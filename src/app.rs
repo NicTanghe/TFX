@@ -78,6 +78,9 @@ pub fn App() -> impl IntoView {
                         <p>"Select a contact to view more info."</p>
                     }/>
                     <Route path=":id" view=move || view!{ <ContactInfo contacts />}>
+                        <Route path="" view=|| view! {
+                        <p>"this is a test or a conditional footer  "</p>
+                        }/>
                     </Route>
                 </Route>
 

@@ -53,21 +53,16 @@ pub fn PostInfo(posts: ReadSignal<Vec<Post>>, set_posts: WriteSignal<Vec<Post>>)
             {
                 move || {
                     match post_info() {
-                        Some(post) => format!("post: {}", post.title),  // Use Post's title
-                        None => "Post not found.".to_string(),
+                        Some(post) => format!("TASK: {}", post.title),  // Use poat's name
+                        None => "Task not found.".to_string(),
                     }
                 }
             }
         </h4>
-        <button on:click=move |_| {
-            handle_post_delete(1, set_posts);  // Wrap in braces and add semicolon inside
-        }>
-            "Delete Post 1"
-        </button>
-        <div class="post-info">
+        <div class="task-info">
             <div class="tabs">
-                <A href="" exact=true>"bleep"</A>
-                <A href="conversations">"bloop"</A>
+                <A href="" exact=true>"Task Info"</A>
+                <A href="conversations">"Conversations"</A>
             </div>
             <Outlet/>
         </div>
@@ -75,7 +70,7 @@ pub fn PostInfo(posts: ReadSignal<Vec<Post>>, set_posts: WriteSignal<Vec<Post>>)
 }
 
 
-
+#[component()]
 pub fn PostInfo_test() -> impl IntoView {
     view! {
         <h4>
@@ -123,7 +118,7 @@ pub fn post_routes(
             <Route path="" view=|| view! {
                 <p>"Select a post to view more info."</p>
             }/>
-            <Route path=":id" view=|| view! { 
+            <Route path=":id" view=move || view! { 
                 <p>"this is not working."</p> // Replace PostInfo with PostInfo_test for debugging
             }>
             <Route path="" view=move || view! {

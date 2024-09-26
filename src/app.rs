@@ -79,11 +79,14 @@ pub fn App() -> impl IntoView {
                     }/>
                     <Route path=":id" view=move || view!{ <ContactInfo contacts />}>
                         <Route path="" view=|| view! {
-                        <p>"this is a test or a conditional footer  "</p>
+                        <p>"Select a contact to view more info."</p>
                         }/>
                     </Route>
                 </Route>
 
+                //<Route path="/blog" view=move || view! { <PostList posts={posts} /> }>
+                //    <Post_routes>
+                //</Route>
                 //{post_routes_test()}
                 {post_routes(posts,set_posts)}
             </Routes>

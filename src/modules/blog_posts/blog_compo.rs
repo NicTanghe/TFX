@@ -2,6 +2,8 @@ use leptos::*;
 use leptos_router::*;
 use serde::{Serialize,Deserialize};
 
+use markdown::to_html as markdown_to_html;
+
 use crate::modules::blog_posts::blog_fn::*; 
 
 // Post struct from your API
@@ -23,7 +25,7 @@ pub fn PostList(posts: ReadSignal<Vec<Post>>) -> impl IntoView {
             <div class="post-list-posts">
                 {move || posts.get().into_iter().map(|post| {
                     // Use the title from the Post struct for href and display
-                    let href = format!("/posts/{}", post.title.to_lowercase());
+                    let href = format!("/blog/{}", post.title.to_lowercase());
                     view! {
                         <A href={href}>{&post.title}</A>
                     }
@@ -35,8 +37,9 @@ pub fn PostList(posts: ReadSignal<Vec<Post>>) -> impl IntoView {
 }
 
 
+
 #[component]
-pub fn PostInfo(posts: ReadSignal<Vec<Post>>, set_posts: WriteSignal<Vec<Post>>) -> impl IntoView {
+pub fn PostInfo(posts: ReadSignal<Vec<Post>>, _set_posts: WriteSignal<Vec<Post>>) -> impl IntoView {
     let params = use_params_map();
     let id = create_memo(move |_| params.with(|params| params.get("id").cloned().unwrap_or_default()));
 
@@ -53,24 +56,33 @@ pub fn PostInfo(posts: ReadSignal<Vec<Post>>, set_posts: WriteSignal<Vec<Post>>)
             {
                 move || {
                     match post_info() {
-                        Some(post) => format!("TASK: {}", post.title),  // Use poat's name
+                        Some(post) => format!("TASK: {}", post.title),
                         None => "Task not found.".to_string(),
                     }
                 }
             }
         </h4>
-        <div class="task-info">
-            <div class="tabs">
-                <A href="" exact=true>"Task Info"</A>
-                <A href="conversations">"Conversations"</A>
-            </div>
-            <Outlet/>
+        <div key={id()}>
+            {
+                move || {
+                    match post_info() {
+                        Some(post) => view! {
+                            <div inner_html={markdown_to_html(&post.markdown)}></div>  // Render Markdown as raw HTML
+                        },
+                        None => view! {
+                            <div inner_html={markdown_to_html("### something went wrong")}></div>
+                        },
+                    }
+                }
+            }
         </div>
+        <Outlet/>
     }
 }
 
 
-#[component()]
+
+#[component]
 pub fn PostInfo_test() -> impl IntoView {
     view! {
         <h4>
@@ -79,51 +91,21 @@ pub fn PostInfo_test() -> impl IntoView {
     }
 }
 
-pub fn post_routes_old(
-    posts: ReadSignal<Vec<Post>>, 
-    _set_posts: WriteSignal<Vec<Post>>
-) -> impl IntoView {
-    view! {
-        <Route path="/blog" view=move || view! { <PostList posts={posts} /> }>   
-            <Route path="" view=|| view! {
-                <p>"Select a post to view more info."</p>
-            }/>
-                <Route path=":id" view=move || view! { 
-                    <div class="tab">"Post Info"</div> // Replace PostInfo with PostInfo_test for debugging
-                }>
-                <Route path="" view=move || view! {
-                    <div class="tab">"Post Info"</div>
-                }/>
-                <Route path="conversations" view=|| view! {
-                    <div class="tab">"Post Conversations"</div>  
-                }/>
-            </Route>
-        </Route>
-    }
-}
 
-#[component]
-pub fn SimpleTestView() -> impl IntoView {
-    view! {
-        <h4>"This is a simple test"</h4>
-    }
-}
 
 pub fn post_routes(
     posts: ReadSignal<Vec<Post>>, 
-    _set_posts: WriteSignal<Vec<Post>>
+    set_posts: WriteSignal<Vec<Post>>
 ) -> impl IntoView {
     view! {
         <Route path="/blog" view=move || view! { <PostList posts={posts} /> }>   
             <Route path="" view=|| view! {
                 <p>"Select a post to view more info."</p>
             }/>
-            <Route path=":id" view=move || view! { 
-                <p>"this is not working."</p> // Replace PostInfo with PostInfo_test for debugging
-            }>
-            <Route path="" view=move || view! {
+            <Route path=":id" view=move ||  view! { <PostInfo posts={posts} _set_posts={set_posts}/> }>
+                <Route path="" view=move || view! {
                 <div class="tab">"Post Info"</div>
-            }/>
+                }/>
         </Route>
         </Route>
     }

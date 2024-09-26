@@ -1,0 +1,9 @@
+# Ignore target directory
+target/
+target/*
+# Optionally ignore other build-related files if needed
+# For example:
+# *.rlib
+# *.so
+# *.wasm
+

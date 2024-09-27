@@ -4,7 +4,9 @@ use serde::{Serialize,Deserialize};
 
 use markdown::to_html as markdown_to_html;
 
-use crate::modules::blog_posts::blog_fn::*; 
+//use crate::modules::blog_posts::blog_fn::*; 
+
+//use leptos_markdown::*;
 
 // Post struct from your API
 #[derive(PartialEq, Clone,Serialize, Deserialize, Debug)] // Ensure Post is Cloneable
@@ -79,18 +81,6 @@ pub fn PostInfo(posts: ReadSignal<Vec<Post>>, _set_posts: WriteSignal<Vec<Post>>
         <Outlet/>
     }
 }
-
-
-
-#[component]
-pub fn PostInfo_test() -> impl IntoView {
-    view! {
-        <h4>
-            "Testing Brrrt"
-        </h4>
-    }
-}
-
 
 
 pub fn post_routes(

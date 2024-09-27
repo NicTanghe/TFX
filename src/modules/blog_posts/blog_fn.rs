@@ -28,7 +28,7 @@ pub fn create_post_signal() -> (ReadSignal<Vec<Post>>, WriteSignal<Vec<Post>>) {
 pub async fn get_post_vector(value: Vec<Post>) -> Vec<Post> {
     match get_posts_from_api().await {
         Ok(fetched_posts) => {
-            logging::log!("Fetched posts:\n{:#?}", fetched_posts);
+            //logging::log!("Fetched posts:\n{:#?}", fetched_posts);
             fetched_posts
         }
         Err(err) => {

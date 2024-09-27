@@ -7,7 +7,7 @@ use crate::contacts::*;
 use crate::modules::blog_posts::blog_compo::*;
 use crate::modules::blog_posts::blog_fn::*;
 
-
+use crate::skrijf::*;
 
 /// Function to create the contact list signal
 pub fn create_contact_signal() -> (ReadSignal<Vec<String>>, WriteSignal<Vec<String>>){
@@ -63,35 +63,37 @@ pub fn App() -> impl IntoView {
 
 
 
+
     view! {
         <Router>
             <nav>
                 <A href="/">"Home"</A>
                 <A href="/contacts">"Contacts"</A>
-                <A href="/blog">"blog"</A>   // Added post navigation
+                <A href="/blog">"blog"</A>
+                <A href="/testing">"testing"</A>
             </nav>
             <Routes>
-                <Route path="/" view=HomePage/>
-                
-                <Route path="/contacts" view=move || view!{ <ContactList contacts />}>
-                    <Route path="" view=|| view! {
-                        <p>"Select a contact to view more info."</p>
-                    }/>
-                    <Route path=":id" view=move || view!{ <ContactInfo contacts />}>
-                        <Route path="" view=|| view! {
-                        <p>"Select a contact to view more info."</p>
-                        }/>
+                <Route path="/" view=HomePage />  // Home route
+                <Route path="/testing" view=move || view! { <ControlledWriting/> } />  // Correctly self-closing
+
+                <Route path="/contacts" view=move || view! { <ContactList contacts /> }>
+                    <Route path="" view=|| view! { 
+                        <p>"Select a contact to view more info."</p> 
+                    } />  // Correctly self-closing
+                    <Route path=":id" view=move || view! { <ContactInfo contacts /> }>
+                        <Route path="" view=|| view! { 
+                            <p>"Select a contact to view more info."</p> 
+                        } />  // Correctly self-closing
                     </Route>
                 </Route>
 
-                //<Route path="/blog" view=move || view! { <PostList posts={posts} /> }>
-                //    <Post_routes>
-                //</Route>
-                //{post_routes_test()}
-                {post_routes(posts,set_posts)}
-            </Routes>
-        </Router>
+                // Uncomment when needed
+                // <Route path="/blog" view=move || view! { <PostList posts={posts} /> } />
+                {post_routes(posts, set_posts)}  // Ensure this is a valid expression
+            </Routes>  // Closing the Routes component
+        </Router>  // Closing the Router component
     }
+
 }
 
 /// Renders the home page of your application.

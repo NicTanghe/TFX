@@ -7,7 +7,7 @@ use crate::contacts::*;
 use crate::modules::blog_posts::blog_compo::*;
 use crate::modules::blog_posts::blog_fn::*;
 
-use crate::skrijf::*;
+use crate::modules::textfields::skrijf::*;
 
 /// Function to create the contact list signal
 pub fn create_contact_signal() -> (ReadSignal<Vec<String>>, WriteSignal<Vec<String>>){

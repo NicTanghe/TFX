@@ -1,8 +1,6 @@
 use leptos::*; // Assuming you're using the Leptos framework
-use leptos_router::Route;
-use crate::comms::get_posts_from_api;
 use crate::modules::blog_posts::blog_compo::Post; // Assuming `Post` is defined in your main or another module
-use crate::comms::*;
+use crate::modules::blog_posts::blog_comms::*;
 
 
 

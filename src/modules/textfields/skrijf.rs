@@ -1,24 +1,36 @@
 use leptos::{ev::SubmitEvent, *};
 use markdown;
 
+use crate::modules::textfields::high_comms::*;
+
 #[component]
 pub fn ControlledWriting() -> impl IntoView {
-    // create a signal to hold the value
-    let (name, set_name) = create_signal("Controlled".to_string());
+    // create a signal to hold the value of the textarea input
+    let (code, set_code) = create_signal("fn main() { println!(\"Hello, world!\"); }".to_string());
+
+    // Create a resource to fetch the highlighted HTML asynchronously
+    let highlighted_html = create_resource(
+        move || code.get(), // the code dependency
+        move |code| async move {
+            send_code_for_highlighting(&code, "rs").await.unwrap_or_else(|_| "Error highlighting code".to_string())
+        },
+    );
 
     view! {
         <textarea
             // fire an event whenever the input changes
             on:input=move |ev| {
                 // Update the signal with the current value
-                set_name(event_target_value(&ev));
+                set_code(event_target_value(&ev));
             }
             // Use prop:value to bind the current value to the textarea
-            prop:value=name
+            prop:value=code
         />
-        <p>"Name is: " {name}</p>
-        <p>"Markdown Input:"</p>
-        <div inner_html=move || markdown::to_html(&name.get())></div> 
+        <p>"Code input:"</p>
+        <pre>"{code}"</pre>
+        <p>"Highlighted Output:"</p>
+        // Display the highlighted HTML once it's available
+        <div inner_html=move || highlighted_html.get().unwrap_or_default()></div>
     }
 }
 

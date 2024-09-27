@@ -1,9 +1,7 @@
 pub mod app;
-pub mod comms;
 pub mod error_template;
 pub mod modules;
 
-pub mod skrijf;
 #[cfg(feature = "ssr")]
 pub mod fileserv;
 pub mod contacts;

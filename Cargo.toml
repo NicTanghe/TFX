@@ -30,6 +30,10 @@ env_logger = "0.9"
 
 
 markdown = "1.0.0-alpha"
+scraper = "0.20.0"
+regex = "1.10.6"
+
+
 # git dependancies abandonment warning!
 #  it doesnt work JSTRASH   leptos-markdown = {git="https://github.com/rambip/leptos-markdown"}
 
@@ -46,7 +50,6 @@ ssr = [
     "leptos_router/ssr",
     "dep:tracing",
 ]
-
 # Defines a size-optimized profile for the WASM bundle in release mode
 [profile.wasm-release]
 inherits = "release"

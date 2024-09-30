@@ -2,7 +2,7 @@ use leptos::{ev::SubmitEvent, *};
 use markdown;
 
 use crate::modules::textfields::high_comms::*;
-
+use crate::modules::textfields::syntectl::*;
 use regex::Regex;
 use scraper::{Html, Selector};
 
@@ -10,10 +10,10 @@ use serde::{Serialize, Deserialize};
 
 // Assuming Omark and Cblock are also serializable
 #[derive(Serialize, Deserialize, Clone)]
-struct Cblock {
-    id: i8,
-    code: String,
-    lang: String,
+pub struct Cblock {
+   pub id: i8,
+   pub code: String,
+   pub lang: String,
 }
 
 #[derive(Serialize, Deserialize, Clone)]
@@ -31,18 +31,14 @@ async fn highlight_code_blocks(code_blocks: Vec<Cblock>) -> Vec<Cblock> {
     let mut highlighted_blocks = Vec::new();
 
     for block in code_blocks {
-        let code_clone = block.code.clone();
-        let lang_clone = block.lang.clone();
 
         // Await the highlighting of the code block
-        let highlighted_code = send_code_for_highlighting(&code_clone, &lang_clone).await.unwrap_or_else(|_| "Error highlighting code".to_string());
+        let processed_block = process_cblock(block).await;
 
         // Create a new Cblock with the highlighted code
-        highlighted_blocks.push(Cblock {
-            id: block.id, // Retain the original ID
-            code: highlighted_code, // Use the highlighted code
-            lang: block.lang, // Retain the original language
-        });
+        highlighted_blocks.push(
+            processed_block
+        );
     }
 
     highlighted_blocks
@@ -106,7 +102,7 @@ fn extract_code_blocks_from_html(html: &str) -> (Vec<Cblock>, Omark) {
 
 #[component]
 pub fn ControlledWriting() -> impl IntoView {
-    // create a signal to hold the value of the textarea input
+    // create a signal to hold the value of the textarea input_e
     let (plainstring, set_plainstring) = create_signal("Uncontrolled".to_string());
     let (code, set_code) = create_signal("fn main() { println!(\"Hello, world!\"); }".to_string());
 
@@ -115,7 +111,7 @@ pub fn ControlledWriting() -> impl IntoView {
     let highlighted_html = create_resource(
         move || code.get(), // the code dependency
         move |code| async move {
-            send_code_for_highlighting(&code, "html").await.unwrap_or_else(|_| "Error highlighting code".to_string())
+            highlight_synthax_to_html(&code, "html").await
         },
     );
     // Create a signal to hold the modified HTML
@@ -124,7 +120,7 @@ pub fn ControlledWriting() -> impl IntoView {
         ohtml:"code removal error".to_string(),
     });
 
-
+// try make a signal c if that reduces the laggio
 
     
     // Create a resource for extracting code blocks and modified HTML
@@ -134,11 +130,11 @@ pub fn ControlledWriting() -> impl IntoView {
         // Run this in an async block
         async move {
             let (code_blocks, omark) = extract_code_blocks_from_html(&html_code);
-            
+            let syndicated_blocks = highlight_code_blocks(code_blocks).await;
             // Create and return AllStat
             AllStat {
                 orig: omark,
-                code: code_blocks,
+                code: syndicated_blocks,
             }
         }
     });
@@ -165,7 +161,7 @@ pub fn ControlledWriting() -> impl IntoView {
                 set_code(markdown::to_html(&plainstring.get()));
                  // Extract code blocks and modified HTML using the `extract_code_blocks_from_html` function
                 let (code_blocks, omark) = extract_code_blocks_from_html(&code.get());
-                
+                //ok do whole thing with signals instead
 
             }
             // Use prop:value to bind the current value to the textarea

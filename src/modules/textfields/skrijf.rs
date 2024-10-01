@@ -138,7 +138,7 @@ pub fn ControlledWriting() -> impl IntoView {
             }
         }
     });
-
+    
 
     // Create a signal to hold the vector of code blocks
     let (code_blocks_signal, set_code_blocks_signal) = create_signal(vec![
@@ -152,7 +152,7 @@ pub fn ControlledWriting() -> impl IntoView {
 
 
     view! {
-        <textarea
+        <textarea class="skrijver_in"
             // fire an event whenever the input changes
             on:input=move |ev| {
                 // Update the signal with the current value
@@ -167,32 +167,37 @@ pub fn ControlledWriting() -> impl IntoView {
             // Use prop:value to bind the current value to the textarea
             prop:value=plainstring
         />
-        <p>"Code input:"</p>
-        <pre>{code}</pre>
+        <div class="skrijver_out">
+            <p>"Code input:"</p>
+            <pre>{code}</pre>
 
-        <p>"marked down"</p>
-        <div inner_html=move || code.get()></div> 
+            <p>"marked down"</p>
+            <div inner_html=move || code.get()></div> 
 
-        <p>"Highlighted Output:"</p>
-        // Display the highlighted HTML once it's available
-        <div inner_html=move || highlighted_html.get().unwrap_or_default()></div>
+            <p>"Highlighted Output:"</p>
+            // Display the highlighted HTML once it's available
+            <div inner_html=move || highlighted_html.get().unwrap_or_default()></div>
 
+            <Suspense
+                fallback=move || view! { <p>"Loading..."</p> }        
+            >
 
-
-        <p>"Highlighted Output:"</p>
-        <div inner_html=move || {
-            // Get the AllStat from the resource
-            match Allstat_resource.get() {
-                Some(all_stat) => {
-                    // Access the first Cblock and print its code if it exists
-                    all_stat.code.get(0).map_or_else(
-                        || "".to_string(), // If no Cblock, return empty string
-                        |first_block| first_block.code.clone(), // Otherwise, return the code
-                    )
-                },
-                None => "".to_string(), // Handle the case where the resource isn't ready yet
-            }
-        }></div>
+                <p>"Highlighted Output:"</p>
+                <div inner_html=move || {
+                    // Get the AllStat from the resource
+                    match Allstat_resource.get() {
+                        Some(all_stat) => {
+                            // Access the first Cblock and print its code if it exists
+                            all_stat.code.get(0).map_or_else(
+                                || "".to_string(), // If no Cblock, return empty string
+                                |first_block| first_block.code.clone(), // Otherwise, return the code
+                            )
+                        },
+                        None => "".to_string(), // Handle the case where the resource isn't ready yet
+                    }
+                }></div>
+            </Suspense>
+        </div>
     }
 }
 #[component]

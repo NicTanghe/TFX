@@ -6,7 +6,7 @@ use scraper::{Html, Selector};
 
 use serde::{Serialize, Deserialize};
 
-use crate::modules::textfields::syntectl::*;
+use crate::modules::textfields::high_comms::*;
 
 // Assuming Omark and Cblock are also serializable
 #[derive(Serialize, Deserialize, Clone)]
@@ -27,6 +27,7 @@ struct AllStat {
     orig: Omark,
     code: Vec<Cblock>,
 }
+
 
 // Function to highlight code blocks asynchronously
 async fn highlight_code_blocks(code_blocks: Vec<Cblock>) -> Vec<Cblock> {
@@ -138,16 +139,23 @@ pub fn ControlledWriting() -> impl IntoView {
     let (plainstring, set_plainstring) = create_signal("Uncontrolled".to_string());
     let (code, set_code) = create_signal("fn main() { println!(\"Hello, world!\"); }".to_string());
 
-    let (final_html, set_final_html) =   create_signal("Uncontrolled".to_string());
+    let (final_html, set_final_html) =   create_signal("".to_string());
+
+
 
     // Create a resource to fetch the highlighted HTML asynchronously
     let highlighted_html = create_resource(
         move || code.get(), // the code dependency
         move |code| async move {
-            highlight_synthax_to_html(&code, "html").await
+            match send_code_for_highlighting(&code, "html").await {
+                Ok(highlighted_code) => highlighted_code,  // Return the highlighted HTML
+                Err(e) => {
+                    println!("Error highlighting code: {:?}", e);
+                    String::new() // Return an empty string or handle the error accordingly
+                }
+            }
         },
     );
-
 
 // try make a signal c if that reduces the laggio
 
@@ -168,6 +176,8 @@ pub fn ControlledWriting() -> impl IntoView {
         }
     });
 
+    
+
      // Create a resource for extracting code blocks and modified HTML
     let Final_resource = create_resource(plainstring, move |plainstring| {
         let html_code = markdown::to_html(&plainstring);
@@ -186,6 +196,7 @@ pub fn ControlledWriting() -> impl IntoView {
         }
     });   
 
+    
     // not sure why this doesnt work
     //let set_final_html_resource = create_resource(
     //  let all_stat = Allstat_resource.get();
@@ -236,14 +247,14 @@ pub fn ControlledWriting() -> impl IntoView {
             //<div inner_html=move || highlighted_html.get().unwrap_or_default()></div>
 
             <Suspense
-                fallback=move || view! { <p>"Loading..."</p> }        
+                fallback=move || view! { <div inner_html ={final_html}></div> }        
             >
 
-                <p>"Highlighted Output:"</p>
                 <div inner_html=move || {
                     // Get the AllStat from the resource
                     match Final_resource.get() {
                         Some(f_html) => {
+                            set_final_html(f_html.clone());
                             // Access the first Cblock and print its code if it exists
                             f_html
                         },

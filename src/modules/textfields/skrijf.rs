@@ -1,12 +1,12 @@
 use leptos::{ev::SubmitEvent, *};
 use markdown;
 
-use crate::modules::textfields::high_comms::*;
-use crate::modules::textfields::syntectl::*;
 use regex::Regex;
 use scraper::{Html, Selector};
 
 use serde::{Serialize, Deserialize};
+
+use crate::modules::textfields::syntectl::*;
 
 // Assuming Omark and Cblock are also serializable
 #[derive(Serialize, Deserialize, Clone)]

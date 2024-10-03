@@ -9,6 +9,8 @@ use crate::modules::blog_posts::blog_fn::*;
 
 use crate::modules::textfields::skrijf::*;
 
+use leptos_meta::*;
+
 /// Function to create the contact list signal
 pub fn create_contact_signal() -> (ReadSignal<Vec<String>>, WriteSignal<Vec<String>>){
     create_signal(vec![
@@ -62,9 +64,16 @@ pub fn App() -> impl IntoView {
     });
 
 
-
+    provide_meta_context();
 
     view! {
+        <Stylesheet id="leptos" href="/style/main.scss" />
+        <Title text="Welcome to Leptos"/>
+        <Html
+            lang="eng"
+            dir="ltr"
+            attr:data-theme="dark"
+        />
         <Router>
             <nav>
                 <A href="/">"Home"</A>
@@ -90,6 +99,7 @@ pub fn App() -> impl IntoView {
                 // Uncomment when needed
                 // <Route path="/blog" view=move || view! { <PostList posts={posts} /> } />
                 {post_routes(posts, set_posts)}  // Ensure this is a valid expression
+                                                 //
             </Routes>  // Closing the Routes component
         </Router>  // Closing the Router component
     }

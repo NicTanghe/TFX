@@ -67,7 +67,7 @@ pub fn App() -> impl IntoView {
     provide_meta_context();
 
     view! {
-        <Stylesheet id="leptos" href="/pkg/firstgo.scss" />
+        <Stylesheet id="leptos" href="/pkg/firstgo.css" />
         <Title text="Welcome to Leptos"/>
         <Html
             lang="eng"

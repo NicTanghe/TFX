@@ -1,22 +1,24 @@
+@import "navbar";
+@import "blog";
+@import "globals";
+
+
+
 body {
-  background-color: hsl(270, 25%, 30%); // Purple hue with lower saturation and darker shade
-	font-family: sans-serif;
-	text-align: center;
+  background-color: hsl(270, 15%, 5%); // Purple hue with lower saturation and darker shade
+  font-family: sans-serif;
+  text-align: center;
+  padding-top: 4em;
+  margin: 0;
 }
 
-
-
 button {
-  --glow-color: rgb(217, 176, 255);
-  --glow-spread-color: rgba(191, 123, 255, 0.781);
-  --enhanced-glow-color: rgb(231, 206, 255);
-  --btn-color: rgb(100, 61, 136);
   border: .25em solid var(--glow-color);
   padding: 1em 3em;
   color: var(--glow-color);
   font-size: 15px;
   font-weight: bold;
-  background-color: var(--btn-color);
+  background-color: var(--link-color);
   border-radius: 1em;
   outline: none;
   box-shadow: 0 0 1em .25em var(--glow-color),
@@ -25,7 +27,6 @@ button {
   text-shadow: 0 0 .5em var(--glow-color);
   position: relative;
   transition: all 0.3s;
-
   &::after {
     pointer-events: none;
     content: "";
@@ -41,7 +42,7 @@ button {
   }
 
   &:hover {
-    color: var(--btn-color);
+    color: var(--link-color);
     background-color: var(--glow-color);
     box-shadow: 0 0 1em .25em var(--glow-color),
                 0 0 4em 2em var(--glow-spread-color),
@@ -54,3 +55,8 @@ button {
                 inset 0 0 .5em .25em var(--glow-color);
   }
 }
+
+
+
+
+

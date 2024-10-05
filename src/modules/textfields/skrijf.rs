@@ -220,48 +220,43 @@ pub fn ControlledWriting() -> impl IntoView {
 
 
     view! {
-        <textarea class="skrijver_in"
-            // fire an event whenever the input changes
-            on:input=move |ev| {
-                // Update the signal with the current value
-                //set_code(event_target_value(&ev));
-                set_plainstring(event_target_value(&ev));
-                set_code(markdown::to_html(&plainstring.get()));
-                 // Extract code blocks and modified HTML using the `extract_code_blocks_from_html` function
-                let (code_blocks, omark) = extract_code_blocks_from_html(&code.get());
-                //ok do whole thing with signals instead
-
-            }
-            // Use prop:value to bind the current value to the textarea
-            prop:value=plainstring
-        />
-        <div class="skrijver_out">
-            //<p>"Code input:"</p>
-            //<pre>{code}</pre>
-            //
-            <p>"marked down"</p>
-            //<div inner_html=move || code.get()></div> 
-
-            //<p>"Highlighted Output:"</p>
-            //// Display the highlighted HTML once it's available
-            //<div inner_html=move || highlighted_html.get().unwrap_or_default()></div>
-
-            <Suspense
-                fallback=move || view! { <div inner_html ={final_html}></div> }        
-            >
-
-                <div inner_html=move || {
-                    // Get the AllStat from the resource
-                    match Final_resource.get() {
-                        Some(f_html) => {
-                            set_final_html(f_html.clone());
-                            // Access the first Cblock and print its code if it exists
-                            f_html
-                        },
-                        None => "".to_string(), // Handle the case where the resource isn't ready yet
+        <div class= "text_section">
+            <div class= "skrijver_in">
+                <textarea class="title" rows=1 style="width:75%"/>
+                <textarea class="tags" rows=1 style="width:50% height:1em"/>
+                <textarea class="blog_area"
+                    rows=40
+                    style="width: 100%;"
+                    // fire an event whenever the input changes
+                    on:input=move |ev| {
+                        // Update the signal with the current value
+                        set_plainstring(event_target_value(&ev));
+                        set_code(markdown::to_html(&plainstring.get()));
+                        // Extract code blocks and modified HTML using the `extract_code_blocks_from_html` function
+                        let (code_blocks, omark) = extract_code_blocks_from_html(&code.get());
                     }
-                }></div>
-            </Suspense>
+                    // Use prop:value to bind the current value to the textarea
+                    prop:value=plainstring
+                />
+            </div>
+            <div class="skrijver_out">
+                <Suspense
+                    fallback=move || view! { <div inner_html ={final_html}></div> }        
+                >
+
+                    <div inner_html=move || {
+                        // Get the AllStat from the resource
+                        match Final_resource.get() {
+                            Some(f_html) => {
+                                set_final_html(f_html.clone());
+                                // Access the first Cblock and print its code if it exists
+                                f_html
+                            },
+                            None => "".to_string(), // Handle the case where the resource isn't ready yet
+                        }
+                    }></div>
+                </Suspense>
+            </div>
         </div>
     }
 }

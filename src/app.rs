@@ -27,9 +27,23 @@ pub fn create_contact_signal() -> (ReadSignal<Vec<String>>, WriteSignal<Vec<Stri
 
 /// Function to create the post list signal
 
+#[component]
+fn NavBar() -> impl IntoView {
+    // Get the current location (path)
+    let location = use_location();
 
+    // Helper function to check if the current path starts with the link's href
+    let is_active = move |base: &str| location.pathname.get().starts_with(base);
 
-
+    view! {
+        <nav class="navbar">
+            <A class=move || format!("navlink{}", if is_active("/") && location.pathname.get() == "/" { " nb-active" } else { "" }) href="/">"Home"</A>
+            <A class=move || format!("navlink{}", if is_active("/contacts") { " nb-active" } else { "" }) href="/contacts">"Contacts"</A>
+            <A class=move || format!("navlink{}", if is_active("/blog") { " nb-active" } else { "" }) href="/blog">"Blog"</A>
+            <A class=move || format!("navlink{}", if is_active("/testing") { " nb-active" } else { "" }) href="/testing">"Testing"</A>
+        </nav>
+    }
+}
 
 // note look at using a sagnal aswess for increased responsiveness
 
@@ -63,24 +77,19 @@ pub fn App() -> impl IntoView {
         }
     });
 
-
     provide_meta_context();
 
     view! {
-        <Stylesheet id="leptos" href="/pkg/firstgo.css" />
+        <Stylesheet id="leptos" href="/pkg/werk.css" />
         <Title text="Welcome to Leptos"/>
         <Html
             lang="eng"
             dir="ltr"
             attr:data-theme="dark"
         />
+
         <Router>
-            <nav>
-                <A href="/">"Home"</A>
-                <A href="/contacts">"Contacts"</A>
-                <A href="/blog">"blog"</A>
-                <A href="/testing">"testing"</A>
-            </nav>
+            <NavBar />
             <Routes>
                 <Route path="/" view=HomePage />  // Home route
                 <Route path="/testing" view=move || view! { <ControlledWriting/> } />  // Correctly self-closing

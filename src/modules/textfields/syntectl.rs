@@ -44,6 +44,9 @@ fn map_language(language: &str) -> LanguageStatus {
     lang_map.insert("Java", "java");
     lang_map.insert("java", "java");
     
+    lang_map.insert("scss","css");
+    lang_map.insert("css","css");
+
     lang_map.insert("html", "html");
     // Return mapped value or indicate if not found
     match lang_map.get(language) {

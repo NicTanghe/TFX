@@ -41,6 +41,9 @@ fn map_language(language: &str) -> LanguageStatus {
     lang_map.insert("c++", "cpp");
     lang_map.insert("C++", "cpp");
     lang_map.insert("cpp", "cpp");
+
+    lang_map.insert("scss", "scss");
+    lang_map.insert("css", "css");
     
     lang_map.insert("Go", "go");
     lang_map.insert("go", "go");

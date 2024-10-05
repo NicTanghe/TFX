@@ -72,8 +72,6 @@ fn escape_html(input: &str) -> String {
 }
 
 
-
-
 // Function to extract code blocks from HTML-formatted markdown and return both Cblock and Omark
 fn extract_code_blocks_from_html(html: &str) -> (Vec<Cblock>, Omark) {
     let mut code_blocks: Vec<Cblock> = Vec::new();
@@ -113,7 +111,7 @@ fn extract_code_blocks_from_html(html: &str) -> (Vec<Cblock>, Omark) {
 
                 // Replace the code block content in the HTML
                 let code_html = format!(r#"<code class="language-{}">{}</code>"#, language, escaped_code_content);
-                let placeholder = format!(r#"<code class="language-{}">[Code Block {}]</code>"#, language, id_counter);
+                let placeholder = format!(r#"<code text-decoration= none; class="language-{}">[Code Block {}]</code>"#, language, id_counter);
                 modified_html = modified_html.replace(&code_html, &placeholder);
 
                 id_counter += 1;
@@ -136,7 +134,12 @@ fn extract_code_blocks_from_html(html: &str) -> (Vec<Cblock>, Omark) {
 #[component]
 pub fn ControlledWriting() -> impl IntoView {
     // create a signal to hold the value of the textarea input_e
-    let (plainstring, set_plainstring) = create_signal("Uncontrolled".to_string());
+    let (content_string, set_content_string) = create_signal("Uncontrolled".to_string());
+
+
+    
+
+
     let (code, set_code) = create_signal("fn main() { println!(\"Hello, world!\"); }".to_string());
 
     let (final_html, set_final_html) =   create_signal("".to_string());
@@ -161,8 +164,8 @@ pub fn ControlledWriting() -> impl IntoView {
 
     
     // Create a resource for extracting code blocks and modified HTML
-    let Allstat_resource = create_resource(plainstring, move |plainstring| {
-        let html_code = markdown::to_html(&plainstring);
+    let Allstat_resource = create_resource(content_string, move |content_string| {
+        let html_code = markdown::to_html(&content_string);
         
         // Run this in an async block
         async move {
@@ -179,8 +182,8 @@ pub fn ControlledWriting() -> impl IntoView {
     
 
      // Create a resource for extracting code blocks and modified HTML
-    let Final_resource = create_resource(plainstring, move |plainstring| {
-        let html_code = markdown::to_html(&plainstring);
+    let Final_resource = create_resource(content_string, move |content_string| {
+        let html_code = markdown::to_html(&content_string);
         
         // Run this in an async block
         async move {
@@ -196,27 +199,6 @@ pub fn ControlledWriting() -> impl IntoView {
         }
     });   
 
-    
-    // not sure why this doesnt work
-    //let set_final_html_resource = create_resource(
-    //  let all_stat = Allstat_resource.get();
-    //
-    //    async move{
-    //       let final_html =  assemble_highlighted_content(all_stat).await
-    //    }
-    //    final_html
-    //);
-
-
-    // Create a signal to hold the vector of code blocks
-    let (code_blocks_signal, set_code_blocks_signal) = create_signal(vec![
-        Cblock {
-            id: 0,
-            code: "".to_string(),
-            lang: "none".to_string(),
-        },
-    ]);
-
 
 
     view! {
@@ -226,17 +208,16 @@ pub fn ControlledWriting() -> impl IntoView {
                 <textarea class="tags" rows=1 style="width:50% height:1em"/>
                 <textarea class="blog_area"
                     rows=40
-                    style="width: 100%;"
+                    style="width: 100%; max-width: 100%;"
                     // fire an event whenever the input changes
                     on:input=move |ev| {
                         // Update the signal with the current value
-                        set_plainstring(event_target_value(&ev));
-                        set_code(markdown::to_html(&plainstring.get()));
+                        set_content_string(event_target_value(&ev));
+                        set_code(markdown::to_html(&content_string.get()));
                         // Extract code blocks and modified HTML using the `extract_code_blocks_from_html` function
-                        let (code_blocks, omark) = extract_code_blocks_from_html(&code.get());
                     }
                     // Use prop:value to bind the current value to the textarea
-                    prop:value=plainstring
+                    prop:value=content_string
                 />
             </div>
             <div class="skrijver_out">

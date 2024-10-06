@@ -5,6 +5,7 @@ use leptos_router::*;
 #[component]
 pub fn ContactList(contacts: ReadSignal<Vec<String>>) -> impl IntoView {
     view! {
+        <div class="big_void"></div>
         <div class="contact-list">
             <h3>"Contacts"</h3>
             <div class="contact-list-contacts">

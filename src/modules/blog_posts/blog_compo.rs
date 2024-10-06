@@ -22,6 +22,7 @@ pub struct Post {
 #[component]
 pub fn PostList(posts: ReadSignal<Vec<Post>>) -> impl IntoView {
     view! {
+        <div class="big_void"></div>
         <div class="post-list">
             <h3>"Posts"</h3>
             <div class="post-list-posts">
@@ -54,29 +55,32 @@ pub fn PostInfo(posts: ReadSignal<Vec<Post>>, _set_posts: WriteSignal<Vec<Post>>
     };
 
     view! {
-        <h4 key={id()}>
-            {
-                move || {
-                    match post_info() {
-                        Some(post) => format!("TASK: {}", post.title),
-                        None => "Task not found.".to_string(),
+        <div class= "void_small"></div>
+        <div class= "skrijver_out">
+            <h1 class="blog_title" key={id()}>
+                {
+                    move || {
+                        match post_info() {
+                            Some(post) => format!("{}", post.title),
+                            None => "Task not found.".to_string(),
+                        }
                     }
                 }
-            }
-        </h4>
-        <div key={id()}>
-            {
-                move || {
-                    match post_info() {
-                        Some(post) => view! {
-                            <div inner_html={markdown_to_html(&post.markdown)}></div>  // Render Markdown as raw HTML
-                        },
-                        None => view! {
-                            <div inner_html={markdown_to_html("### something went wrong")}></div>
-                        },
+            </h1>
+            <div key={id()}>
+                {
+                    move || {
+                        match post_info() {
+                            Some(post) => view! {
+                                <div inner_html={markdown_to_html(&post.markdown)}></div>  // Render Markdown as raw HTML
+                            },
+                            None => view! {
+                                <div inner_html={markdown_to_html("### something went wrong")}></div>
+                            },
+                        }
                     }
                 }
-            }
+            </div>
         </div>
         <Outlet/>
     }
@@ -94,7 +98,6 @@ pub fn post_routes(
             }/>
             <Route path=":id" view=move ||  view! { <PostInfo posts={posts} _set_posts={set_posts}/> }>
                 <Route path="" view=move || view! {
-                <div class="tab">"Post Info"</div>
                 }/>
         </Route>
         </Route>

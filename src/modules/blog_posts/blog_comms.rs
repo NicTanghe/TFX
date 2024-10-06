@@ -1,7 +1,14 @@
 use reqwest::Error;
 use crate::modules::blog_posts::blog_compo::Post;
 use leptos::logging;
-use serde::Deserialize;
+use serde::{Serialize,Deserialize};
+
+#[derive(Serialize,Deserialize)]
+pub struct CreatePostReq {
+ pub title: String,
+ pub tags: Vec<String>,
+ pub markdown: String,
+}
 
 #[derive(Debug, Deserialize)]
 struct ApiResponse {
@@ -91,3 +98,38 @@ pub async fn delete_post_from_api(post_id: i32) -> Result<(), Error> {
 
     Ok(())
 }
+
+
+// Function to create a new post via API
+pub async fn create_post_to_blog_api(new_post: CreatePostReq) -> Result<(), Error> {
+    let url = "http://localhost:3030/posts";
+    logging::log!("Sending POST request to {}", url);
+
+    let client = reqwest::Client::new();
+    let response = client
+        .post(url)
+        .json(&new_post) // Automatically serialize the struct to JSON
+        .send()
+        .await;
+
+    match response {
+        Ok(resp) => {
+            if !resp.status().is_success() {
+                logging::log!("POST request failed with status: {}", resp.status());
+                // Log additional error details if needed
+                // You may choose to log response body for more details
+                // let error_body = resp.text().await.unwrap_or_else(|_| "No response body".to_string());
+                // logging::log!("Response body: {}", error_body);
+            } else {
+                logging::log!("Successfully created post.");
+            }
+        }
+        Err(err) => {
+            logging::log!("Failed to send POST request: {}", err);
+            return Err(err); // You may choose to return an error here if needed
+        }
+    };
+
+    Ok(())
+}
+

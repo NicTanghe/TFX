@@ -8,7 +8,12 @@ use serde::{Serialize, Deserialize};
 
 use crate::modules::textfields::high_comms::*;
 
+use crate::modules::blog_posts::blog_comms::{create_post_to_blog_api,CreatePostReq};
 // Assuming Omark and Cblock are also serializable
+
+
+
+
 #[derive(Serialize, Deserialize, Clone)]
 pub struct Cblock {
    pub id: i8,
@@ -28,6 +33,15 @@ struct AllStat {
     code: Vec<Cblock>,
 }
 
+//splits yo string
+pub fn split_tags(tags: &str) -> Vec<String> {
+    // Trim leading and trailing whitespace from the entire input string
+    tags.trim()
+        .split(',')
+        .map(|tag| tag.trim().to_string()) // Trim whitespace from each tag and convert to String
+        .filter(|tag| !tag.is_empty()) // Remove empty tags if any
+        .collect()
+}
 
 // Function to highlight code blocks asynchronously
 async fn highlight_code_blocks(code_blocks: Vec<Cblock>) -> Vec<Cblock> {
@@ -119,7 +133,6 @@ fn extract_code_blocks_from_html(html: &str) -> (Vec<Cblock>, Omark) {
         }
     }
 
-
     // Create Omark struct
     let omark = Omark {
         amount: (id_counter - 1) as i8,  // Amount is the number of code blocks found
@@ -130,19 +143,27 @@ fn extract_code_blocks_from_html(html: &str) -> (Vec<Cblock>, Omark) {
 }
 
 //hooraaaay vex synthax highlighting incomming
-
+    
+    
+// change the button submit thing so that ControlledWriting takes a function as input for the submit button.
 #[component]
 pub fn ControlledWriting() -> impl IntoView {
-    // create a signal to hold the value of the textarea input_e
-    let (content_string, set_content_string) = create_signal("Uncontrolled".to_string());
-
-
     
+    // blog title, tags
+    let (area_title,set_area_title)= create_signal("enter title".to_string());
+    // maybe change this to an additive dropdown in the future maybe also add a change to closest match
+    
+    let (area_tags,set_area_tags)= create_signal("".to_string());
 
 
+    // blog content variables    
+    let (content_string, set_content_string) = create_signal("*enter content*".to_string());
+    
     let (code, set_code) = create_signal("fn main() { println!(\"Hello, world!\"); }".to_string());
 
     let (final_html, set_final_html) =   create_signal("".to_string());
+
+
 
 
 
@@ -202,13 +223,26 @@ pub fn ControlledWriting() -> impl IntoView {
 
 
     view! {
+        <div class= "big_void"></div>
         <div class= "text_section">
             <div class= "skrijver_in">
-                <textarea class="title" rows=1 style="width:75%"/>
-                <textarea class="tags" rows=1 style="width:50% height:1em"/>
-                <textarea class="blog_area"
-                    rows=40
-                    style="width: 100%; max-width: 100%;"
+                <textarea class="title" rows=1 style="width:75%"
+                    on:input=move |ev_title| {
+                        // Update the signal with the current value
+                        set_area_title(event_target_value(&ev_title));
+                        // Extract code blocks and modified HTML using the `extract_code_blocks_from_html` function
+                    }
+                    // Use prop:value to bind the current value to the textarea
+                    prop:value=area_title
+                />
+                <textarea class="tags" rows=1 style="width:50% height:1em"
+                    on:input=move |ev_tags| {
+                        set_area_tags(event_target_value(&ev_tags));
+                    
+                    }
+                    prop:value=area_tags
+                />
+                <textarea class="blog_area" rows=40 style="width: 100%; max-width: 100%;"
                     // fire an event whenever the input changes
                     on:input=move |ev| {
                         // Update the signal with the current value
@@ -239,8 +273,20 @@ pub fn ControlledWriting() -> impl IntoView {
                 </Suspense>
             </div>
         </div>
+       <button on:click=move |_| {
+            create_post_to_blog_api(
+                CreatePostReq {
+                    title: area_title.get(),
+                    tags: split_tags(&area_tags.get()),
+                    markdown: final_html.get(),
+                },
+            ); // Semicolon here
+        }>
+            "submit!"
+        </button>
     }
 }
+
 #[component]
 pub fn UnControlledWriting() -> impl IntoView {
     // Use NodeRef for Textarea

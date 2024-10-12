@@ -15,7 +15,6 @@ struct ApiResponse {
     data: Vec<Post>,
 }
 
-pub async fn test_extentions_extraction
 
 
 pub async fn get_posts_from_api() -> Result<Vec<Post>, Error> {

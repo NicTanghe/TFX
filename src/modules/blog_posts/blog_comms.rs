@@ -15,6 +15,8 @@ struct ApiResponse {
     data: Vec<Post>,
 }
 
+pub async fn test_extentions_extraction
+
 
 pub async fn get_posts_from_api() -> Result<Vec<Post>, Error> {
     let url = "http://localhost:3030/posts";
@@ -102,7 +104,7 @@ pub async fn delete_post_from_api(post_id: i32) -> Result<(), Error> {
 
 // Function to create a new post via API
 pub async fn create_post_to_blog_api(new_post: CreatePostReq) -> Result<(), Error> {
-    let url = "http://localhost:3030/posts";
+    let url = "http://localhost:4000/posts";
     logging::log!("Sending POST request to {}", url);
 
     let client = reqwest::Client::new();
@@ -118,8 +120,8 @@ pub async fn create_post_to_blog_api(new_post: CreatePostReq) -> Result<(), Erro
                 logging::log!("POST request failed with status: {}", resp.status());
                 // Log additional error details if needed
                 // You may choose to log response body for more details
-                // let error_body = resp.text().await.unwrap_or_else(|_| "No response body".to_string());
-                // logging::log!("Response body: {}", error_body);
+                 let error_body = resp.text().await.unwrap_or_else(|_| "No response body".to_string());
+                 logging::log!("Response body: {}", error_body);
             } else {
                 logging::log!("Successfully created post.");
             }

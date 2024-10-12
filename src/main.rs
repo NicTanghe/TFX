@@ -1,3 +1,4 @@
+
 #[cfg(feature = "ssr")]
 #[tokio::main]
 async fn main() {
@@ -7,6 +8,11 @@ async fn main() {
     use home_portal::app::*;
     use home_portal::fileserv::file_and_error_handler;
 
+
+  // Set up CORS layer
+
+
+    
     // Setting get_configuration(None) means we'll be using cargo-leptos's env values
     // For deployment these variables are:
     // <https://github.com/leptos-rs/start-axum#executing-a-server-on-a-remote-machine-without-the-toolchain>
@@ -22,6 +28,7 @@ async fn main() {
         .leptos_routes(&leptos_options, routes, App)
         .fallback(file_and_error_handler)
         .with_state(leptos_options);
+
 
     let listener = tokio::net::TcpListener::bind(&addr).await.unwrap();
 

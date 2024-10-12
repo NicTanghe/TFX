@@ -28,7 +28,6 @@ log = "0.4"
 console_log = "0.2"
 env_logger = "0.9"
 
-
 markdown = "1.0.0-alpha"
 scraper = "0.20.0"
 regex = "1.10.6"

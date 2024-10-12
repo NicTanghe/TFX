@@ -143,7 +143,27 @@ fn extract_code_blocks_from_html(html: &str) -> (Vec<Cblock>, Omark) {
 }
 
 //hooraaaay vex synthax highlighting incomming
-    
+   
+
+
+
+// Asynchronous function to fetch HTML
+async fn fetch_html(client: Arc<Client>, url: &str) -> Result<String, Box<dyn std::error::Error>> {
+    let response = client.get(url)
+        .header("Content-Type", "application/json")
+        .header("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiQGIuY29tIiwiY29tcGFueSI6IkFDTUUiLCJleHAiOjIwMDAwMDAwMDAsInJvbGVzIjpbImFkbWluIiwiY29tcG9zaXRvciJdfQ.93pyn5aIo3n-SbM5I3Jc04taVz6QbDNFw8ZbeOYJjCY")
+        .send()
+        .await?;
+
+    if response.status().is_success() {
+        let body = response.text().await?;
+        Ok(body)
+    } else {
+        // Handle the error case
+        let error_message = format!("Error: {}", response.status());
+        Err(error_message.into())
+    }
+}
     
 // change the button submit thing so that ControlledWriting takes a function as input for the submit button.
 #[component]
@@ -224,6 +244,28 @@ pub fn ControlledWriting() -> impl IntoView {
 
     view! {
         <div class= "big_void"></div>
+        <div class="skrijver_out">
+            <Suspense
+                fallback=move || view! { <div inner_html ={final_html}></div> }        
+            >
+
+                <div inner_html=move || {
+                    // Get the AllStat from the resource
+                    match Final_resource.get() {
+                        Some(f_html) => {
+                            set_final_html(f_html.clone());
+                            // Access the first Cblock and print its code if it exists
+                            f_html
+                        },
+                        None => "".to_string(), // Handle the case where the resource isn't ready yet
+                    }
+                }></div>
+            </Suspense>
+        </div>
+        <div class= "big_void"></div>
+
+
+
         <div class= "text_section">
             <div class= "skrijver_in">
                 <textarea class="title" rows=1 style="width:75%"
@@ -274,13 +316,16 @@ pub fn ControlledWriting() -> impl IntoView {
             </div>
         </div>
        <button on:click=move |_| {
-            create_post_to_blog_api(
-                CreatePostReq {
-                    title: area_title.get(),
-                    tags: split_tags(&area_tags.get()),
-                    markdown: final_html.get(),
-                },
-            ); // Semicolon here
+           logging::log!("it has pressed my presous");
+            spawn_local(async move {
+                let _ =create_post_to_blog_api(
+                    CreatePostReq {
+                        title: area_title.get(),
+                        tags: split_tags(&area_tags.get()),
+                        markdown: content_string.get(),
+                    }
+                ).await; // Awaiting the async function inside the async block
+            });
         }>
             "submit!"
         </button>

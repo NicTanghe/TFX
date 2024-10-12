@@ -1,0 +1,67 @@
+nav{
+}
+.navbar{
+  //add metal divider betweeb the uptions with a little lamp thing ?
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+  height: 2/5em;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  padding: 0.0em 0em;
+  background-color: hsl(320, 5%, 5.5%);
+  background-image: url("https://www.transparenttextures.com/patterns/felt.png");
+  background-size: 33%;
+  background-blend-mode: color-dodge;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5),
+              0px 10px 15px rgba(0, 0, 0, 1),
+              0px 5px 10px rgba(0, 0, 0, 0.2);
+
+}
+
+nav a {
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.5em;
+  position: relative;
+  padding: 0.2em;
+  text-shadow: 
+      -1px -1px 2px rgba(125, 125, 125, 0),
+      // 1px 1px 0 rgba(125, 125, 125, 1),
+      1px -1px 0 rgba(0, 0, 0, 0.3),
+      -1px 1px 0 rgba(0, 0, 0, 0.3);
+}
+
+.navlink {
+  color: hsl(0, 0%, 30%);
+  transition: all 0.3s ease;
+}
+
+.navlink:active {
+  color: var(--glow-color);
+}
+
+.nb-active {
+  color: var(--glow-color);
+  // box-shadow: 0 0 1em .25em var(--glow-color),
+  //             0 0 4em 1.5em var(--glow-spread-color),
+  //             inset 0 0 .75em .25em var(--glow-color);
+  text-shadow: 0 0 .2em var(--glow-color);
+  position: relative;
+
+  &::after {
+    pointer-events: none;
+    content: "";
+    position: absolute;
+    top: 93%; /* Adjust this to position the glow below the element */
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: var(--glow-spread-color);
+    filter: blur(2em);
+    opacity: .7;
+    transform: perspective(1.5em) rotateX(50deg) scale(2, .6);
+  }
+}
+

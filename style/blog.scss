@@ -1,0 +1,93 @@
+@import "globals";
+
+.text_section {
+  display: flex;
+  flex-direction: row; /* Keep items aligned horizontally */
+  gap: 10px; /* Space between input and output sections */
+  justify-content: flex-start; /* Align items to the start */
+  flex-wrap: wrap; /* Allow items to wrap to the next line if needed */
+}
+
+.skrijver_in {
+  display: flex;
+  flex-direction: column; /* Stack text areas vertically */
+  width: 30em; /* Set width as needed */
+  padding: 2em;
+}
+
+.skrijver_out {
+  text-align: left;
+  display: flex;
+  flex-direction: column; /* Ensure output content stacks vertically if needed */
+  justify-content: flex-start; /* Aligns flex items to the top */
+  align-items: flex-start; 
+  width: 47em; /* Adjust width as necessary */
+  min-height: 23em; /* Maintain minimum height */
+  border-radius: 30px;
+  background: #212121;
+  box-shadow: 15px 15px 30px rgb(25, 25, 25),
+              -15px -15px 30px var(--light-soft);
+  color: #F5F5F5; /* "Broken white" color */
+  overflow-wrap: break-word; /* Ensures text wraps inside the div */
+  padding: 2em; /* Adds some padding to prevent text touching the edges */
+  overflow: hidden; /* Ensures no overflow issues */
+  min-width: 0; /* Prevent overflow if the content is too wide */
+}
+
+textarea {
+    width: 100%; /* Full width to fit the container */
+    max-width: 100%; /* Prevent overflow */
+    padding: 10px; /* Add padding for better text spacing */
+    font-size: 16px; /* Comfortable font size */
+    border: 1px solid hsl(0, 0%, 40%); /* Darker border for contrast */
+    border-radius: 5px; /* Rounded corners */
+    background-color: hsl(0, 0%, 20%); /* Dark background color */
+    color: hsl(0, 0%, 90%); /* Light text color for readability */
+    transition: border-color 0.3s ease; /* Smooth transition for border color */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
+    overflow: auto; /* Ensures no overflow issues */
+    resize: none; /* Disable resizing */
+}
+
+textarea:focus {
+    border-color: hsl(200, 100%, 50%); /* Change border color on focus */
+    outline: none; /* Remove default outline */
+    background-color: hsl(0, 0%, 30%); /* Darker background color on focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add shadow on focus */
+}
+
+code{
+
+}
+pre {
+  padding: 2.5em; /* Add padding to pre */
+  border-radius:1em;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  white-space: pre; 
+  max-width: 94%; 
+  scrollbar-width: none; 
+  text-decoration: none;
+}
+
+pre, code {
+    margin: 0;
+    // padding: 0; /* Removes any default padding */
+    white-space: pre-wrap; /* Prevents extra line breaks or spaces */
+}
+
+pre code {
+    display: block; /* Ensures no inline spacing issues */
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 0; /* Removes any extra space between <p> and <pre> */
+}
+/* Hide scrollbar for WebKit-based browsers */
+pre::-webkit-scrollbar {
+  display: none; /* Hides the scrollbar */
+}
+
+div{
+  text-decoration: none;
+}

@@ -1,8 +1,8 @@
 # Ignore target directory
 target/
 target/*
-style/
-style/*
+# style/
+# style/*
 # Optionally ignore other build-related files if needed
 # For example:
 # *.rlib

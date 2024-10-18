@@ -5,6 +5,7 @@ pub mod modules;
 #[cfg(feature = "ssr")]
 pub mod fileserv;
 pub mod contacts;
+
 #[cfg(feature = "hydrate")]
 #[wasm_bindgen::prelude::wasm_bindgen]
 pub fn hydrate() {

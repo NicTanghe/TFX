@@ -7,6 +7,11 @@ async fn main() {
     use leptos_axum::{generate_route_list, LeptosRoutes};
     use home_portal::app::*;
     use home_portal::fileserv::file_and_error_handler;
+    use tower_cookies::{Cookie, CookieManagerLayer, Cookies};
+
+    use tracing_subscriber;
+
+    use tracing::debug;
 
 
   // Set up CORS layer
@@ -27,13 +32,15 @@ async fn main() {
     let app = Router::new()
         .leptos_routes(&leptos_options, routes, App)
         .fallback(file_and_error_handler)
-        .with_state(leptos_options);
-
+        .with_state(leptos_options)
+        .layer(CookieManagerLayer::new());
 
     let listener = tokio::net::TcpListener::bind(&addr).await.unwrap();
 
-
-    logging::log!("listening on http://{}", &addr);
+    tracing_subscriber::fmt()
+        .with_max_level(tracing::Level::DEBUG)
+        .init();
+    debug!("listening on http://{}", &addr);
     axum::serve(listener, app.into_make_service())
         .await
         .unwrap();
@@ -45,6 +52,5 @@ pub fn main() {
     // unless we want this to work with e.g., Trunk for a purely client-side app
     // see lib.rs for hydration function instead
 }
-
 
 

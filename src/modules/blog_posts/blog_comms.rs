@@ -1,9 +1,13 @@
 use reqwest::Error;
 use crate::modules::blog_posts::blog_compo::Post;
-use leptos::logging;
+use leptos::{
+    server,
+    logging,
+    ServerFnError
+};
 use serde::{Serialize,Deserialize};
 
-#[derive(Serialize,Deserialize)]
+#[derive(Serialize,Deserialize,Clone,Debug)]
 pub struct CreatePostReq {
  pub title: String,
  pub tags: Vec<String>,
@@ -15,9 +19,8 @@ struct ApiResponse {
     data: Vec<Post>,
 }
 
-
-
-pub async fn get_posts_from_api() -> Result<Vec<Post>, Error> {
+#[server(GetPosts, "/post/get")]
+pub async fn get_posts_from_api() -> Result<Vec<Post>, ServerFnError> {
     let url = "http://localhost:3030/posts";
     logging::log!("Sending request to {}", url);
 
@@ -78,8 +81,9 @@ pub async fn get_posts_from_api() -> Result<Vec<Post>, Error> {
 }
 
 
-// DELETE request to delete a post by ID
-pub async fn delete_post_from_api(post_id: i32) -> Result<(), Error> {
+
+#[server(DelPost, "/post/del")]
+pub async fn delete_post_from_api(post_id: i32) -> Result<(), ServerFnError> {
     let url = format!("http://localhost:3030/posts/{}", post_id);
     logging::log!("Sending DELETE request to {}", url);
 
@@ -87,7 +91,7 @@ pub async fn delete_post_from_api(post_id: i32) -> Result<(), Error> {
         Ok(resp) => resp,
         Err(err) => {
             logging::log!("Failed to delete post {}: {}", post_id, err);
-            return Err(err);
+            return Err(ServerFnError::Args(err.to_string())); // Wrap it in `Err`
         }
     };
 
@@ -101,33 +105,43 @@ pub async fn delete_post_from_api(post_id: i32) -> Result<(), Error> {
 }
 
 
+
 // Function to create a new post via API
-pub async fn create_post_to_blog_api(new_post: CreatePostReq) -> Result<(), Error> {
+#[server(SetPost, "/post/set")]
+pub async fn create_post_to_blog_api(new_post: CreatePostReq, jwt: String) -> Result<(), ServerFnError> {
     let url = "http://localhost:4000/posts";
     logging::log!("Sending POST request to {}", url);
 
     let client = reqwest::Client::new();
     let response = client
         .post(url)
+        .header("Authorization", format!("Bearer {}", jwt))
         .json(&new_post) // Automatically serialize the struct to JSON
         .send()
         .await;
 
+
     match response {
         Ok(resp) => {
-            if !resp.status().is_success() {
-                logging::log!("POST request failed with status: {}", resp.status());
-                // Log additional error details if needed
-                // You may choose to log response body for more details
-                 let error_body = resp.text().await.unwrap_or_else(|_| "No response body".to_string());
-                 logging::log!("Response body: {}", error_body);
+            let status = resp.status(); // Store the status
+            let error_body = resp.text().await.unwrap_or_else(|_| "No response body".to_string()); // Move the response here
+
+            if !status.is_success() {
+                logging::log!("POST request failed with status: {}", status);
+                logging::log!("Response body: {}", error_body);
+
+                return Err(ServerFnError::ServerError(format!(
+                    "POST request failed with status: {} and body: {}",
+                    status,
+                    error_body
+                )));
             } else {
                 logging::log!("Successfully created post.");
             }
         }
         Err(err) => {
             logging::log!("Failed to send POST request: {}", err);
-            return Err(err); // You may choose to return an error here if needed
+            return Err(ServerFnError::ServerError(err.to_string()));
         }
     };
 

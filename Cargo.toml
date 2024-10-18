@@ -9,10 +9,14 @@ crate-type = ["cdylib", "rlib"]
 [dependencies]
 axum = { version = "0.7", optional = true }
 console_error_panic_hook = "0.1"
+
 leptos = { version = "0.6", features = ["nightly"] }
 leptos_axum = { version = "0.6", optional = true }
 leptos_meta = { version = "0.6", features = ["nightly"] }
 leptos_router = { version = "0.6", features = ["nightly"] }
+
+
+
 tokio = { version = "1", features = ["rt-multi-thread"], optional = true }
 tower = { version = "0.4", optional = true }
 tower-http = { version = "0.5", features = ["fs"], optional = true }
@@ -21,7 +25,9 @@ thiserror = "1"
 tracing = { version = "0.1", optional = true }
 http = "1"
 reqwest = { version = "0.12", features = ["json"] }
-web-sys = "0.3.70"
+
+web-sys = { version = "0.3", features = ["Window", "Storage"] }
+
 serde = "1.0.210"
 
 log = "0.4"
@@ -34,6 +40,19 @@ regex = "1.10.6"
 
 #highlighting
 syntect = { version = "5.2.0", default-features = false, features = ["default-fancy"]}
+tracing-subscriber = "0.3.18"
+serde_json = "1.0.128"
+
+tower-cookies = "0.10.0"  #This fits in much better with the code figure out how it works. also no fucking js
+
+rand = "0.8"
+
+
+cookie = "0.18.1"
+wasm-cookies = "0.2.1"
+axum-extra = {version ="0.9.4" , features = ["cookie"]}
+
+time = "0.3.36"
 
 # git dependancies abandonment warning!
 #  it doesnt work JSTRASH   leptos-markdown = {git="https://github.com/rambip/leptos-markdown"}

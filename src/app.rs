@@ -188,31 +188,26 @@ fn NavBar(user_l1: ReadSignal<ActiveUser>,set_user_l1: WriteSignal<ActiveUser>) 
 // note look at using a sagnal aswess for increased responsiveness
 
 
-
-
 #[server(GetActiveUset, "/ActiveUser")]
 pub async fn get_user_details() -> Result<Option<ActiveUser>, ServerFnError> {
-    use leptos_axum::extract;
-
+    use  leptos_axum::extract;
+    // Retrieve the stored JSON string from the cookie
+    let headers: http::HeaderMap = extract().await?;
+    
     // Define the cookie key
     let cookie_key = CookieKey::Other("user");
 
     // Check for user cookie using the key
-    match cookie::cookieops::get(&cookie_key) {
-        // Handle the case where the result is Ok with a valid String
-        Ok(user_str) => {
-            // Try to deserialize the string into ActiveUser
-            match serde_json::from_str::<ActiveUser>(&user_str) {
-                Ok(loaded_user) => Ok(Some(loaded_user)), // Return the ActiveUser if deserialization succeeds
-                Err(_) => Ok(None), // Return None if deserialization fails
-            }
+    if let Ok(Some(user_str)) = cookie::cookieops::get(&cookie_key, &headers) {
+        // Deserialize and return the ActiveUser
+        if let Ok(loaded_user) = serde_json::from_str::<ActiveUser>(&user_str) {
+            return Ok(Some(loaded_user));
         }
-        // Handle the case where there is an error in fetching the cookie
-        Err(_) => Ok(None), // Any error in fetching cookie, return None
     }
+
+    // Default return if no cookie or deserialization fails
+    Ok(None)
 }
-
-
 
 
 #[component]

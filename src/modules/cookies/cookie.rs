@@ -29,6 +29,7 @@ pub enum SetCookieError {
     #[error("Invalid header value")]
     InvalidHeaderValue(InvalidHeaderValue),
 }
+
 #[derive(Error, Debug)]
 pub enum RemoveCookieError {
     #[error("Missing ResponseOptions in context")]
@@ -44,7 +45,6 @@ pub enum GetCookieError {
     #[error("Cookie not found")]
     CookieNotFound,
 }
-
 
 #[cfg(not(target_arch = "wasm32"))]
 pub mod cookieops {
@@ -64,6 +64,7 @@ pub mod cookieops {
             .build();
         cookie
     }
+
     pub fn set(
         key: &CookieKey,
         value: &str,
@@ -79,16 +80,15 @@ pub mod cookieops {
         }
     }
 
-    pub fn get(key: &CookieKey) -> Result<String, GetCookieError> {
-        if let Some(headers) = use_context::<HeaderMap>() {
-            let jar = CookieJar::from_headers(&headers);
-            if let Some(cookie) = jar.get(key.as_str()) {
-                Ok(cookie.value().to_string())
-            } else {
-                Err(GetCookieError::CookieNotFound)
-            }
-        }else{
-            Err(GetCookieError::MissingHeaderMap)
+    pub fn get<'a>(
+        key: &CookieKey<'a>,
+        headers: &HeaderMap,
+    ) -> Result<Option<String>, GetCookieError> {
+        let jar = CookieJar::from_headers(&headers);
+        if let Some(cookie) = jar.get(key.as_str()) {
+            Ok(Some(cookie.value().to_string()))
+        } else {
+            Ok(None)
         }
     }
 
@@ -135,3 +135,4 @@ pub mod cookieops {
         Ok(())
     }
 }
+

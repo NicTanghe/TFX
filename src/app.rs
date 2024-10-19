@@ -1,4 +1,5 @@
 use leptos::*;
+use leptos::ev::SubmitEvent;
 use leptos_router::*;
 
 
@@ -6,13 +7,21 @@ use leptos_router::*;
 use crate::contacts::*;
 
 
-use crate::modules::blog_posts::blog_compo::*;
-use crate::modules::blog_posts::blog_fn::*;
+use crate::modules::{
 
-use crate::modules::textfields::skrijf::*;
+    blog_posts::{
+        blog_compo::*,
+        blog_fn::*,
+    },
 
-use crate::modules::cookies::cookie;
-use crate::modules::cookies::cookie::CookieKey;
+    textfields::skrijf::*,
+
+    auth_fc::{
+        cookie,
+        auth_ta::get_access_token,
+    }
+};
+
 
 
 
@@ -105,6 +114,101 @@ fn generate_random_user() -> ActiveUser {
 }
 
 
+
+// you need to set a global loggin attempt failure somewhere not cookie based. or you could encrypt
+// the cookie
+#[component]
+fn UncontrolledComponent(set_user_l3: WriteSignal<ActiveUser>) -> impl IntoView {
+    use leptos::html::Input;
+
+    let (userName, set_userName) = create_signal("".to_string());
+    let (password, set_password) = create_signal("".to_string());
+
+    // Separate NodeRefs for each input element
+    let username_input: NodeRef<Input> = create_node_ref();
+    let password_input: NodeRef<Input> = create_node_ref();
+
+    // Fires when the form `submit` event happens
+    let on_submit = move |ev: SubmitEvent| {
+        // Stop the page from reloading
+        ev.prevent_default();
+
+        // Extract the values from both input fields
+        if let (Some(username_input_element), Some(password_input_element)) = (
+            username_input(), // Access the username input element
+            password_input(), // Access the password input element
+        ) {
+            // Update the signals with the input values
+            set_userName(username_input_element.value());
+            set_password(password_input_element.value());
+            set_user_l3.update(|user| {
+                debug!("Previous user state: {:?}", user);
+
+                // Clone the necessary data from the user
+                let mut user_clone = user.clone();
+
+                // Asynchronously fetch the access token
+                leptos::spawn_local(async move {
+                    match get_access_token(username_input_element.value().to_string(), password_input_element.value().to_string()).await {
+                        Ok(token) => {
+                            // Token retrieved successfully, update the user's token
+                            user_clone.token = token;
+                            user_clone.name = username_input_element.value().to_string();
+
+                            debug!("Updated user token: {:?}", user_clone.token);
+                        }
+                        Err(err) => {
+                            // Error handling, set the token to "Error"
+                            user_clone.token = "Error".to_string();
+                            debug!("Failed to get token, set to 'Error'. Error: {:?}", err);
+                        }
+                    }
+
+                    set_user_l3.update(|user| {
+                        *user = user_clone.clone(); // Update with the new token
+                        debug!("User state updated: {:?}", user);
+
+                        // Determine the duration based on whether the token contains "Error"
+                        let cookie_duration = if user_clone.token.contains("Error") {
+                            Duration::new(2, 0)  // Short duration for "Error" tokens
+                        } else {
+                            Duration::new(324890, 0)  // Default duration
+                        };
+
+                        // Handle cookie creation
+                        cookie::cookieops::set(
+                            &cookie::CookieKey::Other("user"),
+                            &serde_json::to_string(&user_clone).expect("Failed to serialize user"),
+                            cookie_duration
+                        );
+                    });
+                });
+            });
+        }
+    };
+
+    view! {
+        <form on:submit=on_submit>
+            <input type="text"
+                // Set the initial value for the username
+                value=userName
+                // Reference this input as username input
+                node_ref=username_input
+            />
+            <input type="password"
+                // Set the initial value for the password
+                value=password
+                // Reference this input as password input
+                node_ref=password_input
+            />
+            <button type="submit">"Submit"</button>
+        </form>
+        <p>"Name is: " {userName}</p>
+        <p>"Name is: " {password}</p>
+    }
+}
+
+
 #[component]
 fn UserElement(user_l2: ReadSignal<ActiveUser>, set_user_l2: WriteSignal<ActiveUser>) -> impl IntoView {
     view! {
@@ -112,36 +216,73 @@ fn UserElement(user_l2: ReadSignal<ActiveUser>, set_user_l2: WriteSignal<ActiveU
             {
                 move || {
                     let user = user_l2.get(); // Reactively get the current user state
-                    if user.name != "" {
+
+                    if user.token.contains("Error") {
+                        view!{
+                            <span>{format!("Wrong password or username ; {}", user.name)}</span>
+
+                            <button on:click=move |_| {
+                                debug!("Button clicked to set user to 'Bob'");
+
+                                set_user_l2.update(|user| {
+                                    debug!("Previous user state: {:?}", user);
+
+                                    // Clear and reset fields directly
+                                    user.name.clear(); // or set to a specific value, e.g., user.name = "Bob".to_string();
+                                    user.token.clear(); // or set to a specific value
+                                    user.roles.clear(); // This clears the vector of roles
+
+                                    // Set the cookie after updating the fields
+                                    cookie::cookieops::set(
+                                        &cookie::CookieKey::Other("user"),
+                                        &serde_json::to_string(&user).expect("Failed to serialize user"),
+                                        Duration::new(0, 0)
+                                    );
+
+                                    debug!("Updated user state: {:?}", user);
+                                });
+                            }>"try_again"</button>
+                        }.into_view()
+                    }
+                    else if user.name != "" {
                         // Show welcome message when user is logged in
                         view! { 
                             <span>{format!("Welcome back, {}", user.name)}</span>
+                            
+                            // make this into a widget since you use it twice
+
+                            <button on:click=move |_| {
+                                debug!("Button clicked to set user to 'Bob'");
+
+                                set_user_l2.update(|user| {
+                                    debug!("Previous user state: {:?}", user);
+
+                                    // Clear and reset fields directly
+                                    user.name.clear(); // or set to a specific value, e.g., user.name = "Bob".to_string();
+                                    user.token.clear(); // or set to a specific value
+                                    user.roles.clear(); // This clears the vector of roles
+
+                                    // Set the cookie after updating the fields
+                                    cookie::cookieops::set(
+                                        &cookie::CookieKey::Other("user"),
+                                        &serde_json::to_string(&user).expect("Failed to serialize user"),
+                                        Duration::new(0, 0)
+                                    );
+
+                                    debug!("Updated user state: {:?}", user);
+                                });
+                            }>"Log Out"</button>
                         }.into_view()
                     } else {
                         // Show login message and button when no user is logged in
                         view! { 
                             <>
                                 <span>"Please log in "</span>
-                                <button on:click=move |_| {
-                                    // Logging the click event
-                                    debug!("Button clicked to set user to 'Bob'");
+                                
+                            <UncontrolledComponent set_user_l3=set_user_l2/> 
 
-                                    set_user_l2.update(|user| {
-                                        // Log before updating the fields
-                                        debug!("Previous user state: {:?}", user);
 
-                                        // Update user details
-                                        *user = generate_random_user();
-                                        cookie::cookieops::set(
-                                            &cookie::CookieKey::Other("user"),
-                                            &serde_json::to_string(user).expect("Failed to serialize user"),
-                                            Duration::new(523457, 0)
-                                            );
 
-                                        // Log after updating
-                                        debug!("Updated user state: {:?}", user);
-                                    });
-                                }>"Click Me"</button>
                             </>
                         }.into_view()
                     }
@@ -195,7 +336,7 @@ pub async fn get_user_details() -> Result<Option<ActiveUser>, ServerFnError> {
     let headers: http::HeaderMap = extract().await?;
     
     // Define the cookie key
-    let cookie_key = CookieKey::Other("user");
+    let cookie_key = cookie::CookieKey::Other("user");
 
     // Check for user cookie using the key
     if let Ok(Some(user_str)) = cookie::cookieops::get(&cookie_key, &headers) {
@@ -243,6 +384,7 @@ pub fn App() -> impl IntoView {
                 }
                 Ok(None) => {
                     // Handle the case where there is no active user
+
                     eprintln!("No active user found");
                 }
                 Err(e) => {
@@ -369,6 +511,6 @@ fn HomePage() -> impl IntoView {
     view! {
         <div class="big_void"></div>
         <h1>"Welcome to Leptos!"</h1>
-        <button on:click=on_click>"Click Me: " {count}</button>
+        <button class="glowy_large" on:click=on_click>"Click Me: " {count}</button>
     }
 }

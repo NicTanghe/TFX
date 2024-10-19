@@ -1,7 +1,10 @@
-@import "navbar";
 @import "blog";
+@import "buttons";
 @import "globals";
+@import "navbar";
 @import "spacers";
+
+
 
 
 body {
@@ -12,50 +15,10 @@ body {
   margin: 0;
 }
 
-button {
-  border: .25em solid var(--glow-color);
-  padding: 1em 3em;
-  color: var(--glow-color);
-  font-size: 15px;
-  font-weight: bold;
-  background-color: var(--link-color);
-  border-radius: 1em;
-  outline: none;
-  box-shadow: 0 0 1em .25em var(--glow-color),
-              0 0 4em 1em var(--glow-spread-color),
-              inset 0 0 .75em .25em var(--glow-color);
-  text-shadow: 0 0 .5em var(--glow-color);
-  position: relative;
-  transition: all 0.3s;
-  &::after {
-    pointer-events: none;
-    content: "";
-    position: absolute;
-    top: 120%;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: var(--glow-spread-color);
-    filter: blur(2em);
-    opacity: .7;
-    transform: perspective(1.5em) rotateX(35deg) scale(1, .6);
-  }
-
-  &:hover {
-    color: var(--link-color);
-    background-color: var(--glow-color);
-    box-shadow: 0 0 1em .25em var(--glow-color),
-                0 0 4em 2em var(--glow-spread-color),
-                inset 0 0 .75em .25em var(--glow-color);
-  }
-
-  &:active {
-    box-shadow: 0 0 0.6em .25em var(--glow-color),
-                0 0 2.5em 2em var(--glow-spread-color),
-                inset 0 0 .5em .25em var(--glow-color);
-  }
+::selection {
+  color: hsl(124,50%,10%,100%);;
+  background: hsl(271.14, 100%, 84.51%);
 }
-
 
 
 

@@ -203,8 +203,8 @@ fn UncontrolledComponent(set_user_l3: WriteSignal<ActiveUser>) -> impl IntoView 
             />
             <button type="submit">"Submit"</button>
         </form>
-        <p>"Name is: " {userName}</p>
-        <p>"Name is: " {password}</p>
+        //<p>"Name is: " {userName}</p>
+        //<p>"Name is: " {password}</p>
     }
 }
 
@@ -220,7 +220,14 @@ fn UserElement(user_l2: ReadSignal<ActiveUser>, set_user_l2: WriteSignal<ActiveU
                     if user.token.contains("Error") {
                         view!{
                             <span>{format!("Wrong password or username ; {}", user.name)}</span>
+                            // make it only clickable every 20 seconds;
+                            // note they can still cycle the token itself so maybe put a limiter on
 
+                            // but maybe still put an update on the effect to limit how fast it
+                            // will update although you can probbably best just block ip`s from a
+                            // firewal if a single user starts spamming requests with different
+                            // tokens
+                            //
                             <button on:click=move |_| {
                                 debug!("Button clicked to set user to 'Bob'");
 
@@ -280,8 +287,6 @@ fn UserElement(user_l2: ReadSignal<ActiveUser>, set_user_l2: WriteSignal<ActiveU
                                 <span>"Please log in "</span>
                                 
                             <UncontrolledComponent set_user_l3=set_user_l2/> 
-
-
 
                             </>
                         }.into_view()

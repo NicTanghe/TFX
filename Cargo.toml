@@ -53,6 +53,7 @@ wasm-cookies = "0.2.1"
 axum-extra = {version ="0.9.4" , features = ["cookie"]}
 
 time = "0.3.36"
+gloo-timers = "0.3.0"
 
 # git dependancies abandonment warning!
 #  it doesnt work JSTRASH   leptos-markdown = {git="https://github.com/rambip/leptos-markdown"}

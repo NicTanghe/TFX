@@ -35,6 +35,8 @@ use serde::{Serialize,Deserialize};
 
 use rand::seq::SliceRandom; // For random selection from slices
 
+
+use gloo_timers::callback::Timeout;
 use wasm_cookies::cookies;
 
 
@@ -188,21 +190,39 @@ fn UncontrolledComponent(set_user_l3: WriteSignal<ActiveUser>) -> impl IntoView 
     };
 
     view! {
-        <form on:submit=on_submit>
-            <input type="text"
-                // Set the initial value for the username
-                value=userName
-                // Reference this input as username input
-                node_ref=username_input
-            />
-            <input type="password"
-                // Set the initial value for the password
-                value=password
-                // Reference this input as password input
-                node_ref=password_input
-            />
-            <button type="submit">"Submit"</button>
-        </form>
+
+        <div class="content">
+
+            <form on:submit=on_submit>
+                <input type="text"
+                    value=userName
+                    node_ref=username_input
+                />
+                <span class="span">
+                    <svg class="log_icon" style="enable-background:new 0 0 512 512" viewBox="0 0 512 512" height="20" width="50" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                            <path class="" data-original="#000000" fill="#595959" d="M256 0c-74.439 0-135 60.561-135 135s60.561 135 135 135 135-60.561 135-135S330.439 0 256 0zM423.966 358.195C387.006 320.667 338.009 300 286 300h-60c-52.008 0-101.006 20.667-137.966 58.195C51.255 395.539 31 444.833 31 497c0 8.284 6.716 15 15 15h420c8.284 0 15-6.716 15-15 0-52.167-20.255-101.461-57.034-138.805z"></path>
+                        </g>
+                    </svg>
+                </span>
+                <input type="password"
+                    value=password
+                    node_ref=password_input
+                />
+                <span class="span">
+                    <svg class="log_icon" style="enable-background:new 0 0 512 512" viewBox="0 0 512 512" height="20" width="50" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                            <path class="" data-original="#000000" fill="#595959" d="M336 192h-16v-64C320 57.406 262.594 0 192 0S64 57.406 64 128v64H48c-26.453 0-48 21.523-48 48v224c0 26.477 21.547 48 48 48h288c26.453 0 48-21.523 48-48V240c0-26.477-21.547-48-48-48zm-229.332-64c0-47.063 38.27-85.332 85.332-85.332s85.332 38.27 85.332 85.332v64H106.668zm0 0"></path>
+                        </g>
+                    </svg>
+                </span>
+                <button type="submit">Sign in</button>
+            </form>
+            //<label class="label">Password</label>
+            //<div class="forgot-pass">
+            //    <a href="#">Forgot Password?</a>
+            //</div>
+        </div>
         //<p>"Name is: " {userName}</p>
         //<p>"Name is: " {password}</p>
     }
@@ -210,11 +230,23 @@ fn UncontrolledComponent(set_user_l3: WriteSignal<ActiveUser>) -> impl IntoView 
 
 
 #[component]
-fn UserElement(user_l2: ReadSignal<ActiveUser>, set_user_l2: WriteSignal<ActiveUser>) -> impl IntoView {
+fn UserElement(
+    user_l2: ReadSignal<ActiveUser>, 
+    set_user_l2: WriteSignal<ActiveUser>, 
+    is_hiding_l: ReadSignal<u8>
+) -> impl IntoView {
+
+    // ok maybe do make this an enum although its stil less space.
+    let hide_class =move || match is_hiding_l.get() {
+        0 => "hover-element from-hiding",
+        1 => "hover-element showing",
+        2 => "hover-element to-hiding",
+        _ => "",
+    };
     view! {
-        <div class="hover-element" style="position: absolute; top: 10px; right: 10px;">
+        <div class=hide_class style="position: absolute; top: 10px; right: 10px;">
             {
-                move || {
+                move ||{
                     let user = user_l2.get(); // Reactively get the current user state
 
                     if user.token.contains("Error") {
@@ -284,8 +316,7 @@ fn UserElement(user_l2: ReadSignal<ActiveUser>, set_user_l2: WriteSignal<ActiveU
                         // Show login message and button when no user is logged in
                         view! { 
                             <>
-                                <span>"Please log in "</span>
-                                
+                    
                             <UncontrolledComponent set_user_l3=set_user_l2/> 
 
                             </>
@@ -295,7 +326,6 @@ fn UserElement(user_l2: ReadSignal<ActiveUser>, set_user_l2: WriteSignal<ActiveU
             }
         </div>
         // Reactively display the user's name
-        <div>{move || user_l2.get().name.clone()}</div>
     }
 }
 
@@ -308,26 +338,62 @@ fn NavBar(user_l1: ReadSignal<ActiveUser>,set_user_l1: WriteSignal<ActiveUser>) 
     // Get the current location (path)
     let location = use_location();
 
+    let (show_card, set_show_card) = create_signal(false); //proly dont need
+                                                           //
+    //rename to hiding state
+    let (is_hiding, set_hiding) =create_signal(2 as u8);
+    
+
     // Helper function to check if the current path starts with the link's href
     let is_active = move |base: &str| location.pathname.get().starts_with(base);
 
     view! {
 
         //all the navlinks
-        
-        <nav class="navbar">
-            <A class=move || format!("navlink{}", if is_active("/") && location.pathname.get() == "/" { " nb-active" } else { "" }) href="/">"Home"</A>
-            <A class=move || format!("navlink{}", if is_active("/contacts") { " nb-active" } else { "" }) href="/contacts">"Contacts"</A>
-            <A class=move || format!("navlink{}", if is_active("/blog") { " nb-active" } else { "" }) href="/blog">"Blog"</A>
-            <A class=move || format!("navlink{}", if is_active("/testing") { " nb-active" } else { "" }) href="/testing">"Testing"</A>
+        <div>
+            <nav class="navbar">
+                <div class = "bg">
+                    <A class=move || format!("navlink{}", if is_active("/") && location.pathname.get() == "/" { " nb-active" } else { "" }) href="/">"Home"</A>
+                    <A class=move || format!("navlink{}", if is_active("/contacts") { " nb-active" } else { "" }) href="/contacts">"Contacts"</A>
+                    <A class=move || format!("navlink{}", if is_active("/blog") { " nb-active" } else { "" }) href="/blog">"Blog"</A>
+                    <A class=move || format!("navlink{}", if is_active("/testing") { " nb-active" } else { "" }) href="/testing">"Testing"</A>
+                    <button class= "toggle_userElelemet" on:click=move |_| {
+                        match is_hiding.get() {
+                    2 => { 
+                        set_show_card.set(true); // start showing
+                        set_hiding.set(0); // transition to "from hiding" state
+                        Timeout::new(1_000,move || {
+                            set_hiding.set(1)
+                        }).forget();
+                    },
+                    1 => { 
+                        set_hiding.set(2); // initiate hiding transition
+                        // Delay hiding until animation completes
+                        Timeout::new(1_000,move || {
+                            set_show_card.set(false)
+                        }).forget();
 
-            <UserElement user_l2=user_l1 set_user_l2=set_user_l1/>
+                    },
+                    _ => {}
+                }            }>
+                        {move || match is_hiding.get() {
+                            0 => "from-hiding",
+                            1 => "showing",
+                            2 => "to-hiding",
+                            _ => "",
+                        }}
+                    </button>
 
-        </nav>
-
-        //the user login pane;
-        
-
+                    
+                    // Conditionally render `UserElement` based on `show_card`
+                    {move || if show_card.get() {
+                        view! { <UserElement user_l2=user_l1 set_user_l2=set_user_l1 is_hiding_l=is_hiding /> }.into_view()
+                    } else {
+                        view! { <></> }.into_view() // Empty view when not shown
+                    }}
+                </div>
+            </nav>
+        </div>
     }
 }
 
@@ -483,7 +549,7 @@ pub fn App() -> impl IntoView {
             <NavBar user_l1=get_user set_user_l1=set_user/>
             <Routes>
                 <Route path="/" view=HomePage />  // Home route
-                <Route path="/testing" view=move || view! { <ControlledWriting/> } />  // Correctly self-closing
+                <Route path="/testing" view=move || view! { <ControlledWriting get_user/> } />  // Correctly self-closing
 
                 <Route path="/contacts" view=move || view! { <ContactList contacts /> }>
                     <Route path="" view=|| view! { 

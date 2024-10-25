@@ -5,13 +5,14 @@ use regex::Regex;
 use scraper::{Html, Selector};
 
 use serde::{Serialize, Deserialize};
+use serde_json::Value;
 
 use crate::modules::textfields::high_comms::*;
 
 use crate::modules::blog_posts::blog_comms::{create_post_to_blog_api,CreatePostReq};
 // Assuming Omark and Cblock are also serializable
 
-
+use crate::app::ActiveUser;
 
 
 #[derive(Serialize, Deserialize, Clone)]
@@ -151,7 +152,7 @@ fn extract_code_blocks_from_html(html: &str) -> (Vec<Cblock>, Omark) {
     
 // change the button submit thing so that ControlledWriting takes a function as input for the submit button.
 #[component]
-pub fn ControlledWriting() -> impl IntoView {
+pub fn ControlledWriting(get_user: ReadSignal<ActiveUser>) -> impl IntoView {
     
     // blog title, tags
     let (area_title,set_area_title)= create_signal("enter title".to_string());
@@ -279,7 +280,15 @@ pub fn ControlledWriting() -> impl IntoView {
             </div>
         </div>
        <button on:click=move |_| {
-           logging::log!("it has pressed my presous");
+            // Assume token is a string
+
+            // Parse the string as JSON
+            let jwt: Value = serde_json::from_str(get_user.get().token.as_str()).expect("Failed to parse token");
+
+            // Extract the access_token
+            let access_token = jwt["access_token"].as_str().expect("access_token not found").to_string();
+
+            logging::log!("it has pressed my presous");
             spawn_local(async move {
                 let _ =create_post_to_blog_api(
                     CreatePostReq {
@@ -287,7 +296,8 @@ pub fn ControlledWriting() -> impl IntoView {
                         tags: split_tags(&area_tags.get()),
                         markdown: content_string.get(),
                     },
-                    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiQGIuY29tIiwiY29tcGFueSI6IkFDTUUiLCJleHAiOjIwMDAwMDAwMDAsInJvbGVzIjpbImFkbWluIiwiY29tcG9zaXRvciJdfQ.93pyn5aIo3n-SbM5I3Jc04taVz6QbDNFw8ZbeOYJjCY".to_string()
+
+                   access_token 
                 ).await; // Awaiting the async function inside the async block
             });
         }>

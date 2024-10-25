@@ -3,12 +3,16 @@
 @import "globals";
 @import "navbar";
 @import "spacers";
+@import "login";
 
-
-
-
+:root {
+  z-index: inherit;
+  z-index:5;
+}
 body {
+
   background-color: hsl(270, 15%, 5%); // Purple hue with lower saturation and darker shade
+  
   font-family: sans-serif;
   text-align: center;
   padding-top: 4em;
@@ -19,7 +23,4 @@ body {
   color: hsl(124,50%,10%,100%);;
   background: hsl(271.14, 100%, 84.51%);
 }
-
-
-
 

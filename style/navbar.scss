@@ -1,8 +1,13 @@
 nav{
+  position:fixed;
+  z-index:100;
 }
+
 .navbar{
   //add metal divider betweeb the uptions with a little lamp thing ?
   display: flex;
+  z-index:100;
+
   justify-content: center;
   gap: 1em;
   height: 2/5em;
@@ -17,10 +22,10 @@ nav{
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5),
               0px 10px 15px rgba(0, 0, 0, 1),
               0px 5px 10px rgba(0, 0, 0, 0.2);
-
 }
 
 nav a {
+  z-index: 5;
   text-decoration: none;
   font-weight: bold;
   font-size: 1.5em;
@@ -32,6 +37,7 @@ nav a {
       1px -1px 0 rgba(0, 0, 0, 0.3),
       -1px 1px 0 rgba(0, 0, 0, 0.3);
 }
+
 
 .navlink {
   color: hsl(0, 0%, 30%);
@@ -65,3 +71,6 @@ nav a {
   }
 }
 
+button.toggle_userElelemet {
+  z-index:100!important;
+}

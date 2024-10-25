@@ -62,7 +62,7 @@ button {
               0 0 2em 0.5em var(--glow-spread-color),
               inset 0 0 .4em .1em var(--glow-color);
   text-shadow: 0 0 .3em var(--glow-color);
-  position: relative;
+  // position: relative;
   transition: all 0.3s;
 }
 

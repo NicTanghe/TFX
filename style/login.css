@@ -1,4 +1,13 @@
 /* Main hover element */
+button.toggle_userElelemet {
+    all:unset;
+    position: absolute; /* Removes it from the flow */
+    right: 0.2em; /* Adjust the value to add space from the right edge */
+    top: 50%; /* Centers vertically within the navbar */
+    transform: translateY(-40%); /* Adjusts to truly center vertically */
+
+    z-index: 101; /* Higher than the ::before element */
+}
 
 .toggle_userElement button{
   /*all: unset;*/
@@ -17,7 +26,7 @@
 .hover-element {
   position: relative;
   top: 3em !important;
-  z-index: 1;
+  z-index: 4;
   right: 1px;
   width: 15em;
   height: 7em;
@@ -100,18 +109,19 @@
 .hover-element.showing {
   opacity: 1;
   background-color:hsl(0,100%,100%)!important;
-  transform: translateY(-20);
+  transform: translateY(-5);
+  z-index: 7 !important;
 }
  /*Coming from hiding (fade in + slide down) */
 .hover-element.from-hiding {
   opacity: 0;
 
   transform: translateY(-40px);
-  animation: fadeIn 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+  animation: fadeIn 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
 }
 
 @keyframes fadeIn {
-      0% {
+    0% {
         opacity: 0;
         transform: translateY(-40px);
     }
@@ -121,6 +131,7 @@
     100% {
         opacity: 1;
         transform: translateY(0); /* Ends at the intended position */
+
     }
 }
 
@@ -128,7 +139,7 @@
 .hover-element.to-hiding {
   opacity: 1;
   transform: translateY(0);
-  animation: fadeOut 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+  animation: fadeOut 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
 
 }
 

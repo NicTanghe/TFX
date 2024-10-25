@@ -358,30 +358,30 @@ fn NavBar(user_l1: ReadSignal<ActiveUser>,set_user_l1: WriteSignal<ActiveUser>) 
                     <A class=move || format!("navlink{}", if is_active("/blog") { " nb-active" } else { "" }) href="/blog">"Blog"</A>
                     <A class=move || format!("navlink{}", if is_active("/testing") { " nb-active" } else { "" }) href="/testing">"Testing"</A>
                     <button class= "toggle_userElelemet" on:click=move |_| {
-                        match is_hiding.get() {
-                    2 => { 
-                        set_show_card.set(true); // start showing
-                        set_hiding.set(0); // transition to "from hiding" state
-                        Timeout::new(1_000,move || {
-                            set_hiding.set(1)
-                        }).forget();
-                    },
-                    1 => { 
-                        set_hiding.set(2); // initiate hiding transition
-                        // Delay hiding until animation completes
-                        Timeout::new(1_000,move || {
-                            set_show_card.set(false)
-                        }).forget();
+                            match is_hiding.get() {
+                        2 => { 
+                            set_show_card.set(true); // start showing
+                            set_hiding.set(0); // transition to "from hiding" state
+                            Timeout::new(1_0000,move || {
+                                set_hiding.set(1)
+                            }).forget();
+                        },
+                        1 => { 
+                            set_hiding.set(2); // initiate hiding transition
+                            // Delay hiding until animation completes
+                            Timeout::new(1_000,move || {
+                                set_show_card.set(false)
+                            }).forget();
 
-                    },
-                    _ => {}
-                }            }>
-                        {move || match is_hiding.get() {
-                            0 => "from-hiding",
-                            1 => "showing",
-                            2 => "to-hiding",
-                            _ => "",
-                        }}
+                        },
+                        _ => {}
+                    }}>
+                        <svg class="log_icon" style="enable-background:new 0 0 512 512" viewBox="0 0 512 512" height="20" width="50" xmlns="http://www.w3.org/2000/svg">
+                        <g>
+                            <path class="" data-original="#000000" fill="#595959" d="M256 0c-74.439 0-135 60.561-135 135s60.561 135 135 135 135-60.561 135-135S330.439 0 256 0zM423.966 358.195C387.006 320.667 338.009 300 286 300h-60c-52.008 0-101.006 20.667-137.966 58.195C51.255 395.539 31 444.833 31 497c0 8.284 6.716 15 15 15h420c8.284 0 15-6.716 15-15 0-52.167-20.255-101.461-57.034-138.805z"></path> 
+                        </g>
+                    </svg>
+                        
                     </button>
 
                     

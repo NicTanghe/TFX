@@ -66,19 +66,19 @@ button {
   transition: all 0.3s;
 }
 
-button::after {
-  pointer-events: none;
-  content: "";
-  position: absolute;
-  top: 120%;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: var(--glow-spread-color);
-  filter: blur(1.5em);
-  opacity: .6;
-  transform: perspective(1.5em) rotateX(35deg) scale(1, .6);
-}
+// button::after {
+//   pointer-events: none;
+//   content: "";
+//   position: absolute;
+//   top: 120%;
+//   left: 0;
+//   height: 100%;
+//   width: 100%;
+//   background-color: var(--glow-spread-color);
+//   filter: blur(1.5em);
+//   opacity: .6;
+//   transform: perspective(1.5em) rotateX(35deg) scale(1, .6);
+// }
 
 button:hover {
   color: var(--link-color);

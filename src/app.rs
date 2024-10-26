@@ -362,14 +362,14 @@ fn NavBar(user_l1: ReadSignal<ActiveUser>,set_user_l1: WriteSignal<ActiveUser>) 
                         2 => { 
                             set_show_card.set(true); // start showing
                             set_hiding.set(0); // transition to "from hiding" state
-                            Timeout::new(1_0000,move || {
+                            Timeout::new(0_500,move || {
                                 set_hiding.set(1)
                             }).forget();
                         },
                         1 => { 
                             set_hiding.set(2); // initiate hiding transition
                             // Delay hiding until animation completes
-                            Timeout::new(1_000,move || {
+                            Timeout::new(0_500,move || {
                                 set_show_card.set(false)
                             }).forget();
 

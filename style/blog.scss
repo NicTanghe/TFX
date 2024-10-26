@@ -1,38 +1,108 @@
-@import "globals";
 
-.text_section {
-  display: flex;
-  flex-direction: row; /* Keep items aligned horizontally */
-  gap: 10px; /* Space between input and output sections */
-  justify-content: flex-start; /* Align items to the start */
-  flex-wrap: wrap; /* Allow items to wrap to the next line if needed */
+
+.decorated{
+    border-radius: 30px;
+    box-shadow: 7px 7px 15px hsl(25, 0%, 5%), -7px -7px 20px var(--light-soft);
+    background: hsl(260,4%,7%);
+    overflow-wrap: break-word;
+    padding: 2rem;
+    box-sizing: border-box;
+    margin: 0 auto;
+
 }
 
+.decorated_2{
+    background: hsl(260,4%,10%);
+    border-radius: 20px;
+  }
+
+
+.post-list-posts {
+    display: flex; /* Use flexbox to align items in a row */
+    flex-direction: row; /* Align items horizontally */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    padding: 1rem; /* Optional padding around the links */
+    gap: 1rem; /* Space between each link */
+    justify-content: center; /* Center the links horizontally */
+}
+
+.post-list-posts A {
+    text-decoration: none; /* Remove underline */
+    color: #F5F5F5; /* Default link color */
+    transition: color 0.75s ease; /* Smooth transition for hover effect */
+    white-space: nowrap; /* Prevent line breaks within links */
+}
+
+
+
+/* Ensure the visited and focus states retain the hover color */
+.post-list-posts A:focus,
+.post-list-posts A:hover {
+    
+    color: #FFD700; /* Keep the hover color */
+}
+
+/* Optional: Style for active links (if needed) */
+.post-list-posts A:active {
+    color: hsl(50.59, 100%, 50%); /* Color when the link is active */
+}
+
+
+
+.text_section {
+    display: flex;
+    flex-direction: row;
+    justify-content: center; /* Centers contents horizontally */
+    align-items: flex-start;
+    width: 100%; /* Full width of the parent */
+    max-width: 90vw; /* Limit width if needed */
+    padding: 1em;
+    gap: 1em;
+    margin: 0 auto; /* Center the entire section within the container */
+}
+
+
 .skrijver_in {
-  display: flex;
-  flex-direction: column; /* Stack text areas vertically */
-  width: 30em; /* Set width as needed */
-  padding: 2em;
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Allow it to grow within the flex container */
+    flex-basis: 30em; /* Set a starting width */
+    max-width: 47em; /* Limit its maximum width */
+    padding-left: 1em;
+    padding-right: 2.5em;
+    padding-top: 2em;
+    padding-bottom: 1em;
 }
 
 .skrijver_out {
-  text-align: left;
-  display: flex;
-  flex-direction: column; /* Ensure output content stacks vertically if needed */
-  justify-content: flex-start; /* Aligns flex items to the top */
-  align-items: flex-start; 
-  width: 47em; /* Adjust width as necessary */
-  min-height: 23em; /* Maintain minimum height */
-  border-radius: 30px;
-  background: #212121;
-  box-shadow: 15px 15px 30px rgb(25, 25, 25),
-              -15px -15px 30px var(--light-soft);
-  color: #F5F5F5; /* "Broken white" color */
-  overflow-wrap: break-word; /* Ensures text wraps inside the div */
-  padding: 2em; /* Adds some padding to prevent text touching the edges */
-  overflow: hidden; /* Ensures no overflow issues */
-  min-width: 0; /* Prevent overflow if the content is too wide */
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    max-width: 47em; /* Match width limit */
+    width: 100%;
+    min-height: 50em;
+
+
+    overflow-wrap: break-word;
+    padding: 2em;
+    box-sizing: border-box; /* Prevents padding from affecting overall width */
+    margin: 0 auto; /* Center within the flex container */
 }
+
+/* Responsive layout adjustments */
+@media (max-width: 1200px) {
+    .text_section {
+        flex-direction: column; /* Stack sections vertically on smaller screens */
+    }
+
+    .skrijver_in, .skrijver_out {
+        width: 90%; /* Full width when stacked */
+        max-width: none; /* Allow expansion */
+    }
+}
+
 
 textarea {
     width: 100%; /* Full width to fit the container */

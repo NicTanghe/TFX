@@ -88,11 +88,15 @@ button.toggle_userElelemet {
 /*U still need to get the icons to fit in the bars*/
 .hover-element input {
   /*height: 75%;*/
-  /*width: 100%;*/
-  /*padding-left: 45px;*/
+  width: 80%;
+  font: Montserrat;
+  /*text-indent: 20px;*/
+  padding-left: 40px;
+  padding-top: 5px;
+  padding-bottom: 2px;
   outline: none;
   border: none;
-  font-size: 0.85em;
+  font-size: 1em;
   background: hsl(210,10%,10%);
   color: hsl(172,2%,70%);
   border-radius: 0.3em;
@@ -100,6 +104,39 @@ button.toggle_userElelemet {
               inset -5px -5px 10px hsl(250,10%,15%);
   transition-property: opacity, transform;
 }
+
+
+.input-container {
+    position: relative; /* Set the container to relative to position children absolutely */
+    margin-bottom: 1em; /* Add some spacing between inputs */
+}
+
+.span {
+    position: absolute; /* Position icons absolutely */
+    left: 0px; /* Adjust left position as needed */
+    top: 2%; /* Center vertically */
+    transform: translateY(5); /* Correct centering */
+    pointer-events: none; /* Prevent click events on the icon */
+}
+
+.span svg {
+    height:15;
+    width:45;
+    /*transform: scale(0.8)!important; /* Scale up by 150% */
+    transform-origin: center; /* Ensures scaling happens from the center */
+}
+
+.input-container input {
+    padding-left: 40px; /* Ensure enough padding on the left for the icon */
+    /* Other input styles */
+}
+
+
+
+
+
+
+
 
 /*ANIMATIONS ON THE THING */
 
@@ -109,7 +146,7 @@ button.toggle_userElelemet {
 .hover-element.showing {
   opacity: 1;
   background-color:hsl(0,100%,100%)!important;
-  transform: translateY(-5);
+  transform: translateY(-2);
   z-index: 7 !important;
 }
  /*Coming from hiding (fade in + slide down) */

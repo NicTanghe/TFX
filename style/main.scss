@@ -1,4 +1,4 @@
-@import "blog";
+// @import "blog";
 @import "buttons";
 @import "globals";
 @import "navbar";
@@ -10,6 +10,9 @@
   z-index:5;
   color:var(--white-2);
 }
+
+
+// Maybe use Montserrat 
 body {
 
   background-color: hsl(270, 15%, 5%); // Purple hue with lower saturation and darker shade

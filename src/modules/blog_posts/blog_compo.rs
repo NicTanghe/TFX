@@ -56,30 +56,32 @@ pub fn PostInfo(posts: ReadSignal<Vec<Post>>, _set_posts: WriteSignal<Vec<Post>>
 
     view! {
         <div class= "void_small"></div>
-        <div class= "skrijver_out">
-            <h1 class="blog_title" key={id()}>
-                {
-                    move || {
-                        match post_info() {
-                            Some(post) => format!("{}", post.title),
-                            None => "Task not found.".to_string(),
+        <div class= "text_section">
+            <div class= "skrijver_out">
+                <h1 class="blog_title" key={id()}>
+                    {
+                        move || {
+                            match post_info() {
+                                Some(post) => format!("{}", post.title),
+                                None => "Task not found.".to_string(),
+                            }
                         }
                     }
-                }
-            </h1>
-            <div key={id()}>
-                {
-                    move || {
-                        match post_info() {
-                            Some(post) => view! {
-                                <div inner_html={markdown_to_html(&post.markdown)}></div>  // Render Markdown as raw HTML
-                            },
-                            None => view! {
-                                <div inner_html={markdown_to_html("### something went wrong")}></div>
-                            },
+                </h1>
+                <div key={id()}>
+                    {
+                        move || {
+                            match post_info() {
+                                Some(post) => view! {
+                                    <div inner_html={markdown_to_html(&post.markdown)}></div>  // Render Markdown as raw HTML
+                                },
+                                None => view! {
+                                    <div inner_html={markdown_to_html("### something went wrong")}></div>
+                                },
+                            }
                         }
                     }
-                }
+                </div>
             </div>
         </div>
         <Outlet/>

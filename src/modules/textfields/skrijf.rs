@@ -230,7 +230,7 @@ pub fn ControlledWriting(get_user: ReadSignal<ActiveUser>) -> impl IntoView {
     view! {
         <div class= "big_void"></div>
 
-        <div class= "text_section">
+        <div class= "text_section decorated">
             <div class= "skrijver_in">
                 <textarea class="title" rows=1 style="width:75%"
                     on:input=move |ev_title| {
@@ -279,7 +279,9 @@ pub fn ControlledWriting(get_user: ReadSignal<ActiveUser>) -> impl IntoView {
                 </Suspense>
             </div>
         </div>
-       <button on:click=move |_| {
+
+        <div class="small_void"></div>
+        <button on:click=move |_| {
             // Assume token is a string
 
             // Parse the string as JSON
@@ -303,6 +305,7 @@ pub fn ControlledWriting(get_user: ReadSignal<ActiveUser>) -> impl IntoView {
         }>
             "submit!"
         </button>
+        <div class="big_void"></div>
     }
 }
 

@@ -189,42 +189,39 @@ fn UncontrolledComponent(set_user_l3: WriteSignal<ActiveUser>) -> impl IntoView 
         }
     };
 
+    
     view! {
-
         <div class="content">
-
             <form on:submit=on_submit>
-                <input type="text"
-                    value=userName
-                    node_ref=username_input
-                />
-                <span class="span">
-                    <svg class="log_icon" style="enable-background:new 0 0 512 512" viewBox="0 0 512 512" height="20" width="50" xmlns="http://www.w3.org/2000/svg">
-                        <g>
-                            <path class="" data-original="#000000" fill="#595959" d="M256 0c-74.439 0-135 60.561-135 135s60.561 135 135 135 135-60.561 135-135S330.439 0 256 0zM423.966 358.195C387.006 320.667 338.009 300 286 300h-60c-52.008 0-101.006 20.667-137.966 58.195C51.255 395.539 31 444.833 31 497c0 8.284 6.716 15 15 15h420c8.284 0 15-6.716 15-15 0-52.167-20.255-101.461-57.034-138.805z"></path>
-                        </g>
-                    </svg>
-                </span>
-                <input type="password"
-                    value=password
-                    node_ref=password_input
-                />
-                <span class="span">
-                    <svg class="log_icon" style="enable-background:new 0 0 512 512" viewBox="0 0 512 512" height="20" width="50" xmlns="http://www.w3.org/2000/svg">
-                        <g>
-                            <path class="" data-original="#000000" fill="#595959" d="M336 192h-16v-64C320 57.406 262.594 0 192 0S64 57.406 64 128v64H48c-26.453 0-48 21.523-48 48v224c0 26.477 21.547 48 48 48h288c26.453 0 48-21.523 48-48V240c0-26.477-21.547-48-48-48zm-229.332-64c0-47.063 38.27-85.332 85.332-85.332s85.332 38.27 85.332 85.332v64H106.668zm0 0"></path>
-                        </g>
-                    </svg>
-                </span>
+                <div class="input-container">
+                    <input type="text"
+                        value=userName
+                        node_ref=username_input
+                    />
+                    <span class="span username-icon">
+                        <svg class="log_icon" style="enable-background:new 0 0 512 512" viewBox="0 0 512 512"  xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <path class="" data-original="#000000" fill="#595959" d="M256 0c-74.439 0-135 60.561-135 135s60.561 135 135 135 135-60.561 135-135S330.439 0 256 0zM423.966 358.195C387.006 320.667 338.009 300 286 300h-60c-52.008 0-101.006 20.667-137.966 58.195C51.255 395.539 31 444.833 31 497c0 8.284 6.716 15 15 15h420c8.284 0 15-6.716 15-15 0-52.167-20.255-101.461-57.034-138.805z"></path>
+                            </g>
+                        </svg>
+                    </span>
+                </div>
+                <div class="input-container">
+                    <input type="password"
+                        value=password
+                        node_ref=password_input
+                    />
+                    <span class="span password-icon">
+                        <svg class="log_icon" style="enable-background:new 0 0 512 512" viewBox="0 0 512 512"  xmlns="http://www.w3.org/2000/svg">
+                            <g>
+                                <path class="" data-original="#000000" fill="#595959" d="M336 192h-16v-64C320 57.406 262.594 0 192 0S64 57.406 64 128v64H48c-26.453 0-48 21.523-48 48v224c0 26.477 21.547 48 48 48h288c26.453 0 48-21.523 48-48V240c0-26.477-21.547-48-48-48zm-229.332-64c0-47.063 38.27-85.332 85.332-85.332s85.332 38.27 85.332 85.332v64H106.668zm0 0"></path>
+                            </g>
+                        </svg>
+                    </span>
+                </div>
                 <button type="submit">Sign in</button>
             </form>
-            //<label class="label">Password</label>
-            //<div class="forgot-pass">
-            //    <a href="#">Forgot Password?</a>
-            //</div>
         </div>
-        //<p>"Name is: " {userName}</p>
-        //<p>"Name is: " {password}</p>
     }
 }
 
@@ -244,32 +241,23 @@ fn UserElement(
         _ => "",
     };
     view! {
+       
         <div class=hide_class style="position: absolute; top: 10px; right: 10px;">
             {
-                move ||{
+                move || {
                     let user = user_l2.get(); // Reactively get the current user state
 
                     if user.token.contains("Error") {
-                        view!{
-                            <span>{format!("Wrong password or username ; {}", user.name)}</span>
-                            // make it only clickable every 20 seconds;
-                            // note they can still cycle the token itself so maybe put a limiter on
-
-                            // but maybe still put an update on the effect to limit how fast it
-                            // will update although you can probbably best just block ip`s from a
-                            // firewal if a single user starts spamming requests with different
-                            // tokens
-                            //
+                        view! {
+                            <span>{format!("Wrong password or username; {}", user.name)}</span>
                             <button on:click=move |_| {
                                 debug!("Button clicked to set user to 'Bob'");
 
                                 set_user_l2.update(|user| {
                                     debug!("Previous user state: {:?}", user);
-
-                                    // Clear and reset fields directly
-                                    user.name.clear(); // or set to a specific value, e.g., user.name = "Bob".to_string();
-                                    user.token.clear(); // or set to a specific value
-                                    user.roles.clear(); // This clears the vector of roles
+                                    user.name.clear(); 
+                                    user.token.clear(); 
+                                    user.roles.clear(); 
 
                                     // Set the cookie after updating the fields
                                     cookie::cookieops::set(
@@ -282,43 +270,38 @@ fn UserElement(
                                 });
                             }>"try_again"</button>
                         }.into_view()
-                    }
-                    else if user.name != "" {
+                    } else if user.name != "" {
                         // Show welcome message when user is logged in
                         view! { 
-                            <span>{format!("Welcome back, {}", user.name)}</span>
-                            
-                            // make this into a widget since you use it twice
+                            <div class="user-info">
+                                <span>{format!("Welcome back, {}", user.name)}</span>
+                                <div class="tiny_void"></div>
+                                <button on:click=move |_| {
+                                    debug!("Button clicked to log out");
 
-                            <button on:click=move |_| {
-                                debug!("Button clicked to set user to 'Bob'");
+                                    set_user_l2.update(|user| {
+                                        debug!("Previous user state: {:?}", user);
+                                        user.name.clear(); 
+                                        user.token.clear(); 
+                                        user.roles.clear(); 
+                                        // Set the cookie after updating the fields
+                                        cookie::cookieops::set(
+                                            &cookie::CookieKey::Other("user"),
+                                            &serde_json::to_string(&user).expect("Failed to serialize user"),
+                                            Duration::new(0, 0)
+                                        );
 
-                                set_user_l2.update(|user| {
-                                    debug!("Previous user state: {:?}", user);
-
-                                    // Clear and reset fields directly
-                                    user.name.clear(); // or set to a specific value, e.g., user.name = "Bob".to_string();
-                                    user.token.clear(); // or set to a specific value
-                                    user.roles.clear(); // This clears the vector of roles
-
-                                    // Set the cookie after updating the fields
-                                    cookie::cookieops::set(
-                                        &cookie::CookieKey::Other("user"),
-                                        &serde_json::to_string(&user).expect("Failed to serialize user"),
-                                        Duration::new(0, 0)
-                                    );
-
-                                    debug!("Updated user state: {:?}", user);
-                                });
-                            }>"Log Out"</button>
+                                        debug!("Updated user state: {:?}", user);
+                                    });
+                                }>"Log Out"</button>
+                            </div>
+                            <div class="small_void"></div>
                         }.into_view()
                     } else {
                         // Show login message and button when no user is logged in
                         view! { 
                             <>
-                    
-                            <UncontrolledComponent set_user_l3=set_user_l2/> 
-
+                                <UncontrolledComponent set_user_l3=set_user_l2/> 
                             </>
                         }.into_view()
                     }
@@ -362,7 +345,7 @@ fn NavBar(user_l1: ReadSignal<ActiveUser>,set_user_l1: WriteSignal<ActiveUser>) 
                         2 => { 
                             set_show_card.set(true); // start showing
                             set_hiding.set(0); // transition to "from hiding" state
-                            Timeout::new(1_0000,move || {
+                            Timeout::new(500,move || {
                                 set_hiding.set(1)
                             }).forget();
                         },

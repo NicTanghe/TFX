@@ -8,47 +8,81 @@
     padding: 2rem;
     box-sizing: border-box;
     margin: 0 auto;
-
+    z-index:2;
+    max-width:75rem;
 }
 
 .decorated_2{
     background: hsl(260,4%,10%);
     border-radius: 20px;
+    z-index: 20;
   }
 
 
 .post-list-posts {
-    display: flex; /* Use flexbox to align items in a row */
-    flex-direction: row; /* Align items horizontally */
-    overflow-x: auto; /* Enable horizontal scrolling */
-    padding: 1rem; /* Optional padding around the links */
-    gap: 1rem; /* Space between each link */
-    justify-content: center; /* Center the links horizontally */
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    padding: 1rem 1rem 1rem 2rem; /* Padding for spacing */
+    gap: 1rem;
+    justify-content: flex-start;
+    width: 47rem; /* Set the width of the container */
+    margin: 0 auto; /* Center the container */
+
+
+    scrollbar-width: thin; 
+    scrollbar-color: #555 transparent; 
+
+    scroll-padding-left: 2rem;
+    scroll-snap-type: none;
+
+    /* Styling for the first and last items */
+    // a:first-of-type {
+    //     background: blue;
+    //     margin-left: 0;
+    // }
+    //
+    // a:last-of-type {
+    //     background: red;
+    //     margin-right: 1rem;
+    // }
 }
 
-.post-list-posts A {
-    text-decoration: none; /* Remove underline */
-    color: #F5F5F5; /* Default link color */
-    transition: color 0.75s ease; /* Smooth transition for hover effect */
-    white-space: nowrap; /* Prevent line breaks within links */
+
+/* Customize the scrollbar */
+.post-list-posts::-webkit-scrollbar {
+    height: 8px;
 }
 
-
-
-/* Ensure the visited and focus states retain the hover color */
-.post-list-posts A:focus,
-.post-list-posts A:hover {
-    
-    color: #FFD700; /* Keep the hover color */
+.post-list-posts::-webkit-scrollbar-thumb {
+    background-color: #555;
+    border-radius: 10px;
 }
 
-/* Optional: Style for active links (if needed) */
-.post-list-posts A:active {
-    color: hsl(50.59, 100%, 50%); /* Color when the link is active */
+.post-list-posts::-webkit-scrollbar-track {
+    background: transparent;
 }
 
+.post-list-posts a {
+    font-size: 18px;
+    min-width: auto;
+    white-space: nowrap;
+    text-decoration: none;
+    color: hsl(260, 99%, 99%);
+    transition: color 0.75s ease;
 
+    scroll-snap-stop: normal;
+    scroll-snap-align: end; /* Aligns items to the end when scrolling */
+}
 
+.post-list-posts a:focus,
+.post-list-posts a:hover {
+    color: hsl(50.59, 100%, 50%);
+}
+
+.post-list-posts a:active {
+    color: hsl(50.59, 100%, 50%);
+}
 .text_section {
     display: flex;
     flex-direction: row;
@@ -67,7 +101,7 @@
     flex-direction: column;
     flex: 1; /* Allow it to grow within the flex container */
     flex-basis: 30em; /* Set a starting width */
-    max-width: 47em; /* Limit its maximum width */
+    max-width: 50em; /* Limit its maximum width */
     padding-left: 1em;
     padding-right: 2.5em;
     padding-top: 2em;
@@ -80,9 +114,9 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    max-width: 47em; /* Match width limit */
+    max-width: 50rem; /* Match width limit */
     width: 100%;
-    min-height: 50em;
+    min-height: 65em;
 
 
     overflow-wrap: break-word;
@@ -109,9 +143,9 @@ textarea {
     max-width: 100%; /* Prevent overflow */
     padding: 10px; /* Add padding for better text spacing */
     font-size: 16px; /* Comfortable font size */
-    border: 1px solid hsl(0, 0%, 40%); /* Darker border for contrast */
+     border: 0px solid hsl(0, 0%, 40%); /* Darker border for contrast */
     border-radius: 5px; /* Rounded corners */
-    background-color: hsl(0, 0%, 20%); /* Dark background color */
+    background-color: hsl(250, 7%, 15%); /* Dark background color */
     color: hsl(0, 0%, 90%); /* Light text color for readability */
     transition: border-color 0.3s ease; /* Smooth transition for border color */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
@@ -120,10 +154,9 @@ textarea {
 }
 
 textarea:focus {
-    border-color: hsl(200, 100%, 50%); /* Change border color on focus */
+    border-color: var(--glow-color); /* Change border color on focus */
     outline: none; /* Remove default outline */
-    background-color: hsl(0, 0%, 30%); /* Darker background color on focus */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add shadow on focus */
+    // box-shadow: 0 0 5px var(--glow-color); /* Add shadow on focus */
 }
 
 code{

@@ -25,78 +25,71 @@ use leptos_router::A;
 
 
 
+
+
+
+
 #[component]
 pub fn PostList(posts: ReadSignal<Vec<Post>>) -> impl IntoView {
-    // Signal to store the currently selected tag for filtering
-    let (selected_tag, set_selected_tag) = create_signal(None::<String>);
+    let (selected_tags, set_selected_tags) = create_signal(Some(Vec::<String>::new()));
 
-    // Collect unique tags once, outside the `view!` macro
-    let unique_tags = {
-        // Create a HashSet to store unique tags
-        let mut tags = std::collections::HashSet::new();
+    let unique_tags = move ||{
+        let mut tags = std::collections::BTreeSet::new();
         for post in posts.get().iter() {
             tags.extend(post.tags.iter().cloned());
         }
-        // Convert HashSet into a Vec for sorted collection of tags
         tags.into_iter().collect::<Vec<String>>()
     };
 
-    //this is absolutly great. it whould probably be less complicated and better ux if it just
-    //shows all the tags as buttons that you can toggle to filter. safe this somewhere though as you wil need it
-
-    println!("{:?}", unique_tags); // Debug: Check contents of `unique_tags`
-
     view! {
-        <div class="big_void"></div>
-        <div class="post-list">
-            <h3>"Posts"</h3>
-            
-            // Tag filter section
-            <div class="tag-filter">
-                <label>"Filter by Tag: "</label>
-                <select on:input=move |event| {
-                    // Safely cast the event target to `HtmlSelectElement` and get its value
-                    if let Some(target) = event.target() {
-                        if let Ok(select_element) = target.dyn_into::<web_sys::HtmlSelectElement>() {
-                            let selected = select_element.value();
-                            set_selected_tag.set(if selected.is_empty() { None } else { Some(selected) });
-                        }
-                    }
-                }> // ok look at being able to the list open and selecting multiple entries instead
-                   // of using buttons. although a scrollable list of toggle buttons is probably what you
-                   // want.
-                    <option value="">"All"</option>
-                    {
-                        // Generate <option> elements for each unique tag
-                        unique_tags.iter()
-                            .map(|tag| view! {
-                                <option value={tag.clone()}>{tag}</option>
-                            })
-                            .collect_view()
-                    }
-                </select>
-            </div>
+        <div class="tag-buttons">
+            {
+              move ||  unique_tags().iter().map(|tag| {
+                    let tag_clone = tag.clone();
+                    let is_selected = selected_tags.get().as_ref()
+                        .map_or(false, |tags| tags.contains(&tag_clone));
 
-            // Posts list
-            <div class="post-list-posts">
-                {
-                    move || posts.get().into_iter()
-                        .filter(|post| selected_tag.get().as_deref().map_or(true, |tag| post.tags.contains(&tag.to_string())))
-                        .map(|post| {
-                            let href = format!("/blog/{}", post.title.to_lowercase());
-                            view! {
-                                <A href={href}>{&post.title}</A>
+                    view! {
+                        <button
+                            class=if is_selected { "tags selected" } else { "tags " }
+                            on:click=move |_| {
+                                let mut selected = selected_tags.get().clone().unwrap_or_default();
+                                if selected.contains(&tag_clone) {
+                                    selected.retain(|t| t != &tag_clone); 
+                                } else {
+                                    selected.push(tag_clone.clone()); 
+                                }
+                                set_selected_tags.set(Some(selected)); 
                             }
-                        })
-                        .collect_view()
-                }
-            </div>
-
-            <Outlet/>
+                        >
+                            {tag.clone()}
+                        </button>
+                    }
+                }).collect_view()
+            }
         </div>
+
+        <div class="post-list-posts">
+            {
+                move || posts.get().into_iter()
+                    .filter(|post| {
+                        selected_tags.get().as_ref().map_or(true, |tags| {
+                            tags.is_empty() || post.tags.iter().any(|tag| tags.contains(tag))
+                        })
+                    })
+                    .map(|post| {
+                        let href = format!("/blog/{}", post.title.to_lowercase());
+                        view! {
+                            <A href={href}>{&post.title}</A>
+                        }
+                    })
+                    .collect_view()
+            }
+        </div>
+
+        <Outlet/>
     }
 }
-
 
 
 

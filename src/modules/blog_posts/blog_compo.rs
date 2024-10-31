@@ -69,14 +69,18 @@ pub fn PostList(posts: ReadSignal<Vec<Post>>) -> impl IntoView {
             }
         </div>
 
+
         <div class="post-list-posts">
             {
                 move || posts.get().into_iter()
                     .filter(|post| {
-                        selected_tags.get().as_ref().map_or(true, |tags| {
-                            tags.is_empty() || post.tags.iter().any(|tag| tags.contains(tag))
-                        })
-                    })
+                        // Ensure that all selected tags are present in post tags
+                        if let Some(tags) = selected_tags.get().as_ref() {
+                            tags.is_empty() || tags.iter().all(|tag| post.tags.contains(tag))
+                        } else {
+                            true // If no tags are selected, show all posts
+                        }
+                    }) //you can also make a switch to an ore filter
                     .map(|post| {
                         let href = format!("/blog/{}", post.title.to_lowercase());
                         view! {

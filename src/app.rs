@@ -65,58 +65,6 @@ pub fn create_contact_signal() -> (ReadSignal<Vec<String>>, WriteSignal<Vec<Stri
 struct UserSession(Option<String>);
 
 
-
-
-#[component]
-pub fn FormExample() -> impl IntoView {
-    // reactive access to URL query
-    let query = use_query_map();
-    let name = move || query().get("name").cloned().unwrap_or_default();
-    let number = move || query().get("number").cloned().unwrap_or_default();
-
-    view! {
-        // read out the URL query strings
-        <table>
-            <tr>
-                <td><code>"name"</code></td>
-                <td>{name()}</td>
-            </tr>
-            <tr>
-                <td><code>"number"</code></td>
-                <td>{number()}</td>
-            </tr>
-        </table>
-
-        // <Form/> will navigate whenever submitted
-        <h2>"Manual Submission"</h2>
-        <Form method="GET" action="">
-            // input names determine query string key
-            <input type="text" name="name" value=name()/>
-            <input type="number" name="number" value=number()/>
-            // submitting should cause a client-side
-            // navigation, not a full reload
-            <input type="submit"/>
-        </Form>
-    }
-}
-
-
-fn generate_random_user() -> ActiveUser {
-    let names = ["Alice", "Bob", "Charlie", "David", "Eve"];
-    let tokens = ["token1", "token2", "token3", "token4", "token5"];
-    let roles = vec!["admin", "editor", "viewer","horntoad"];
-
-    let mut rng = rand::thread_rng();
-    
-    ActiveUser {
-        name: names.choose(&mut rng).unwrap().to_string(),
-        token: tokens.choose(&mut rng).unwrap().to_string(),
-        roles: roles.choose_multiple(&mut rng, 2).map(|&s| s.to_string()).collect(), // Choose 2 random roles
-    }
-}
-
-
-
 // you need to set a global loggin attempt failure somewhere not cookie based. or you could encrypt
 // the cookie
 #[component]
@@ -199,22 +147,22 @@ fn UncontrolledComponent(set_user_l3: WriteSignal<ActiveUser>) -> impl IntoView 
                     node_ref=username_input
                 />
                 <span class="span">
-                    <svg class="log_icon" style="enable-background:new 0 0 512 512" viewBox="0 0 512 512" height="20" width="50" xmlns="http://www.w3.org/2000/svg">
-                        <g>
-                            <path class="" data-original="#000000" fill="#595959" d="M256 0c-74.439 0-135 60.561-135 135s60.561 135 135 135 135-60.561 135-135S330.439 0 256 0zM423.966 358.195C387.006 320.667 338.009 300 286 300h-60c-52.008 0-101.006 20.667-137.966 58.195C51.255 395.539 31 444.833 31 497c0 8.284 6.716 15 15 15h420c8.284 0 15-6.716 15-15 0-52.167-20.255-101.461-57.034-138.805z"></path>
-                        </g>
-                    </svg>
+                    //<svg class="log_icon" style="enable-background:new 0 0 512 512" viewBox="0 0 512 512" height="20" width="50" xmlns="http://www.w3.org/2000/svg">
+                    //    <g>
+                    //        <path class="" data-original="#000000" fill="#595959" d="M256 0c-74.439 0-135 60.561-135 135s60.561 135 135 135 135-60.561 135-135S330.439 0 256 0zM423.966 358.195C387.006 320.667 338.009 300 286 300h-60c-52.008 0-101.006 20.667-137.966 58.195C51.255 395.539 31 444.833 31 497c0 8.284 6.716 15 15 15h420c8.284 0 15-6.716 15-15 0-52.167-20.255-101.461-57.034-138.805z"></path>
+                    //    </g>
+                    //</svg>
                 </span>
                 <input type="password"
                     value=password
                     node_ref=password_input
                 />
                 <span class="span">
-                    <svg class="log_icon" style="enable-background:new 0 0 512 512" viewBox="0 0 512 512" height="20" width="50" xmlns="http://www.w3.org/2000/svg">
-                        <g>
-                            <path class="" data-original="#000000" fill="#595959" d="M336 192h-16v-64C320 57.406 262.594 0 192 0S64 57.406 64 128v64H48c-26.453 0-48 21.523-48 48v224c0 26.477 21.547 48 48 48h288c26.453 0 48-21.523 48-48V240c0-26.477-21.547-48-48-48zm-229.332-64c0-47.063 38.27-85.332 85.332-85.332s85.332 38.27 85.332 85.332v64H106.668zm0 0"></path>
-                        </g>
-                    </svg>
+                    //<svg class="log_icon" style="enable-background:new 0 0 512 512" viewBox="0 0 512 512" height="20" width="50" xmlns="http://www.w3.org/2000/svg">
+                    //    <g>
+                    //        <path class="" data-original="#000000" fill="#595959" d="M336 192h-16v-64C320 57.406 262.594 0 192 0S64 57.406 64 128v64H48c-26.453 0-48 21.523-48 48v224c0 26.477 21.547 48 48 48h288c26.453 0 48-21.523 48-48V240c0-26.477-21.547-48-48-48zm-229.332-64c0-47.063 38.27-85.332 85.332-85.332s85.332 38.27 85.332 85.332v64H106.668zm0 0"></path>
+                    //    </g>
+                    //</svg>
                 </span>
                 <button type="submit">Sign in</button>
             </form>

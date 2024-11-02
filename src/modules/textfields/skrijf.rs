@@ -14,6 +14,7 @@ use crate::modules::blog_posts::blog_comms::{create_post_to_blog_api,CreatePostR
 
 use crate::app::ActiveUser;
 
+use gloo_timers::callback::Timeout;
 
 #[derive(Serialize, Deserialize, Clone)]
 pub struct Cblock {
@@ -151,162 +152,170 @@ fn extract_code_blocks_from_html(html: &str) -> (Vec<Cblock>, Omark) {
 
     
 // change the button submit thing so that ControlledWriting takes a function as input for the submit button.
+
 #[component]
 pub fn ControlledWriting(get_user: ReadSignal<ActiveUser>) -> impl IntoView {
-    
-    // blog title, tags
-    let (area_title,set_area_title)= create_signal("enter title".to_string());
-    // maybe change this to an additive dropdown in the future maybe also add a change to closest match
-    
-    let (area_tags,set_area_tags)= create_signal("".to_string());
+    // Signals for the post status
+    let (post_status, set_post_status) = create_signal(None);
 
-
-    // blog content variables    
+    // Existing signals for title, tags, content, etc.
+    let (area_title, set_area_title) = create_signal("enter title".to_string());
+    let (area_tags, set_area_tags) = create_signal("".to_string());
     let (content_string, set_content_string) = create_signal("*enter content*".to_string());
-    
     let (code, set_code) = create_signal("fn main() { println!(\"Hello, world!\"); }".to_string());
+    let (final_html, set_final_html) = create_signal("".to_string());
 
-    let (final_html, set_final_html) =   create_signal("".to_string());
-
-
-
-
-
-    // Create a resource to fetch the highlighted HTML asynchronously
-    let highlighted_html = create_resource(
-        move || code.get(), // the code dependency
-        move |code| async move {
-            match send_code_for_highlighting(&code, "html").await {
-                Ok(highlighted_code) => highlighted_code,  // Return the highlighted HTML
-                Err(e) => {
-                    println!("Error highlighting code: {:?}", e);
-                    String::new() // Return an empty string or handle the error accordingly
-                }
-            }
-        },
-    );
-
-// try make a signal c if that reduces the laggio
-
-    
-    // Create a resource for extracting code blocks and modified HTML
-    let Allstat_resource = create_resource(content_string, move |content_string| {
-        let html_code = markdown::to_html(&content_string);
-        
-        // Run this in an async block
-        async move {
-            let (code_blocks, omark) = extract_code_blocks_from_html(&html_code);
-            let syndicated_blocks = highlight_code_blocks(code_blocks).await;
-            // Create and return AllStat
-            AllStat {
-                orig: omark,
-                code: syndicated_blocks,
+    // Resources for code highlighting
+    let highlighted_html = create_resource(move || code.get(), move |code| async move {
+        match send_code_for_highlighting(&code, "html").await {
+            Ok(highlighted_code) => highlighted_code,
+            Err(e) => {
+                println!("Error highlighting code: {:?}", e);
+                String::new()
             }
         }
     });
 
-    
-
-     // Create a resource for extracting code blocks and modified HTML
-    let Final_resource = create_resource(content_string, move |content_string| {
+    // Resources for markdown and HTML conversion
+    let Allstat_resource = create_resource(content_string, move |content_string| async move {
         let html_code = markdown::to_html(&content_string);
-        
-        // Run this in an async block
-        async move {
-            let (code_blocks, omark) = extract_code_blocks_from_html(&html_code);
-            let syndicated_blocks = highlight_code_blocks(code_blocks).await;
+        let (code_blocks, omark) = extract_code_blocks_from_html(&html_code);
+        let syndicated_blocks = highlight_code_blocks(code_blocks).await;
+        AllStat { orig: omark, code: syndicated_blocks }
+    });
 
-            // Create AllStat
-            let tempstat = AllStat {
-                orig: omark,
-                code: syndicated_blocks,
-            };
-            assemble_highlighted_content(tempstat).await
-        }
-    });   
-
-
+    let Final_resource = create_resource(content_string, move |content_string| async move {
+        let html_code = markdown::to_html(&content_string);
+        let (code_blocks, omark) = extract_code_blocks_from_html(&html_code);
+        let syndicated_blocks = highlight_code_blocks(code_blocks).await;
+        let tempstat = AllStat { orig: omark, code: syndicated_blocks };
+        assemble_highlighted_content(tempstat).await
+    });
 
     view! {
-        <div class= "big_void"></div>
+        <div class="big_void"></div>
 
-        <div class= "text_section decorated">
-            <div class= "skrijver_in decorated_2">
+        <div class="text_section decorated">
+            <div class="skrijver_in decorated_2">
                 <textarea class="title" rows=1 style="width:75%"
-                    on:input=move |ev_title| {
-                        // Update the signal with the current value
-                        set_area_title(event_target_value(&ev_title));
-                        // Extract code blocks and modified HTML using the `extract_code_blocks_from_html` function
-                    }
-                    // Use prop:value to bind the current value to the textarea
+                    on:input=move |ev_title| set_area_title(event_target_value(&ev_title))
                     prop:value=area_title
-                />
-                <textarea class="tags" rows=1 style="width:50% height:1em"
-                    on:input=move |ev_tags| {
-                        set_area_tags(event_target_value(&ev_tags));
-                    
-                    }
+                /> 
+                // begone spawn of darness
+                <textarea class="tags_in" rows=1 style="width:88%; height:1em"
+                    on:input=move |ev_tags| set_area_tags(event_target_value(&ev_tags))
                     prop:value=area_tags
                 />
                 <textarea class="blog_area" rows=40 style="width: 100%; max-width: 100%;"
-                    // fire an event whenever the input changes
                     on:input=move |ev| {
-                        // Update the signal with the current value
                         set_content_string(event_target_value(&ev));
                         set_code(markdown::to_html(&content_string.get()));
-                        // Extract code blocks and modified HTML using the `extract_code_blocks_from_html` function
                     }
-                    // Use prop:value to bind the current value to the textarea
                     prop:value=content_string
                 />
             </div>
             <div class="skrijver_out decorated_2">
-                <Suspense
-                    fallback=move || view! { <div inner_html ={final_html}></div> }        
-                >
-
+                <Suspense fallback=move || view! { <div inner_html={final_html}></div> }>
                     <div inner_html=move || {
-                        // Get the AllStat from the resource
                         match Final_resource.get() {
                             Some(f_html) => {
                                 set_final_html(f_html.clone());
-                                // Access the first Cblock and print its code if it exists
                                 f_html
                             },
-                            None => "".to_string(), // Handle the case where the resource isn't ready yet
+                            None => "".to_string(),
                         }
                     }></div>
                 </Suspense>
             </div>
         </div>
         <div class="small_void"></div>
-        <button on:click=move |_| {
-            // Assume token is a string
+        
+        // Submit button with overlay status handling
 
-            // Parse the string as JSON
-            let jwt: Value = serde_json::from_str(get_user.get().token.as_str()).expect("Failed to parse token");
+    <button on:click=move |_| {
+        // Log and set the initial status to processing
+        logging::log!("Submission started");
+        set_post_status(Some("processing".to_string())); 
 
-            // Extract the access_token
-            let access_token = jwt["access_token"].as_str().expect("access_token not found").to_string();
+            // Check if token is available and non-empty before parsing
+        let token = get_user.get().token;
+        if token.is_empty() {
+            logging::log!("Token is empty or missing - setting status to error.");
+            set_post_status(Some("error".to_string())); // Set to error if token is missing
+            return;
+        }
 
-            logging::log!("it has pressed my presous");
-            spawn_local(async move {
-                let _ =create_post_to_blog_api(
-                    CreatePostReq {
-                        title: area_title.get(),
-                        tags: split_tags(&area_tags.get()),
-                        markdown: content_string.get(),
-                    },
+        // Parse JWT if token is present
+        let jwt: Value = match serde_json::from_str(&token) {
+            Ok(value) => value,
+            Err(e) => {
+                logging::log!("Failed to parse token: {:?}", e);
+                set_post_status(Some("error".to_string())); // Set to error if token parsing fails
+                return;
+            }
+        };
+        let access_token = jwt["access_token"].as_str().expect("access_token not found").to_string();
 
-                   access_token 
-                ).await; // Awaiting the async function inside the async block
-            });
-        }>
-            "submit!"
-        </button>
+        // Set a timeout to check if still in `processing` after 1 second
+        let timeout_handle = Timeout::new(2_500, move || {
+            if post_status.get() == Some("processing".to_string()) {
+                logging::log!("Submission timed out - setting status to error");
+                set_post_status(Some("error".to_string())); // Set to error if still in processing
+            }
+        });
+
+        // Attempt to create post asynchronously
+        spawn_local(async move {
+            match create_post_to_blog_api(
+                CreatePostReq {
+                    title: area_title.get(),
+                    tags: split_tags(&area_tags.get()),
+                    markdown: content_string.get(),
+                },
+                access_token
+            ).await {
+                Ok(_) => {
+                    set_post_status(Some("success".to_string())); // Set success status
+                    timeout_handle.cancel(); // Cancel timeout if completed
+                },
+                Err(_) => {
+                    set_post_status(Some("error".to_string())); // Set error status
+                    timeout_handle.cancel(); // Cancel timeout on explicit error
+                },
+            };
+        });
+    }>
+        "submit!"
+    </button>
+
+        
+        // Overlay based on post status
+        //only works when logged in doesnt return error becouse the request gets stuck when not
+        //logged in so it never fails. maybe add a request auto fail timer or whatever as well as a submit
+        //
+        //
+    {
+        move || {
+            match post_status.get().as_deref() {
+                Some("success") => {
+                    // Start a timeout to clear the "success" message
+                    Timeout::new(2_000, move || set_post_status(None)).forget();
+                    view! { <div class="overlay success">"Post created successfully!"</div> }
+                },
+                Some("error") => {
+                    // Start a timeout to clear the "error" message
+                    Timeout::new(2_000, move || set_post_status(None)).forget();
+                    view! { <div class="overlay error">"Failed to create post. Try again."</div> }
+                },
+                _ => view! { <div></div> }, // Render empty div for consistency
+            }
+        }
+    }
+
         <div class="big_void"></div>
     }
 }
+
 
 #[component]
 pub fn UnControlledWriting() -> impl IntoView {

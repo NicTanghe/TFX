@@ -33,10 +33,15 @@ use leptos_router::A;
 pub fn PostList(posts: ReadSignal<Vec<Post>>) -> impl IntoView {
     let (selected_tags, set_selected_tags) = create_signal(Some(Vec::<String>::new()));
 
-    let unique_tags = move ||{
+    // Updated unique_tags function to only show combinable tags
+    let unique_tags = move || {
+        let selected = selected_tags.get().as_ref().unwrap_or(&Vec::new()).clone();
         let mut tags = std::collections::BTreeSet::new();
+
         for post in posts.get().iter() {
-            tags.extend(post.tags.iter().cloned());
+            if selected.is_empty() || selected.iter().all(|tag| post.tags.contains(tag)) {
+                tags.extend(post.tags.iter().cloned());
+            }
         }
         tags.into_iter().collect::<Vec<String>>()
     };
@@ -44,14 +49,14 @@ pub fn PostList(posts: ReadSignal<Vec<Post>>) -> impl IntoView {
     view! {
         <div class="tag-buttons">
             {
-              move ||  unique_tags().iter().map(|tag| {
+              move || unique_tags().iter().map(|tag| {
                     let tag_clone = tag.clone();
                     let is_selected = selected_tags.get().as_ref()
                         .map_or(false, |tags| tags.contains(&tag_clone));
 
                     view! {
                         <button
-                            class=if is_selected { "tags selected" } else { "tags " }
+                            class=if is_selected { "tags selected" } else { "tags" }
                             on:click=move |_| {
                                 let mut selected = selected_tags.get().clone().unwrap_or_default();
                                 if selected.contains(&tag_clone) {
@@ -59,7 +64,7 @@ pub fn PostList(posts: ReadSignal<Vec<Post>>) -> impl IntoView {
                                 } else {
                                     selected.push(tag_clone.clone()); 
                                 }
-                                set_selected_tags.set(Some(selected)); 
+                                set_selected_tags.set(Some(selected));
                             }
                         >
                             {tag.clone()}
@@ -69,18 +74,16 @@ pub fn PostList(posts: ReadSignal<Vec<Post>>) -> impl IntoView {
             }
         </div>
 
-
         <div class="post-list-posts">
             {
                 move || posts.get().into_iter()
                     .filter(|post| {
-                        // Ensure that all selected tags are present in post tags
                         if let Some(tags) = selected_tags.get().as_ref() {
                             tags.is_empty() || tags.iter().all(|tag| post.tags.contains(tag))
                         } else {
                             true // If no tags are selected, show all posts
                         }
-                    }) //you can also make a switch to an ore filter
+                    })
                     .map(|post| {
                         let href = format!("/blog/{}", post.title.to_lowercase());
                         view! {

@@ -2,6 +2,7 @@ nav{
 }
 .navbar{
   //add metal divider betweeb the uptions with a little lamp thing ?
+
   display: flex;
   z-index:100;
 
@@ -31,6 +32,11 @@ nav{
                 0px 5px 10px rgba(0, 0, 0, 0.2);
     z-index: 5; /* Ensures ::before stays behind the navbar content */
 }
+nav a:link{
+  color: hsl(0, 0%, 30%);
+
+}
+
 nav a {
   z-index: 100;
   text-decoration: none;

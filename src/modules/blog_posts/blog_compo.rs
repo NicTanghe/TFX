@@ -25,52 +25,64 @@ use leptos_router::A;
 
 
 
-
-
-
-
 #[component]
 pub fn PostList(posts: ReadSignal<Vec<Post>>) -> impl IntoView {
+
+    // Changed function to dynamically filter tags based on selected tags
     let (selected_tags, set_selected_tags) = create_signal(Some(Vec::<String>::new()));
 
-    // Updated unique_tags function to only show combinable tags
+    // Changed function to dynamically filter tags based on selected tags
+
+    // Define the closures without calling them immediately
     let unique_tags = move || {
         let selected = selected_tags.get().as_ref().unwrap_or(&Vec::new()).clone();
         let mut tags = std::collections::BTreeSet::new();
+        let mut filtered_out_tags = std::collections::BTreeSet::new();
 
         for post in posts.get().iter() {
             if selected.is_empty() || selected.iter().all(|tag| post.tags.contains(tag)) {
                 tags.extend(post.tags.iter().cloned());
+            } else {
+                filtered_out_tags.extend(post.tags.iter().cloned());
             }
         }
-        tags.into_iter().collect::<Vec<String>>()
+
+        // Return the values without collecting into Vec<String> just yet
+        (
+            tags.into_iter().collect::<Vec<String>>(),
+            filtered_out_tags.into_iter().collect::<Vec<String>>(),
+        )
     };
 
+    // todo these tag buttons really need an alignment animation instead of just shifting around
     view! {
         <div class="tag-buttons">
             {
-              move || unique_tags().iter().map(|tag| {
-                    let tag_clone = tag.clone();
-                    let is_selected = selected_tags.get().as_ref()
-                        .map_or(false, |tags| tags.contains(&tag_clone));
+                move || {
+                    let (unique, disappearing) = unique_tags(); // Call the outer closure here
+                    unique.iter().map(|tag| {
+                        let tag_clone = tag.clone();
+                        let is_selected = selected_tags.get().as_ref()
+                            .map_or(false, |tags| tags.contains(&tag_clone));
 
-                    view! {
-                        <button
-                            class=if is_selected { "tags selected" } else { "tags" }
-                            on:click=move |_| {
-                                let mut selected = selected_tags.get().clone().unwrap_or_default();
-                                if selected.contains(&tag_clone) {
-                                    selected.retain(|t| t != &tag_clone); 
-                                } else {
-                                    selected.push(tag_clone.clone()); 
+                        view! {
+                            <button
+                                class=if is_selected { "tags selected" } else { "tags tags-hidden" }
+                                on:click=move |_| {
+                                    let mut selected = selected_tags.get().clone().unwrap_or_default();
+                                    if selected.contains(&tag_clone) {
+                                        selected.retain(|t| t != &tag_clone);
+                                    } else {
+                                        selected.push(tag_clone.clone());
+                                    }
+                                    set_selected_tags.set(Some(selected));
                                 }
-                                set_selected_tags.set(Some(selected));
-                            }
-                        >
-                            {tag.clone()}
-                        </button>
-                    }
-                }).collect_view()
+                            >
+                                {tag.clone()}
+                            </button>
+                        }
+                    }).collect_view()
+                }
             }
         </div>
 
@@ -97,6 +109,7 @@ pub fn PostList(posts: ReadSignal<Vec<Post>>) -> impl IntoView {
         <Outlet/>
     }
 }
+
 
 
 

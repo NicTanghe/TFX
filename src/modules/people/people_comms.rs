@@ -1,7 +1,9 @@
 use leptos::{
     server,
     logging,
-    ServerFnError
+    ServerFnError,
+    ReadSignal,
+    SignalGet
 };
 use serde::{Serialize,Deserialize};
 
@@ -21,14 +23,17 @@ pub struct Person {
 struct ApiResponse {
     data: Vec<Person>,
 }
+use crate::app::ActiveUser;
 
 // ok so this thing seems to just return an empt vector.
 // so then why are there 8 unknowns wtf.
 
 
 // this updates the current vector and returns the old value if there is an error.
-pub async fn get_people_vector(value: Vec<Person>, jwt_l1:String) -> Vec<Person> {
-    match get_people_from_api(jwt_l1).await {
+pub async fn get_people_vector(value: Vec<Person>, get_user: ReadSignal<ActiveUser>) -> Vec<Person> {
+    let access_token = get_user.get().token;
+
+    match get_people_from_api(access_token).await {
         Ok(fetched_people) => {
             logging::log!("Fetched people:\n{:#?}", fetched_people);
             fetched_people
@@ -48,13 +53,13 @@ pub async fn get_people_from_api(jwt_l2: String) -> Result<Vec<Person>, ServerFn
 
     // Initialize reqwest client
     let client = reqwest::Client::new();
-
+    logging::log!("!!! transmitteed JWT: {}", jwt_l2);
     // Send request with Authorization header
     let response = match client
         .get(url)
         .header("Content-Type", "application/json")
 
-        .header("Authorization", format!("Bearer {}", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0aW5nIiwiY29tcGFueSI6IkV4YW1wbGUgQ29ycCIsImV4cCI6MTczMjIyODQ5NSwicm9sZXMiOlsidXNlciJdfQ.-Q-r1JD8j3xXLnBAbfC6PNTs9O2PGPpJddGSwRUHztk"))
+        .header("Authorization", format!("Bearer {}", jwt_l2))
 
 
         .send()

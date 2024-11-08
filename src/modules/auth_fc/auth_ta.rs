@@ -84,6 +84,7 @@ pub async fn get_access_token(client_id: String, client_secret: String) -> Resul
         }
     };
 
+        let access_token = json_response["access_token"].as_str().expect("access_token not found").to_string();
      //Return the access token from the response
-    Ok(json_response.to_string())
+    Ok(access_token.to_string())
 }

@@ -229,23 +229,7 @@ pub fn ControlledWriting(get_user: ReadSignal<ActiveUser>) -> impl IntoView {
         set_post_status(Some("processing".to_string())); 
 
             // Check if token is available and non-empty before parsing
-        let token = get_user.get().token;
-        if token.is_empty() {
-            logging::log!("Token is empty or missing - setting status to error.");
-            set_post_status(Some("error".to_string())); // Set to error if token is missing
-            return;
-        }
-
-        // Parse JWT if token is present
-        let jwt: Value = match serde_json::from_str(&token) {
-            Ok(value) => value,
-            Err(e) => {
-                logging::log!("Failed to parse token: {:?}", e);
-                set_post_status(Some("error".to_string())); // Set to error if token parsing fails
-                return;
-            }
-        };
-        let access_token = jwt["access_token"].as_str().expect("access_token not found").to_string();
+        let access_token = get_user.get().token;
 
         // Set a timeout to check if still in `processing` after 1 second
         let timeout_handle = Timeout::new(2_500, move || {

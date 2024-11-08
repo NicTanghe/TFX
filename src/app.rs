@@ -375,55 +375,57 @@ pub fn App() -> impl IntoView {
 
     let (get_user,set_user) = create_signal(
        ActiveUser{
-           name:"".to_string(),
-           token:"".to_string(),
-           roles:["".to_string()].to_vec()
+           name:"trouble".to_string(),
+           token:"NANNI !!!".to_string(),
+           roles:["error".to_string()].to_vec()
        }
         );
+
 
     let async_UserCookieData = create_resource(
         move || (),  // Pass an empty tuple as a dependency to ensure it runs once
         move |_| async move {
             debug!("RESOURCE: loading data from user Cookies");
-           get_user_details().await
+            let bob = get_user_details().await;
+            
+            match bob {
+                Ok(Some(active_user)) => {
+                    print!("what is this : {}", active_user.name);
+                    Some(active_user) // return the ActiveUser if available
+                },
+                Ok(None) => {
+                    print!("No active user found.");
+                    Some(get_user.get())
+                },
+                Err(e) => {
+                    print!("Error retrieving user details: {:?}", e);
+                    Some(get_user.get())
+                },
+            }
         },
     );
 
 
+
     // Update user details
+
     create_effect(move |_| {
         if let Some(fetched_usercookie) = async_UserCookieData.get() {
-            // Properly handle the Result<Option<ActiveUser>, leptos::ServerFnError>
             match fetched_usercookie {
-                Ok(Some(active_user)) => {
+                Some(active_user) => {
                     // Proceed with ActiveUser
-                    set_user(active_user);
+                    set_user(active_user.clone());
+                    logging::log!("{}",active_user.name);
                 }
-                Ok(None) => {
+                None => {
                     // Handle the case where there is no active user
-
                     eprintln!("No active user found");
                 }
-                Err(e) => {
-                    // Handle the error case from leptos::ServerFnError
-                    eprintln!("Error fetching user cookie: {:?}", e);
-                }
             }
+        } else {
+            eprintln!("Error fetching user cookie: No data available");
         }
     });
-
-
-
-    let jwt: serde_json::Value = match serde_json::from_str(&get_user.get().token) {
-        Ok(token) => token,
-        Err(_) => {
-            // Set to an invalid or default token value when deserialization fails
-            serde_json::json!({"access_token": "NANNI !!"})
-
-        }
-    };
-
-    let access_token = jwt["access_token"].as_str().expect("access_token not found").to_string();
 
 
 
@@ -478,13 +480,14 @@ pub fn App() -> impl IntoView {
     let async_data_people = create_resource(
         move || (), // Pass an empty tuple as a dependency to ensure it runs once
         move |_| {
-            let atoken = access_token.clone();
+            let atoken = get_user().token.clone();
+
             async move {
                 logging::log!("RESOURCE: loading data from API");
 
                 // Await the result of the API call and handle the response
-                let people_vector = get_people_vector(people.get(), atoken.clone()).await;
-                logging::log!("{}",atoken);
+                let people_vector = get_people_vector(people.get(), get_user).await;
+                logging::log!(" !!! passed user.token:{} \n !!! other stuf: {}",atoken, get_user().name);
                 people_vector // omg you did not return it you fucking idiot
             }
         }
@@ -498,8 +501,8 @@ pub fn App() -> impl IntoView {
         }
     });
 
-
-    //provide_meta_context();
+    //this is some sord of hard required leptos thing
+    provide_meta_context();
 
     view! {
         <Stylesheet id="leptos" href="/pkg/werk.css" />

@@ -25,49 +25,76 @@ use leptos_router::A;
 
 
 
-#[component]
-pub fn PostList(posts: ReadSignal<Vec<Post>>) -> impl IntoView {
 
-    // Changed function to dynamically filter tags based on selected tags
+
+#[component]
+
+// since you are an idiot I`d  also like the buttons position to be remembered so that they don`t
+// all jump to left and then stuf disapears on the right but they disapear in the correct place.
+// and dont jump to the left.
+
+pub fn PostList(posts: ReadSignal<Vec<Post>>) -> impl IntoView {
+    use leptos_router::*;
+     
     let (selected_tags, set_selected_tags) = create_signal(Some(Vec::<String>::new()));
 
-    // Changed function to dynamically filter tags based on selected tags
 
-    // Define the closures without calling them immediately
-    let unique_tags = move || {
+    // Signals to track previous unique tags and disappearing tags
+    let (previous_unique_tags, set_previous_unique_tags) = create_signal(Some(Vec::<String>::new()));
+    let (disappearing_tags, set_disappearing_tags) = create_signal(Some(Vec::<String>::new()));
+
+    // Closure to compute current unique and disappearing tags
+    let compute_tags = move || {
         let selected = selected_tags.get().as_ref().unwrap_or(&Vec::new()).clone();
-        let mut tags = std::collections::BTreeSet::new();
-        let mut filtered_out_tags = std::collections::BTreeSet::new();
+        let mut current_unique = std::collections::BTreeSet::new();
 
         for post in posts.get().iter() {
             if selected.is_empty() || selected.iter().all(|tag| post.tags.contains(tag)) {
-                tags.extend(post.tags.iter().cloned());
-            } else {
-                filtered_out_tags.extend(post.tags.iter().cloned());
+                current_unique.extend(post.tags.iter().cloned());
             }
         }
 
-        // Return the values without collecting into Vec<String> just yet
-        (
-            tags.into_iter().collect::<Vec<String>>(),
-            filtered_out_tags.into_iter().collect::<Vec<String>>(),
-        )
+        // Get the current unique tags as a Vec<String>
+        let current_unique: Vec<String> = current_unique.into_iter().collect();
+
+        // Bind `previous` to avoid dropping temporary Vec
+        let previous_tags = previous_unique_tags.get();
+        let lifebringer = Vec::new();
+        let previous = previous_tags.as_ref().unwrap_or(&lifebringer);
+        
+        let disappearing = previous
+            .iter()
+            .filter(|tag| !current_unique.contains(tag))
+            .cloned()
+            .collect::<Vec<String>>();
+
+        // Update the signals
+        set_previous_unique_tags.set(Some(current_unique.clone()));
+        set_disappearing_tags.set(Some(disappearing));
+
+        current_unique
     };
 
-    // todo these tag buttons really need an alignment animation instead of just shifting around
+    // Render view
     view! {
         <div class="tag-buttons">
             {
                 move || {
-                    let (unique, disappearing) = unique_tags(); // Call the outer closure here
-                    unique.iter().map(|tag| {
+                    let unique = compute_tags(); // Update unique and disappearing tags
+                    let disappearing_tags_list = disappearing_tags.get();
+                    
+                    let binding = Vec::new();
+                    let disappearing = disappearing_tags_list.as_ref().unwrap_or(&binding);
+
+                    // Render unique tags as buttons
+                    let unique_buttons = unique.iter().map(|tag| {
                         let tag_clone = tag.clone();
                         let is_selected = selected_tags.get().as_ref()
                             .map_or(false, |tags| tags.contains(&tag_clone));
 
                         view! {
                             <button
-                                class=if is_selected { "tags selected" } else { "tags tags-hidden" }
+                                class=if is_selected { "tags selected" } else { "tags not-selected" }
                                 on:click=move |_| {
                                     let mut selected = selected_tags.get().clone().unwrap_or_default();
                                     if selected.contains(&tag_clone) {
@@ -81,12 +108,36 @@ pub fn PostList(posts: ReadSignal<Vec<Post>>) -> impl IntoView {
                                 {tag.clone()}
                             </button>
                         }
-                    }).collect_view()
+                    });
+
+                    // Render disappearing tags as buttons with shrinking animation
+                    let disappearing_buttons = disappearing.iter().map(|tag| {
+                        let tag_clone = tag.clone();
+
+                        view! {
+                            <button
+                                class="tags disappearing"
+                                on:click=move |_| {
+                                    log::info!("Disappearing tag clicked: {:?}", tag_clone);
+                                }
+                            >
+                                {tag.clone()}
+                            </button>
+                        }
+                    });
+
+                    // Combine unique and disappearing buttons for display
+                    unique_buttons.chain(disappearing_buttons).collect_view()
                 }
             }
         </div>
 
+
+
+
         <div class="post-list-posts">
+        // The first entry with a custom class logic
+            <A  href="/blog/newpost">"+"</A> // not a tittle this is just the first entry
             {
                 move || posts.get().into_iter()
                     .filter(|post| {
@@ -127,7 +178,7 @@ pub fn PostInfo(posts: ReadSignal<Vec<Post>>, _set_posts: WriteSignal<Vec<Post>>
     };
 
     view! {
-        <div class= "void_small"></div>
+        //<div class= "small_void_void"></div>
         <div class= "text_section">
             <div class= "skrijver_out decorated">
                 <h1 class="blog_title" key={id()}>
@@ -156,6 +207,7 @@ pub fn PostInfo(posts: ReadSignal<Vec<Post>>, _set_posts: WriteSignal<Vec<Post>>
                 </div>
             </div>
         </div>
+        <div class="big_void"></div>
         <Outlet/>
     }
 }

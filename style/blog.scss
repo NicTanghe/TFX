@@ -159,9 +159,7 @@ textarea:focus {
     // box-shadow: 0 0 5px var(--glow-color); /* Add shadow on focus */
 }
 
-code{
 
-}
 pre {
   padding: 2.5em; /* Add padding to pre */
   border-radius:1em;
@@ -172,10 +170,7 @@ pre {
   text-decoration: none;
 }
 
-p a:link {
-  color: hsl(200,100%,35%);
-  text-decoration:none;
-}
+
 
 img {
     max-width: 100%;
@@ -207,47 +202,93 @@ div{
   text-decoration: none;
 }
 
-
-// style this like a wako wako keep it simple
-
+/* Basic styles for tags */
 .tags {
+  transform-origin: left;
   all: unset;
-  color: hsl(280,7,50);
-  margin:0.7rem;
+  color: hsl(280, 7%, 50%);
+  margin: 0.7rem;
+  display: inline-block; /* Ensures margin is applied properly */
+  flex-shrink: 0; /* Prevent unwanted shrinking of other tags */ 
 }
 
 .tags:hover {
-  all: unset;
-  margin:0.7rem;
-  color: hsl(280,7,60);
-  // color: var(--link-color);
-  // background-color: var(--glow-color);
-  // box-shadow: 0 0 0.8em .15em var(--glow-color),
-  //             0 0 2.5em 1em var(--glow-spread-color),
-  //             inset 0 0 .6em .15em var(--glow-color);
+  box-shadow: unset;
+  background-color: unset;
+  color: hsl(280, 7%, 60%);
 }
 
 .tags:active {
-  all: unset;
-  margin:0.7rem;
-  color: hsl(280,7,60);
-  // box-shadow: 0 0 0.4em .1em var(--glow-color),
-  //             0 0 1.5em 1em var(--glow-spread-color),
-}     
-
+  color: hsl(280, 7%, 60%);
+}
 
 .tags.selected {
-  all: unset; /* Ensure unset properties first */
-  color: hsl(280, 7, 60);
-  background-color: hsl(280, 80, 10);
-  padding: 0.2rem 0.5rem; /* Space around text */
-  border-radius: 0.5rem; /* Rounding for corners */
-  margin: 0.2rem; /* Spacing outside element */
-  display: inline-block; /* Makes background fit rounded corners */
+  color: hsl(280, 7%, 60%);
+  background-color: hsl(280, 80%, 10%);
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.5rem;
+  margin: 0.2rem;
+  display: inline-block;
+}
+
+
+// ITS STIL NOT FIXED
+/* Shrink and remove disappearing tags */
+@keyframes shrinkHorizontally {
+    0% {
+
+        transform: scaleX(100%);
+        width:auto; 
+        max-width:100%
+    }
+    100% {
+        transform: scaleX(0%);
+        opacity: 0;
+        margin: 0; /* Remove margin to prevent spacing */
+        max-width: 0%; /* Collapse width to 0 to ensure no space is left */
+        padding: 0; /* Remove padding to collapse fully */
+        visibility: hidden;
+    }
+}
+
+
+@keyframes growHorizontally {
+    0% {
+        // transform: scaleX(100%);
+        opacity: 0;
+        margin: 0; /* Remove margin to prevent spacing */
+        max-width: 0%; /* Collapse width to 0 to ensure no space is left */
+        padding: 0; /* Remove padding to collapse fully */
+        visibility: hidden;
+    }
+    100% {
+        // transform: scaleX(0%);
+        opacity: 0;
+        margin: 0; /* Remove margin to prevent spacing */
+        max-width: 0%; /* Collapse width to 0 to ensure no space is left */
+        padding: 0; /* Remove padding to collapse fully */
+        visibility: hidden;
+    }
 }
 
 
 
+
+.tags.disappearing {
+    animation: shrinkHorizontally 1s ease forwards;
+    transform-origin: left;
+    transition: margin 700ms;
+    min-width: 0;
+    white-space: nowrap;
+    opacity: 0;
+}
+
+// #disappearing {
+//   width: 0; 
+//   overflow: hidden; 
+//   transition: width 0.66s ease-out, opacity 0.66s ease-out; 
+//   opacity: 0; 
+// }
 
 /* Base styling */
 .overlay {
@@ -261,6 +302,7 @@ div{
   z-index: 1000;
   border-radius: 0.5rem;
   animation: errorAnim 2s ease forwards;
+
 }
 
 /* Combined bounce-in and fade-out animation */

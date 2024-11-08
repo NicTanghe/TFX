@@ -84,6 +84,6 @@ pub async fn get_access_token(client_id: String, client_secret: String) -> Resul
         }
     };
 
-    // Return the access token from the response
+     //Return the access token from the response
     Ok(json_response.to_string())
 }

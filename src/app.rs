@@ -3,15 +3,16 @@ use leptos::ev::SubmitEvent;
 use leptos_router::*;
 
 
-
-use crate::contacts::*;
-
-
 use crate::modules::{
 
     blog_posts::{
         blog_compo::*,
         blog_fn::*,
+    },
+
+    people::{
+        people_comms::*,
+        people_main::*,
     },
 
     textfields::skrijf::*,
@@ -21,9 +22,6 @@ use crate::modules::{
         auth_ta::get_access_token,
     }
 };
-
-
-
 
 use leptos_meta::*;
 
@@ -303,8 +301,9 @@ fn NavBar(user_l1: ReadSignal<ActiveUser>,set_user_l1: WriteSignal<ActiveUser>) 
                 <div class = "bg">
                     <A class=move || format!("navlink{}", if is_active("/") && location.pathname.get() == "/" { " nb-active" } else { "" }) href="/">"Home"</A>
                     <A class=move || format!("navlink{}", if is_active("/contacts") { " nb-active" } else { "" }) href="/contacts">"Contacts"</A>
+                    <A class=move || format!("navlink{}", if is_active("/people") { " nb-active" } else { "" }) href="/people">"people"</A>
                     <A class=move || format!("navlink{}", if is_active("/blog") { " nb-active" } else { "" }) href="/blog">"Blog"</A>
-                    <A class=move || format!("navlink{}", if is_active("/testing") { " nb-active" } else { "" }) href="/testing">"Testing"</A>
+                    //<A class=move || format!("navlink{}", if is_active("/testing") { " nb-active" } else { "" }) href="/testing">"Testing"</A>
                     <button class= "toggle_userElelemet" on:click=move |_| {
                             match is_hiding.get() {
                         2 => { 
@@ -324,7 +323,7 @@ fn NavBar(user_l1: ReadSignal<ActiveUser>,set_user_l1: WriteSignal<ActiveUser>) 
                         },
                         _ => {}
                     }}>
-                        <svg class="log_icon" style="enable-background:new 0 0 512 512" viewBox="0 0 512 512" height="20" width="50" xmlns="http://www.w3.org/2000/svg">
+                       <svg class="log_icon" style="enable-background:new 0 0 512 512" viewBox="0 0 512 512" height="20" width="50" xmlns="http://www.w3.org/2000/svg">
                         <g>
                             <path class="" data-original="#000000" fill="#595959" d="M256 0c-74.439 0-135 60.561-135 135s60.561 135 135 135 135-60.561 135-135S330.439 0 256 0zM423.966 358.195C387.006 320.667 338.009 300 286 300h-60c-52.008 0-101.006 20.667-137.966 58.195C51.255 395.539 31 444.833 31 497c0 8.284 6.716 15 15 15h420c8.284 0 15-6.716 15-15 0-52.167-20.255-101.461-57.034-138.805z"></path> 
                         </g>
@@ -372,7 +371,6 @@ pub async fn get_user_details() -> Result<Option<ActiveUser>, ServerFnError> {
 
 #[component]
 pub fn App() -> impl IntoView {
-   
 
 
     let (get_user,set_user) = create_signal(
@@ -383,11 +381,11 @@ pub fn App() -> impl IntoView {
        }
         );
 
-        let async_UserCookieData = create_resource(
+    let async_UserCookieData = create_resource(
         move || (),  // Pass an empty tuple as a dependency to ensure it runs once
         move |_| async move {
             debug!("RESOURCE: loading data from user Cookies");
-            get_user_details().await
+           get_user_details().await
         },
     );
 
@@ -414,45 +412,27 @@ pub fn App() -> impl IntoView {
         }
     });
 
-    //match get_user_details() {
-    //    Some(loaded_user) => {
-    //        // If the user details are successfully loaded, update the signal
-    //        set_user(loaded_user);
-    //        println!("User updated successfully!");
-    //
-    //    }
-    //    None => {
-    //        println!("Failed to load user details.");
-    //    }
-    //}
 
 
-    //Ok these don`t trow errors but cause a thread panic 
+    let jwt: serde_json::Value = match serde_json::from_str(&get_user.get().token) {
+        Ok(token) => token,
+        Err(_) => {
+            // Set to an invalid or default token value when deserialization fails
+            serde_json::json!({"access_token": "NANNI !!"})
 
+        }
+    };
 
-    //if let Some(storage) = window().unwrap().local_storage().unwrap() {
-    //    if let Ok(Some(user_data)) = storage.get_item("user_data") {
-    //        // Deserialize the JSON string into the ActiveUser struct
-    //        if let Ok(user) = serde_json::from_str::<ActiveUser>(&user_data) {
-    //            set_user.set(user); // Restore the user state
-    //        }
-    //    }
-    //}
-
-    //create_effect(move |_| {
-    //  // immediately prints "Value: 0" and subscribes to `a`
-    //  if let Some(storage) = window().unwrap().local_storage().unwrap() {
-    //    let user = get_user.get();
-    //    let user_data = serde_json::to_string(&user).unwrap();
-    //    storage.set_item("user_data", &user_data).unwrap();
-    //    }
-    //});
-    //
+    let access_token = jwt["access_token"].as_str().expect("access_token not found").to_string();
 
 
 
+    //_____________
+    //__ posts ____
+    //_____________
 
-    let (contacts, _set_contacts) = create_contact_signal();
+
+
     let (posts, set_posts) = create_signal(vec![
         Post {
             post_id: 0 as i32,
@@ -463,7 +443,7 @@ pub fn App() -> impl IntoView {
     ]);
 
     // Create a resource that fetches posts from the API
-    let async_data = create_resource(
+    let async_data_posts = create_resource(
         move || (),  // Pass an empty tuple as a dependency to ensure it runs once
         move |_| async move {
             logging::log!("RESOURCE: loading data from API");
@@ -474,15 +454,52 @@ pub fn App() -> impl IntoView {
 
     // Update the posts signal when data is loaded
     create_effect(move |_| {
-        if let Some(fetched_posts) = async_data.get() {
+        if let Some(fetched_posts) = async_data_posts.get() {
             set_posts(fetched_posts);
         }
     });
-    
+   
+    //_____________
+    //__ people ___
+    //_____________
 
-    //add_cookie("presousing".to_string());
 
-    provide_meta_context();
+
+    let (people, set_people) = create_signal(vec![
+        Person {
+            id: 0 as i32,
+            name: Some("server not talked to".to_string()),
+            description: Some("# server unreachable".to_string()),
+            contact_info: None,
+            profile_pic: None
+        },
+    ]);
+
+    let async_data_people = create_resource(
+        move || (), // Pass an empty tuple as a dependency to ensure it runs once
+        move |_| {
+            let atoken = access_token.clone();
+            async move {
+                logging::log!("RESOURCE: loading data from API");
+
+                // Await the result of the API call and handle the response
+                let people_vector = get_people_vector(people.get(), atoken.clone()).await;
+                logging::log!("{}",atoken);
+                people_vector // omg you did not return it you fucking idiot
+            }
+        }
+    );
+
+    //ok next up try it in the function itself don`t make no sence that it doesn`t work here.
+    // Update the posts signal when data is loaded
+    create_effect(move |_| {
+        if let Some(fetched_people) = async_data_people.get() {
+            set_people(fetched_people);
+        }
+    });
+
+
+    //provide_meta_context();
 
     view! {
         <Stylesheet id="leptos" href="/pkg/werk.css" />
@@ -498,16 +515,13 @@ pub fn App() -> impl IntoView {
             <Routes>
                 <Route path="/" view=HomePage />  // Home route
                 <Route path="/testing" view=move || view! { <ControlledWriting get_user/> } />  // Correctly self-closing
+                <Route path="/people" view=move || view! { <PeopleList people /> }>
+                </Route>
 
-                <Route path="/contacts" view=move || view! { <ContactList contacts /> }>
-                    <Route path="" view=|| view! { 
-                        <p>"Select a contact to view more info."</p> 
-                    } />  // Correctly self-closing
-                    <Route path=":id" view=move || view! { <ContactInfo contacts /> }>
-                        <Route path="" view=|| view! { 
-                            <p>"Select a contact to view more info."</p> 
-                        } />  // Correctly self-closing
-                    </Route>
+                // a bit wonky but not as spaghetty as passing get_user 3 times 
+                // we have to pass it annyway to add the + conditionally
+                <Route path="/blog" view=move || view! { <PostList posts={posts} /> }>   
+                    <Route path="/newpost" view=move || view! { <ControlledWriting get_user/> } /> 
                 </Route>
 
                 // Uncomment when needed
@@ -516,6 +530,11 @@ pub fn App() -> impl IntoView {
                                                  //
             </Routes>  // Closing the Routes component
         </Router>  // Closing the Router component
+                   //
+        <footer>
+            <p>Copyright &copy; TFX 2024. All Rights Reserved.</p>
+        </footer>
+
     }
 
 }

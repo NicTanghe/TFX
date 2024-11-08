@@ -165,16 +165,7 @@ pub fn ControlledWriting(get_user: ReadSignal<ActiveUser>) -> impl IntoView {
     let (code, set_code) = create_signal("fn main() { println!(\"Hello, world!\"); }".to_string());
     let (final_html, set_final_html) = create_signal("".to_string());
 
-    // Resources for code highlighting
-    let highlighted_html = create_resource(move || code.get(), move |code| async move {
-        match send_code_for_highlighting(&code, "html").await {
-            Ok(highlighted_code) => highlighted_code,
-            Err(e) => {
-                println!("Error highlighting code: {:?}", e);
-                String::new()
-            }
-        }
-    });
+
 
     // Resources for markdown and HTML conversion
     let Allstat_resource = create_resource(content_string, move |content_string| async move {

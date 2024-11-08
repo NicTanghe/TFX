@@ -18,6 +18,7 @@ body {
   text-align: center;
   padding-top: 4em;
   margin: 0;
+
 }
 
 ::selection {
@@ -26,5 +27,42 @@ body {
 }
 
 
+p a:link {
+  color: hsl(200,100%,35%);
+  text-decoration:none;
+}
+.app_main > Router {
+    flex: 1; /* Allows main content to grow and pushes footer to the bottom */
+}
 
+footer {
+    // background-color: hsla(0, 1%, 90%, 1%);
+    //color: hsl(260, 10%, 30%);
+    color: hsla(260, 10%, 60%,10%);
+    text-align: right;
+    padding: 0.2rem 4rem;
+    font-family: Arial, sans-serif;
+    font-size: 0.7em;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+    /* Add this for an animated transition (optional) */
+    transition: all 0.3s ease;
+}
 
+footer p {
+    margin: 0.5em 0;
+}
+
+footer a {
+    color: #ccc; /* Slightly brighter than text */
+    text-decoration: none;
+    transition: color 0.3s ease; /* Smooth color transition */
+}
+
+footer p a:link {
+   color: hsl(260,10%,50%);
+//   // text-decoration:none;
+}

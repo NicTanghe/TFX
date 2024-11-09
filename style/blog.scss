@@ -238,8 +238,8 @@ div{
     0% {
 
         transform: scaleX(100%);
-        width:auto; 
-        max-width:100%
+        // width:auto; 
+        max-width:40px
     }
     100% {
         transform: scaleX(0%);

@@ -3,7 +3,8 @@ use leptos::{
     logging,
     ServerFnError,
     ReadSignal,
-    SignalGet
+    SignalGet,
+    Signal
 };
 use serde::{Serialize,Deserialize};
 
@@ -23,7 +24,7 @@ pub struct Person {
 struct ApiResponse {
     data: Vec<Person>,
 }
-use crate::app::ActiveUser;
+use crate::app::{ActiveUser,get_user_detailsb};
 
 // ok so this thing seems to just return an empt vector.
 // so then why are there 8 unknowns wtf.
@@ -45,7 +46,21 @@ pub async fn get_people_vector(value: Vec<Person>, get_user: ReadSignal<ActiveUs
     }
 }
 
+// this updates the current vector and returns the old value if there is an error.
+pub async fn get_people_vectorb(value: Vec<Person>, get_user: Signal<Option<ActiveUser>>) -> Vec<Person> {
+    let access_token = get_user.get().unwrap().token;
 
+    match get_people_from_api(access_token).await {
+        Ok(fetched_people) => {
+            logging::log!("Fetched people:\n{:#?}", fetched_people);
+            fetched_people
+        }
+        Err(err) => {
+            logging::log!("Error fetching posts: {:?}", err);
+            value // Returns old vector in case of error
+        }
+    }
+}
 #[server(GetPosts, "/people/get")]
 pub async fn get_people_from_api(jwt_l2: String) -> Result<Vec<Person>, ServerFnError> {
     let url = "http://localhost:4000/people";

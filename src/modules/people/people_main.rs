@@ -20,27 +20,24 @@ use crate::modules::people::people_comms::*;
 
 
 
+
 #[component]
-pub fn PeopleList(people: ReadSignal<Vec<Person>>) -> impl IntoView {
+pub fn PeopleList(async_data_peopleb: Resource<(), Vec<Person>>) -> impl IntoView {
     view! {
         <div>
-            {move || people.get().into_iter()
-                //.filter(|person| {
-                //    // If selected_tags is Some and not empty, check if all tags match
-                //    selected_tags.get().as_ref().map_or(true, |tags| {
-                //        tags.is_empty() || tags.iter().all(|tag| person.id.contains(tag))
-                //    })
-                //})
-                .map(|person| {
+            {move || async_data_peopleb.get().map(|people| {
+                people.iter().map(|person| {
                     view! {
-                        <div class="HUUMAN">{person.name.clone().unwrap_or_else(|| "Unknown".to_string())}</div>
+                        <div class="HUUMAN">
+                            {person.name.clone().unwrap_or_else(|| "Unknown".to_string())}
+                        </div>
                     }
-                })
-                .collect_view()
-            }
+                }).collect_view()
+            }).unwrap_or_default()}
         </div>
     }
 }
+
 
 
 

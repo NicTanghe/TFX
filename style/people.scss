@@ -1,0 +1,565 @@
+.people_card {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start; /* Explicitly aligns items to the start */
+    text-align: left; /* Aligns text to the left within the card */
+    align-items: flex-start;
+    width: 80%; /* Full width of the parent */
+    max-width: 90vw; /* Optional max width */
+    padding: 1em;
+    gap: 1em;
+    margin: 0 auto; /* Centers the entire section within the container */
+    border: 1px solid #ccc; /* Optional: Adds a border for clarity */
+    border-radius: 5px; /* Optional: Rounds edges for styling */
+    // background-color: #f9f9f9; /* Optional: Sets background color */
+}
+
+.HUUMAN {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Aligns all content inside to the left */
+}
+
+.username, .description {
+    text-align: left; /* Ensures left alignment of text */
+    padding: 0.5em 0; /* Optional: Adds vertical spacing */
+}
+
+/* Optional: Styles for username and description */
+.username {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+// .description {
+//     color: #666; /* Optional: Lighter text f
+// }
+.description{
+  width:23rem
+}
+
+
+.plain_info {
+    display: grid ;
+    grid-template-columns: repeat(4, max-content); /* First column width fits the longest text, second column takes remaining space */
+    row-gap: 0px ; /* Space between key and value */
+    column-gap: 15px;
+    padding: 4px ;
+    border-radius: 4px; /* Rounded corners */
+    width: 100%; /* Full width for overflow handling */
+    max-width: 100%; /* Prevent overflow outside container */
+    overflow-wrap: break-word; /* Ensures text will break properly */
+    //align-items: center important!;
+    justify-content: flex-start;
+    transform:translateY(-20px);
+}
+
+
+/* Responsive layout adjustments */
+@media (max-width: 670px) {
+    .plain_info {
+       grid-template-columns: repeat(2, max-content);  /* Stack sections vertically on smaller screens */
+    }
+
+    .description{
+      width:13rem;
+    }
+}
+
+
+.card{
+ fill: hsl(160, 2%, 33%)
+}
+
+.card_plain {
+    display: grid ;
+    grid-template-columns: max-content max-content ; /* First column width fits the longest text, second column takes remaining space */
+    grid-gap: 12px ; /* Space between key and value */
+    padding: 2px ;
+    border-radius: 4px; /* Rounded corners */
+    //align-items: center important!;
+}
+
+.info_type {
+    font-weight: bold;
+    color: #555; /* Subtle color for text */
+    //margin: 0; /* Remove default margin */
+}
+
+.value {
+    color: #333; /* Slightly darker color for distinction */
+    //margin: 0; /* Remove default margin */
+  overflow-wrap: break-word; 
+}
+
+
+// trying to get a grid layout on the socials
+
+.username { grid-area: header; }
+.description {grid-area: description; }
+.plain_info { grid-area: info; }
+.socials_main { grid-area: socials; }
+.profile_pic { grid-area: image; }
+.item5 { grid-area: footer; }
+
+.HUUMAN {
+  display: grid;
+  grid-template-areas:
+    'header header header header header header '
+    'image description description description socials socials'
+    'image description description description socials socials'
+    'info info info info socials socials';
+
+}
+.HUUMAN > div {
+  // background-color: rgba(255, 255, 255, 0.8);
+  //text-align: center;
+  padding: 10px 10px;
+  //font-size: 30px;
+}
+// socials widget
+
+
+
+.socials {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Three equal-width columns */
+  grid-template-rows: repeat(3, auto);   /* Three rows for a 3x3 grid */
+  width: auto;      /* Allow the grid to size itself */
+  align-items: center;
+  justify-items: center;
+}
+
+.main_back {
+  position: absolute;
+  border-radius: 10px;
+  // transform: rotate(90deg);
+  width: 11em;
+  height: 11em;
+  background: linear-gradient(270deg, hsl(320, 97.57%, 30.43%), hsl(295, 100.04%, 25.18%), hsl(270, 100%, 40.49%));
+  z-index: 1;
+  box-shadow: inset 0px 0px 180px 5px #ffffff;
+}
+
+.socials_main:hover .main_back {
+  opacity: 0;
+  z-index: -1;
+}
+
+.socials_main {
+  display: flex;
+  flex-wrap: wrap;
+  width: 14em;
+  height: 14em;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: transform 0.3s ease-in-out;
+  overflow-y:auto;
+  transform:translateY(-20px);
+}
+
+.card {
+  width: 60px;
+  height: 60px;
+  border-top-left-radius: 10px;
+  transition: 0.4s ease-in-out, 0.2s background-color ease-in-out,
+    0.2s background-image ease-in-out;
+  background: hsla(270, 40%, 12%, 0.596);
+  backdrop-filter: blur(5px);
+  border: 1px solid transparent;
+  -webkit-backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index:1;
+}
+
+
+
+//card shaping
+.card:nth-child(3) {
+  border-top-right-radius: 10px;
+  border-top-left-radius: 0px;
+}
+ .card:nth-child(2) {
+   border-radius: 0px;
+ }
+.card:nth-child(4) {
+  border-radius: 0px;
+}
+
+.card:nth-child(5) {
+  border-radius: 0px;
+}
+
+.card:nth-child(6) {
+  border-radius: 0px;
+}
+
+.card:nth-child(7) {
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 0px;
+}
+
+.card:nth-child(8) {
+  border-radius: 0px;
+}
+
+.card:nth-child(9) {
+  border-bottom-right-radius: 10px;
+  border-top-left-radius: 0px;
+}
+
+
+.socials_main:hover .card:nth-child(5) {
+  border: transparent;
+}
+
+
+.socials_main:hover {
+  width: 14em;
+  cursor: pointer;
+  // transform: rotate(-45deg);
+}
+
+
+
+.socials_main:hover .card {
+  margin: 0.2em;
+  border-radius: 10px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+// .socials_main:hover .card svg {
+//   transform: rotate(45deg);
+// }
+
+.socials_main:hover .text {
+  opacity: 0;
+  z-index: -3;
+}
+
+.card.c_dribble:hover {
+  background-color: #ffb5d2;
+}
+
+.card:nth-child(3):hover .dribble {
+  fill: white;
+}
+
+
+.card:nth-child(2):hover .twitter {
+  fill: white;
+}
+
+.socials_main:hover .card {
+  margin: 0.2em;
+  border-radius: 10px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 1);
+  border: 1px solid hsla(255, 100%, 20%, 0.1);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+
+
+/////////
+//  note that the first entries where opacity is set to 1
+// can be easaly avoided by adding a class svg_icon and just configuring there
+// using .svg dont work
+////////////
+
+
+//discord
+
+.socials_main:hover .discord {
+  opacity: 1;
+}
+
+.card .discord {
+  opacity: 0;
+  transition: 0.2s ease-in-out;
+  fill: #8c9eff;
+}
+
+.card.c_discord:hover {
+  background-color: #8c9eff;
+}
+
+.card.c_discord:hover .discord {
+  fill: white;
+
+}
+
+// instagram
+.socials_main:hover .instagram {
+  opacity: 1;
+}
+
+.card .instagram {
+  opacity: 0;
+  transition: 0.2s ease-in-out;
+  fill: #cc39a4;
+}
+
+.card:hover .instagram {
+  fill: white;
+}
+
+.card.c_instagram:hover {
+  background-color: #cc39a4;
+}
+
+//github
+.socials_main:hover .github {
+  opacity: 1;
+}
+
+.card .github {
+  opacity: 0;
+  transition: 0.2s ease-in-out;
+  fill: black;
+}
+
+.card.c_github:hover {
+  background-color: black;
+}
+
+.card.c_github:hover .github {
+  fill: white;
+}
+
+//artstation
+.socials_main:hover .artstation {
+  opacity: 1;
+}
+
+.card .artstation {
+  opacity: 0;
+  transition: 0.2s ease-in-out;
+  fill: #26bbff;
+}
+
+.card.c_artstation:hover {
+  background-color: #26bbff;
+}
+
+.card.c_artstation:hover .artstation {
+  fill: black;
+}
+
+//houdini 
+
+.socials_main:hover .houdini {
+  opacity: 1;
+}
+
+.card .houdini {
+  opacity: 0;
+  transition: 0.2s ease-in-out;
+  fill: #f04b24;
+}
+
+
+.card.c_houdini:hover {
+  background-color: #f04b24;
+}
+
+.card.c_houdini:hover .houdini {
+  fill: white;
+}
+
+//youtube
+
+.socials_main:hover .youtube {
+  opacity: 1;
+}
+
+.card .youtube {
+  opacity: 0;
+  transition: 0.2s ease-in-out;
+  fill: #ff0033;
+}
+
+
+.card.c_youtube:hover {
+  background-color: #ff0033;
+}
+
+.card.c_youtube:hover .youtube {
+  fill: white;
+}
+
+//youtube
+
+.socials_main:hover .vimeo {
+  opacity: 1;
+}
+
+.card .vimeo {
+  opacity: 0;
+  transition: 0.2s ease-in-out;
+  fill: #01aced;
+}
+
+
+.card.c_vimeo:hover {
+  background-color: #01aced;
+}
+
+.card.c_vimeo:hover .vimeo {
+  fill: white;
+}
+
+
+//linkedin
+
+.socials_main:hover .linkedin {
+  opacity: 1;
+}
+
+.card .linkedin {
+  opacity: 0;
+  transition: 0.2s ease-in-out;
+  fill: #0a66c2;
+}
+
+
+.card.c_linkedin:hover {
+  background-color: #0a66c2;
+}
+
+.card.c_linkedin:hover .linkedin {
+  fill: white;
+}
+
+
+//codepen MISCONFIG !!!
+
+.socials_main:hover .codepen {
+  opacity: 1;
+}
+
+.card .codepen {
+  opacity: 0;
+  transition: 0.2s ease-in-out;
+  fill: black;
+}
+
+.card.c_codepen:hover {
+  background-color: #1e1f26;
+}
+
+.card.c_codepen:hover {
+  background-color: #03a9f4;
+}
+
+
+.card.c_codepen:hover .codepen {
+  fill: white;
+}
+
+
+
+// telgram 
+
+
+.card.c_telgram:hover {
+  background-color: #29b6f6;
+}
+
+.card.c_telgram:hover .telegram > path:nth-of-type(1) {
+  fill: white;
+}
+
+.card .c_telgram :hover .telegram > path:nth-of-type(2) {
+  fill: #29b6f6;
+}
+
+.card .c_telgram :hover .telegram > path:nth-of-type(3) {
+  fill: #29b6f6;
+}
+
+.card .c_reddit :hover {
+  background-color: rgb(255, 69, 0);
+}
+
+.card .c_reddit .reddit > g circle {
+  fill: rgb(255, 69, 0);
+}
+
+.card .c_reddit > g path {
+  fill: white;
+}
+
+// uiverse
+.socials_main:hover .uiverse {
+  opacity: 1;
+}
+
+.card .uiverse {
+  opacity: 0;
+  transition: 0.2s ease-in-out;
+  fill: black;
+}
+
+
+.card.c_uiverse:hover {
+  animation: backgroundIMG 0.1s;
+  animation-fill-mode: forwards;
+}
+
+.card:hover .uiverse #paint0_linear_501_142 stop {
+  stop-color: white;
+}
+
+.card:hover .uiverse #paint1_linear_501_142 stop {
+  stop-color: white;
+}
+
+.card:hover .uiverse #paint2_linear_501_142 stop {
+  stop-color: white;
+}
+
+@keyframes backgroundIMG {
+  100% {
+    background-image: linear-gradient(#bf66ff, #6248ff, #00ddeb);
+  }
+}
+
+
+// leftovers
+
+.card:nth-child(3) .dribble {
+  opacity: 0;
+  transition: 0.2s ease-in-out;
+  fill: #ffb5d2;
+}
+
+
+
+.text {
+  position: absolute;
+  font-size: 0.7em;
+  transition: 0.4s ease-in-out;
+  color: black;
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 0.33em;
+  z-index: 3;
+}
+
+
+
+.card:nth-child(8) .telegram {
+  opacity: 0;
+  transition: 0.2s ease-in-out;
+  fill: #29b6f6;
+}
+
+.card:nth-child(9) .reddit {
+  opacity: 0;
+  transition: 0.2s ease-in-out;
+}

@@ -368,32 +368,7 @@ pub async fn get_user_details() -> Result<Option<ActiveUser>, ServerFnError> {
     Ok(None)
 }
 
-#[server(GetActiveUserb, "/ActiveUserb")]
-pub async fn get_user_detailsb() -> Result<Option<ActiveUser>, ServerFnError> {
-    use  leptos_axum::extract;
-    // Retrieve the stored JSON string from the cookie
-    let headers: http::HeaderMap = extract().await?;
-    
-    // Define the cookie key
-    let cookie_key = cookie::CookieKey::Other("user");
 
-    // Check for user cookie using the key
-    if let Ok(Some(user_str)) = cookie::cookieops::get(&cookie_key, &headers) {
-        // Deserialize and return the ActiveUser
-        if let Ok(loaded_user) = serde_json::from_str::<ActiveUser>(&user_str) {
-            return Ok(Some(loaded_user));
-        }
-    }
-
-    // Default return if no cookie or deserialization fails
-    Ok(
-        Some(ActiveUser{
-           name:"trouble".to_string(),
-           token:"NANNI !!!".to_string(),
-           roles:["error".to_string()].to_vec()
-       })
-    )
-}
 
 #[component]
 pub fn App() -> impl IntoView {
@@ -401,8 +376,8 @@ pub fn App() -> impl IntoView {
 
     let (get_user,set_user) = create_signal(
        ActiveUser{
-           name:"trouble".to_string(),
-           token:"NANNI !!!".to_string(),
+           name:"".to_string(),
+           token:"".to_string(),
            roles:["error".to_string()].to_vec()
        }
         );
@@ -436,8 +411,8 @@ pub fn App() -> impl IntoView {
         move |_| get_user_details(),
     );
     let errUser = ActiveUser{
-           name:"trouble".to_string(),
-           token:"NANNI !!!".to_string(),
+           name:"".to_string(),
+           token:"".to_string(),
            roles:["error".to_string()].to_vec()
     };
 
@@ -510,7 +485,8 @@ pub fn App() -> impl IntoView {
     );
 
 
-    // Update the posts signal when data is loaded
+    // Update the posts signal when data is loaded  Maybe this is also redundant/ the signal needs
+    // deletion and resource
     create_effect(move |_| {
         if let Some(fetched_posts) = async_data_posts.get() {
             set_posts(fetched_posts);
@@ -522,18 +498,7 @@ pub fn App() -> impl IntoView {
     //_____________
 
 
-
-    let (people, set_people) = create_signal(vec![
-        Person {
-            id: 0 as i32,
-            name: Some("server not talked to".to_string()),
-            description: Some("# server unreachable".to_string()),
-            contact_info: None,
-            profile_pic: None
-        },
-    ]);
-
-    let async_data_people = create_resource(
+    let people = create_resource(
         move || (), // Pass an empty tuple as a dependency to ensure it runs once
         move |_| {
             let atoken = get_user().token.clone();
@@ -542,38 +507,13 @@ pub fn App() -> impl IntoView {
                 logging::log!("RESOURCE: loading data from API");
 
                 // Await the result of the API call and handle the response
-                let people_vector = get_people_vector(people.get(), get_user).await;
+                let people_vector = get_people_vectorb( user_rb).await;
                 logging::log!(" !!! passed user.token:{} \n !!! other stuf: {}",atoken, get_user().name);
                 people_vector // omg you did not return it you fucking idiot
             }
         }
     );
 
-    let async_data_peopleb = create_resource(
-        move || (), // Pass an empty tuple as a dependency to ensure it runs once
-        move |_| {
-            let atoken = get_user().token.clone();
-
-            async move {
-                logging::log!("RESOURCE: loading data from API");
-
-                // Await the result of the API call and handle the response
-                let people_vector = get_people_vectorb(people.get(), user_rb).await;
-                logging::log!(" !!! passed user.token:{} \n !!! other stuf: {}",atoken, get_user().name);
-                people_vector // omg you did not return it you fucking idiot
-            }
-        }
-    );
-
-        
-
-    //ok next up try it in the function itself don`t make no sence that it doesn`t work here.
-    // Update the posts signal when data is loaded
-    create_effect(move |_| {
-        if let Some(fetched_people) = async_data_people.get() {
-            set_people(fetched_people);
-        }
-    });
 
 
     //this is some sord of hard required leptos thing
@@ -593,7 +533,7 @@ pub fn App() -> impl IntoView {
             <Routes>
                 <Route path="/" view=HomePage />  // Home route
                 <Route path="/testing" view=move || view! { <ControlledWriting get_user/> } />  // Correctly self-closing
-                <Route path="/people" view=move || view! { <PeopleList async_data_peopleb /> }>
+                <Route path="/people" view=move || view! { <PeopleList people /> }>
                 </Route>
 
                 // a bit wonky but not as spaghetty as passing get_user 3 times 
@@ -609,9 +549,9 @@ pub fn App() -> impl IntoView {
             </Routes>  // Closing the Routes component
         </Router>  // Closing the Router component
                    //
-        <footer>
-            <p>Copyright &copy; TFX 2024. All Rights Reserved.</p>
-        </footer>
+        //<footer> //this breaks on the people page for some reason
+        //    <p>Copyright &copy; TFX 2024. All Rights Reserved.</p>
+        //</footer>
 
     }
 

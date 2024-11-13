@@ -19,35 +19,19 @@ pub struct Person {
   pub description: Option<String>,  // This is already an Option
 }
 
-
 #[derive(Debug, Deserialize)]
 struct ApiResponse {
     data: Vec<Person>,
 }
-use crate::app::{ActiveUser,get_user_detailsb};
+use crate::app::ActiveUser;
 
 // ok so this thing seems to just return an empt vector.
 // so then why are there 8 unknowns wtf.
 
 
-// this updates the current vector and returns the old value if there is an error.
-pub async fn get_people_vector(value: Vec<Person>, get_user: ReadSignal<ActiveUser>) -> Vec<Person> {
-    let access_token = get_user.get().token;
-
-    match get_people_from_api(access_token).await {
-        Ok(fetched_people) => {
-            logging::log!("Fetched people:\n{:#?}", fetched_people);
-            fetched_people
-        }
-        Err(err) => {
-            logging::log!("Error fetching posts: {:?}", err);
-            value // Returns old vector in case of error
-        }
-    }
-}
 
 // this updates the current vector and returns the old value if there is an error.
-pub async fn get_people_vectorb(value: Vec<Person>, get_user: Signal<Option<ActiveUser>>) -> Vec<Person> {
+pub async fn get_people_vectorb(get_user: Signal<Option<ActiveUser>>) -> Vec<Person> {
     let access_token = get_user.get().unwrap().token;
 
     match get_people_from_api(access_token).await {
@@ -57,10 +41,21 @@ pub async fn get_people_vectorb(value: Vec<Person>, get_user: Signal<Option<Acti
         }
         Err(err) => {
             logging::log!("Error fetching posts: {:?}", err);
-            value // Returns old vector in case of error
+            vec![
+                Person {
+                    id: 505,
+                    name: Some("No acces".to_string()),
+                    description: Some("You can contact TFX for acces or PW reset".to_string()),
+                    contact_info: None,
+                    profile_pic: None
+                }
+            ]
+                // Returns old vector in case of error
         }
     }
 }
+
+
 #[server(GetPosts, "/people/get")]
 pub async fn get_people_from_api(jwt_l2: String) -> Result<Vec<Person>, ServerFnError> {
     let url = "http://localhost:4000/people";
@@ -75,7 +70,6 @@ pub async fn get_people_from_api(jwt_l2: String) -> Result<Vec<Person>, ServerFn
         .header("Content-Type", "application/json")
 
         .header("Authorization", format!("Bearer {}", jwt_l2))
-
 
         .send()
         .await 
@@ -95,13 +89,14 @@ pub async fn get_people_from_api(jwt_l2: String) -> Result<Vec<Person>, ServerFn
         }
     };
 
+
     // Check if the response status is OK
     if !response.status().is_success() {
         logging::log!("Request failed with status: {}", response.status());
         return Ok(vec![
             Person {
                 id: response.status().as_u16() as i32,
-                name: Some("HTTP Error".to_string()),
+                name: Some("No acces to data".to_string()),
                 description: Some("Request failed".to_string()),
                 contact_info: None,
                 profile_pic: None

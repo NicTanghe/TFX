@@ -25,3 +25,8 @@ H1{
 div{
   color:var(--white-1);
 }
+
+/* Solid border */
+hr.solid {
+  border-top: 3px solid var(--white-2);
+}

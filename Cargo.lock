@@ -975,6 +975,7 @@ version = "0.1.0"
 dependencies = [
  "axum",
  "axum-extra",
+ "base64",
  "console_error_panic_hook",
  "console_log",
  "cookie",

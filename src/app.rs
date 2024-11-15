@@ -2,9 +2,9 @@ use leptos::*;
 use leptos::ev::SubmitEvent;
 use leptos_router::*;
 
-
 use crate::modules::{
-
+    
+    portfolio::home::*,
     blog_posts::{
         blog_compo::*,
         blog_fn::*,
@@ -45,19 +45,7 @@ pub struct ActiveUser {
     pub roles: Vec<String>,
 }
 
-/// Function to create the contact list signal
-pub fn create_contact_signal() -> (ReadSignal<Vec<String>>, WriteSignal<Vec<String>>){
-    create_signal(vec![
-        "Alice".to_string(),
-        "Bob".to_string(),
-        "Steve".to_string(),
-        "Diana".to_string(),
-        "Eve".to_string(),
-        "Fred".to_string(),
-        "Camille".to_string(),
-        "Tron".to_string()
-    ])
-}
+
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 struct UserSession(Option<String>);
@@ -299,7 +287,11 @@ fn NavBar(user_l1: ReadSignal<ActiveUser>,set_user_l1: WriteSignal<ActiveUser>) 
         <div>
             <nav class="navbar">
                 <div class = "bg">
-                    <A class=move || format!("navlink{}", if is_active("/") && location.pathname.get() == "/" { " nb-active" } else { "" }) href="/">"Home"</A>
+                    <A  // note right now the light turns of and we want that but its not on purpase its a bug so fix
+                        class=move || format!(
+                            "navlink{}", 
+                            if is_active("/") && (location.pathname.get() == "/" || is_active("/home")) { " nb-active" } else { "" }) href="/home">"Home"
+                    </A>
                     <A class=move || format!("navlink{}", if is_active("/contacts") { " nb-active" } else { "" }) href="/contacts">"Contacts"</A>
                     <A class=move || format!("navlink{}", if is_active("/people") { " nb-active" } else { "" }) href="/people">"people"</A>
                     <A class=move || format!("navlink{}", if is_active("/blog") { " nb-active" } else { "" }) href="/blog">"Blog"</A>
@@ -519,54 +511,46 @@ pub fn App() -> impl IntoView {
     //this is some sord of hard required leptos thing
     provide_meta_context();
 
+
     view! {
         <Stylesheet id="leptos" href="/pkg/werk.css" />
         <Title text="Welcome to Leptos"/>
-        <Html
-            lang="eng"
-            dir="ltr"
-            attr:data-theme="dark"
-        />
+        <Html lang="eng" dir="ltr" attr:data-theme="dark"/>
 
         <Router>
             <NavBar user_l1=get_user set_user_l1=set_user/>
+
             <Routes>
-                <Route path="/" view=HomePage />  // Home route
-                <Route path="/testing" view=move || view! { <ControlledWriting get_user/> } />  // Correctly self-closing
-                <Route path="/people" view=move || view! { <PeopleList people /> }>
+                <Route path="/" view=HomePage />
+                <Route path="/home" view=HomePage>
+                    <Route path="" view=|| view! { 
+                        <p>"Select a contact to view more info."</p> 
+                    } />  // Nested route inside "/home"
+                    <Route path=":id" view=move || view! { 
+                        <div>"This is a test"</div> 
+                    }>
+                        <Route path="" view=|| view! { 
+                            <p>"Select a contact to view more info."</p> 
+                        } />  
+                    </Route>
                 </Route>
 
-                // a bit wonky but not as spaghetty as passing get_user 3 times 
-                // we have to pass it annyway to add the + conditionally
-                <Route path="/blog" view=move || view! { <PostList posts={posts} /> }>   
-                    <Route path="/newpost" view=move || view! { <ControlledWriting get_user/> } /> 
+                <Route path="/testing" view=move || view! { <ControlledWriting get_user/> } /> 
+
+                <Route path="/people" view=move || view! { <PeopleList people /> } />
+
+                <Route path="/blog" view=move || view! { <PostList posts=posts /> }>
+                    <Route path="newpost" view=move || view! { <ControlledWriting get_user/> } /> 
                 </Route>
 
-                // Uncomment when needed
-                // <Route path="/blog" view=move || view! { <PostList posts={posts} /> } />
-                {post_routes(posts, set_posts)}  // Ensure this is a valid expression
-                                                 //
-            </Routes>  // Closing the Routes component
-        </Router>  // Closing the Router component
-                   //
-        //<footer> //this breaks on the people page for some reason
-        //    <p>Copyright &copy; TFX 2024. All Rights Reserved.</p>
-        //</footer>
+                // Uncomment and ensure that `post_routes` returns a valid `View` if it needs to render routes dynamically
+                {post_routes(posts, set_posts)}  
 
-    }
-
-}
-
-/// Renders the home page of your application.
-#[component]
-fn HomePage() -> impl IntoView {
-    // Creates a reactive value to update the button
-    let (count, set_count) = create_signal(0);
-    let on_click = move |_| set_count.update(|count| *count += 1);
-
-    view! {
-        <div class="big_void"></div>
-        <h1>"Welcome to Leptos!"</h1>
-        <button class="glowy_large" on:click=on_click>"Click Me: " {count}</button>
+            </Routes>
+        </Router>
     }
 }
+
+
+
+

@@ -3,7 +3,7 @@ use leptos::*;
 //use leptos_router::*;
 //use serde::{Serialize,Deserialize};
 
-
+use base64::{engine::general_purpose, Engine as _};
 use crate::modules::people::people_comms::*;
 
 
@@ -36,6 +36,7 @@ pub fn PeopleList(people: Resource<(), Vec<Person>>) -> impl IntoView {
                                     <div class="HUUMAN">
                                         <div class="username">
                                             {person.name.clone().unwrap_or_else(|| "".to_string())}
+                                            <hr class="solid"></hr>
                                         </div>
                                         <div class="description">
                                             {person.description.clone().unwrap_or_else(|| "Unknown".to_string())}
@@ -43,11 +44,7 @@ pub fn PeopleList(people: Resource<(), Vec<Person>>) -> impl IntoView {
                                             { render_contact_info(person.contact_info.clone()) }
 
                                         <div class="profile_pic">
-                                            {
-                                                person.profile_pic.as_ref().map(|pic| {
-                                                    format!("Profile Picture: {} bytes", pic.len())
-                                                }).unwrap_or_else(|| "No profile picture available".to_string())
-                                            }
+                                            { render_profile_pic(&person.profile_pic.clone()) }
                                         </div>
                                     </div>
                                 </div>
@@ -60,7 +57,23 @@ pub fn PeopleList(people: Resource<(), Vec<Person>>) -> impl IntoView {
     }
 }
 
+// Helper function to handle profile picture rendering
+fn render_profile_pic(profile_pic: &Option<Vec<u8>>) -> impl IntoView {
+    if let Some(pic_data) = profile_pic {
+        // Encode profile picture data as Base64
+        let encoded = general_purpose::STANDARD.encode(pic_data);
 
+        // Return the image tag if data exists
+        view! {
+            <img src={format!("data:image/jpeg;base64,{}", encoded)} alt="Profile Picture" />
+        }.into_view()
+    } else {
+        // Fallback text if no image data is available
+        view! {
+            <img src="https://cdn.pixabay.com/photo/2017/07/18/23/23/user-2517433_640.png" />
+        }.into_view()
+    }
+}
 
 fn render_contact_info(contact_info: Option<serde_json::Value>) -> impl IntoView {
     use std::sync::Arc;

@@ -34,6 +34,10 @@ use serde::{Serialize,Deserialize};
 use rand::seq::SliceRandom; // For random selection from slices
 
 
+use rsa::{RsaPublicKey, PaddingScheme};
+use rand::rngs::OsRng;
+use base64; 
+
 use gloo_timers::callback::Timeout;
 use wasm_cookies::cookies;
 
@@ -45,12 +49,64 @@ pub struct ActiveUser {
     pub roles: Vec<String>,
 }
 
-
+use rsa::{RsaPublicKey, PaddingScheme};
+use rand::rngs::OsRng;
+use base64;
+use pem::parse;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 struct UserSession(Option<String>);
 
+/// Asynchronous function to encrypt a password
+//#[server(Custom_encrypt, "/Custom_encrypt")]
 
+pub async fn custom_encrypt(password: String) -> Result<Option<String>, ServerFnError> {
+    // Example public key in PEM format provided by the server
+    let public_key_pem = r#"
+-----BEGIN RSA PUBLIC KEY-----
+MIIBCgKCAQEA...
+-----END RSA PUBLIC KEY-----
+"#;
+
+    // Parse the PEM-encoded key safely
+    let parsed_pem = match parse(public_key_pem) {
+        Ok(pem) => pem,
+        Err(err) => {
+            log::error!("Failed to parse PEM: {:?}", err);
+            return Err(ServerFnError::ServerError("PEM parsing failed".into()));
+        }
+    };
+
+    // Only extract the actual key content (DER data) safely
+    let public_key_der = parsed_pem.contents();
+
+    // Create the RSA public key from DER data
+    let public_key = match RsaPublicKey::from(&public_key_der) {
+        Ok(key) => key,
+        Err(err) => {
+            log::error!("Failed to parse DER: {:?}", err);
+            return Err(ServerFnError::ServerError("Public key parsing failed".into()));
+        }
+    };
+
+    // Encrypt the password
+    let encrypted = match public_key.encrypt(
+        &mut OsRng,
+        PaddingScheme::new_pkcs1v15_encrypt(),
+        password.as_bytes(),
+    ) {
+        Ok(data) => data,
+        Err(err) => {
+            log::error!("Failed to encrypt password: {:?}", err);
+            return Err(ServerFnError::ServerError("Password encryption failed".into()));
+        }
+    };
+
+    // Encode the encrypted data as Base64 for transport
+    let encrypted_base64 = base64::encode(&encrypted);
+
+    Ok(Some(encrypted_base64))
+}
 // you need to set a global loggin attempt failure somewhere not cookie based. or you could encrypt
 // the cookie
 #[component]
@@ -76,7 +132,11 @@ fn UncontrolledComponent(set_user_l3: WriteSignal<ActiveUser>) -> impl IntoView 
         ) {
             // Update the signals with the input values
             set_userName(username_input_element.value());
-            set_password(password_input_element.value());
+
+            // Hash the password using MD5
+            let password_hash = format!("{:x}", md5::compute(password_input_element.value()));
+            set_password(password_hash.clone()); // Store the hashed password in the signal
+
             set_user_l3.update(|user| {
                 debug!("Previous user state: {:?}", user);
 

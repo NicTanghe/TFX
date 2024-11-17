@@ -1,10 +1,23 @@
 use leptos::*;
 use leptos::ev::SubmitEvent;
 use leptos_router::*;
+use leptos_meta::*;
+use serde::{Serialize,Deserialize};
+use tracing::debug;
 
 use crate::modules::{
     
-    portfolio::home::*,
+    portfolio::{
+        //compositing::*,
+        editing::*,
+        home::*,
+        //lookdev::*,
+        //pipeline::*,
+        //modelling::*,
+        programming::*,
+        //simulations::*,
+        //writing::*
+    },
     blog_posts::{
         blog_compo::*,
         blog_fn::*,
@@ -23,19 +36,10 @@ use crate::modules::{
     }
 };
 
-use leptos_meta::*;
 
-use tracing::debug;
 
 use std::time::Duration;
-
-use serde::{Serialize,Deserialize};
-
-use rand::seq::SliceRandom; // For random selection from slices
-
-
 use gloo_timers::callback::Timeout;
-use wasm_cookies::cookies;
 
 
 #[derive(Clone, PartialEq, Eq, Debug, Serialize, Deserialize)]
@@ -519,13 +523,14 @@ pub fn App() -> impl IntoView {
 
         <Router>
             <NavBar user_l1=get_user set_user_l1=set_user/>
-
             <Routes>
                 <Route path="/" view=HomePage />
                 <Route path="/home" view=HomePage>
                     <Route path="" view=|| view! { 
                         <p>"Select a contact to view more info."</p> 
                     } />  // Nested route inside "/home"
+                    <Route path="editing" view = move || view! { <Portf_editing /> } />
+                    <Route path="programming" view = move || view! { <Portf_programming posts /> } />
                     <Route path=":id" view=move || view! { 
                         <div>"This is a test"</div> 
                     }>

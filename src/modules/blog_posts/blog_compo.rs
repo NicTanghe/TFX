@@ -231,3 +231,151 @@ pub fn post_routes(
 }
 
 
+//ok so the thing with the stuf and so onn.
+//it needs 2 things. 1 it needs an input that says what post go`s on top.
+//and it also needs an input that setshard tags you cant undo.
+
+// maybe a switch for horizontal / vertical "carousell" (just 2 classes
+
+#[component]
+pub fn PostListAll(posts: ReadSignal<Vec<Post>>) -> impl IntoView {
+    let (selected_tags, set_selected_tags) = create_signal(Some(Vec::<String>::new()));
+
+
+    // Signals to track previous unique tags and disappearing tags
+    let (previous_unique_tags, set_previous_unique_tags) = create_signal(Some(Vec::<String>::new()));
+    let (disappearing_tags, set_disappearing_tags) = create_signal(Some(Vec::<String>::new()));
+
+    // Closure to compute current unique and disappearing tags
+    let compute_tags = move || {
+        let selected = selected_tags.get().as_ref().unwrap_or(&Vec::new()).clone();
+        let mut current_unique = std::collections::BTreeSet::new();
+
+        for post in posts.get().iter() {
+            if selected.is_empty() || selected.iter().all(|tag| post.tags.contains(tag)) {
+                current_unique.extend(post.tags.iter().cloned());
+            }
+        }
+
+        // Get the current unique tags as a Vec<String>
+        let current_unique: Vec<String> = current_unique.into_iter().collect();
+
+        // Bind `previous` to avoid dropping temporary Vec
+        let previous_tags = previous_unique_tags.get();
+        let lifebringer = Vec::new();
+        let previous = previous_tags.as_ref().unwrap_or(&lifebringer);
+        
+        let disappearing = previous
+            .iter()
+            .filter(|tag| !current_unique.contains(tag))
+            .cloned()
+            .collect::<Vec<String>>();
+
+        // Update the signals
+        set_previous_unique_tags.set(Some(current_unique.clone()));
+        set_disappearing_tags.set(Some(disappearing));
+
+        current_unique
+    };
+
+    view! {
+        <div class="tag-buttons">
+            {
+                move || {
+                    let unique = compute_tags(); // Update unique and disappearing tags
+                    let disappearing_tags_list = disappearing_tags.get();
+                    
+                    let binding = Vec::new();
+                    let disappearing = disappearing_tags_list.as_ref().unwrap_or(&binding);
+
+                    // Render unique tags as buttons
+                    let unique_buttons = unique.iter().map(|tag| {
+                        let tag_clone = tag.clone();
+                        let is_selected = selected_tags.get().as_ref()
+                            .map_or(false, |tags| tags.contains(&tag_clone));
+
+                        view! {
+                            <button
+                                class=if is_selected { "tags selected" } else { "tags not-selected" }
+                                on:click=move |_| {
+                                    let mut selected = selected_tags.get().clone().unwrap_or_default();
+                                    if selected.contains(&tag_clone) {
+                                        selected.retain(|t| t != &tag_clone);
+                                    } else {
+                                        selected.push(tag_clone.clone());
+                                    }
+                                    set_selected_tags.set(Some(selected));
+                                }
+                            >
+                                {tag.clone()}
+                            </button>
+                        }
+                    });
+
+                    // Render disappearing tags as buttons with shrinking animation
+                    let disappearing_buttons = disappearing.iter().map(|tag| {
+                        let tag_clone = tag.clone();
+
+                        view! {
+                            <button
+                                class="tags disappearing"
+                                on:click=move |_| {
+                                    log::info!("Disappearing tag clicked: {:?}", tag_clone);
+                                }
+                            >
+                                {tag.clone()}
+                            </button>
+                        }
+                    });
+
+                    // Combine unique and disappearing buttons for display
+                    unique_buttons.chain(disappearing_buttons).collect_view()
+                }
+            }
+        </div>
+
+
+            // im going to live
+
+        <div class="post-list-cards">
+            {
+                move || posts.get().into_iter()
+                    .filter(|post| {
+                        if let Some(tags) = selected_tags.get().as_ref() {
+                            tags.is_empty() || tags.iter().all(|tag| post.tags.contains(tag))
+                        } else {
+                            true // If no tags are selected, show all posts
+                        }
+                    })
+                    .map(|post| {
+                        view! {
+                            <div class= "skrijver_out decorated">
+                                <div class= "text_section">
+                                    <div class="horcard">
+                                        <div class="card-header">
+                                            <h2 class="card-title">{&post.title}</h2>
+                                        </div>  
+                                        <div class="card-body">
+                                            <div inner_html={markdown_to_html(&post.markdown)}></div>
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="tags">
+                                                {
+                                                    post.tags.iter().map(|tag| {
+                                                        view! {
+                                                            <span class="tag">{tag.clone()}</span>
+                                                        }
+                                                    }).collect_view()
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    })
+                    .collect_view()
+            }
+        </div>
+    }
+}

@@ -55,6 +55,7 @@ axum-extra = {version ="0.9.4" , features = ["cookie"]}
 time = "0.3.36"
 gloo-timers = "0.3.0"
 base64 = "0.22.1"
+stylers = "0.3.2"
 
 # git dependancies abandonment warning!
 #  it doesnt work JSTRASH   leptos-markdown = {git="https://github.com/rambip/leptos-markdown"}

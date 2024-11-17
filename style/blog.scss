@@ -26,7 +26,7 @@
     padding: 1rem 1rem 1rem 2rem; /* Padding for spacing */
     gap: 1rem;
     justify-content: flex-start;
-    width: 47rem; /* Set the width of the container */
+    width: 47rem !important; /* Set the width of the container */
     margin: 0 auto; /* Center the container */
 
 
@@ -83,17 +83,24 @@
 .post-list-posts a:active {
     color: hsl(50.59, 100%, 50%);
 }
+
 .text_section {
     display: flex;
-    flex-direction: row;
-    justify-content: center; /* Centers contents horizontally */
-    align-items: flex-start;
-    width: 100%; /* Full width of the parent */
+    flex-direction: column;
+    justify-content: flex-start; /* Align items to the start for horizontal scrolling */
+    align-items: flex-start; /* Align items at the top */
+    width: 47rem; /* Full width of the parent */
     max-width: 90vw; /* Limit width if needed */
+    max-height: 70rem; /* Constrain the height */
     padding: 1em;
     gap: 1em;
     margin: 0 auto; /* Center the entire section within the container */
+
+    overflow-y: auto; /* Hides vertical overflow */
+    overflow-x: auto; /* Enables horizontal scrolling */
+    white-space: nowrap; /* Prevents wrapping of child elements */
 }
+
 
 
 .skrijver_in {
@@ -139,11 +146,13 @@
 
 
 textarea {
-    width: 100%; /* Full width to fit the container */
-    max-width: 100%; /* Prevent overflow */
+    
+    display: stacked;
+    flex-direction: column !important; /* Ensure content stacks vertically */
+
     padding: 10px; /* Add padding for better text spacing */
     font-size: 16px; /* Comfortable font size */
-     border: 0px solid hsl(0, 0%, 40%); /* Darker border for contrast */
+    border: 0px solid hsl(0, 0%, 40%); /* Darker border for contrast */
     border-radius: 5px; /* Rounded corners */
     background-color: hsl(250, 7%, 15%); /* Dark background color */
     color: hsl(0, 0%, 90%); /* Light text color for readability */
@@ -230,7 +239,6 @@ div{
   margin: 0.2rem;
   display: inline-block;
 }
-
 
 // ITS STIL NOT FIXED
 /* Shrink and remove disappearing tags */
@@ -335,5 +343,25 @@ div{
 
 .error {
   background-color: hsl(0, 100%, 20%);
+}
+
+
+.post-list-cards {
+    display: flex;
+    gap: 10rem;
+    padding: 3rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory; /* Correct spelling */
+}
+
+.post-list-cards > div {
+    scroll-snap-align: center; /* Only align snapping here */
+    flex: 0 0 auto; /* Ensure child elements don't shrink */
+}
+
+.post-list-cards::before,
+.post-list-cards::after {
+    content: '';
+    flex: 0 0 50%; /* Spacer takes half the viewport width */
 }
 

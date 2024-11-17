@@ -5,6 +5,10 @@
 @import "spacers";
 @import "login";
 @import "people";
+@import "portfolio";
+
+
+// it gets compiled into 1 cssfile with dart stop complaining about it i know youre only doing it to get me to reply
 
 :root {
   z-index: inherit;

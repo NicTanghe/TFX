@@ -53,7 +53,7 @@ pub mod cookieops {
     use axum_extra::extract::CookieJar;
     use http::{header::SET_COOKIE, HeaderMap, HeaderValue};
     use leptos::use_context;
-    use leptos_axum::{ResponseOptions};
+    use leptos_axum::ResponseOptions;
 
     fn new_cookie<'a>(key: &'a CookieKey, value: &'a str, duration: std::time::Duration) -> Cookie<'a> {
         let cookie = Cookie::build((key.as_str(), value))

@@ -1,9 +1,11 @@
 
 #[cfg(feature = "ssr")]
 #[tokio::main]
+//ok u need to fix the linter for one but also like check the axum template and make sure all is well
 async fn main() {
     use axum::Router;
     use leptos::*;
+    use leptos::prelude;
     use leptos_axum::{generate_route_list, LeptosRoutes};
     use home_portal::app::*;
     use home_portal::fileserv::file_and_error_handler;

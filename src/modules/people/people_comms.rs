@@ -1,10 +1,12 @@
 use leptos::{
-    server,
-    logging,
-    ServerFnError,
-    ReadSignal,
-    SignalGet,
-    Signal
+    prelude::{
+        server,
+        ServerFnError,
+        //ReadSignal,
+        //SignalGet,
+        Signal
+    },
+    logging
 };
 use serde::{Serialize,Deserialize};
 
@@ -32,7 +34,7 @@ use crate::app::ActiveUser;
 
 // this updates the current vector and returns the old value if there is an error.
 pub async fn get_people_vectorb(get_user: Signal<Option<ActiveUser>>) -> Vec<Person> {
-    let access_token = get_user.get().unwrap().token;
+    let access_token = get_user().unwrap().token; //used to have get_user.get()
 
     match get_people_from_api(access_token).await {
         Ok(fetched_people) => {
@@ -105,7 +107,7 @@ pub async fn get_people_from_api(jwt_l2: String) -> Result<Vec<Person>, ServerFn
     }
 
     // Deserialize the response body into ApiResponse
-    let api_response: ApiResponse = match response.json().await {
+    let api_rezsponse: ApiResponse = match response.json().await {
         Ok(data) => data,
         Err(err) => {
             logging::log!("Failed to deserialize response: {}", err);

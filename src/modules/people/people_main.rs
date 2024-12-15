@@ -1,5 +1,5 @@
 
-use leptos::*;
+use leptos::prelude::*;
 //use leptos_router::*;
 //use serde::{Serialize,Deserialize};
 

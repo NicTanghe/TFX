@@ -1,6 +1,7 @@
 
 use leptos::*;
-use leptos::server_fn::ServerFnError;
+use leptos::prelude::*;
+use leptos::prelude::server_fn::ServerFnError;
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 

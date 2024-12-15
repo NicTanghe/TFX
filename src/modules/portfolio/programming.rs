@@ -1,5 +1,5 @@
-use leptos::*; 
-use leptos_router::Outlet;
+use leptos::prelude::*; 
+use leptos_router::components::Outlet;
 
 use crate::modules::blog_posts::blog_compo::{Post,PostListAll};
 

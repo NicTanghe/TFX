@@ -1,3 +1,4 @@
+use leptos::prelude::*;
 use leptos::*;
 use leptos::ev::SubmitEvent;
 use leptos_router::*;
@@ -61,8 +62,8 @@ struct UserSession(Option<String>);
 fn UncontrolledComponent(set_user_l3: WriteSignal<ActiveUser>) -> impl IntoView {
     use leptos::html::Input;
 
-    let (userName, set_userName) = create_signal("".to_string());
-    let (password, set_password) = create_signal("".to_string());
+    let (userName, set_userName) = signal("".to_string());
+    let (password, set_password) = signal("".to_string());
 
     // Separate NodeRefs for each input element
     let username_input: NodeRef<Input> = create_node_ref();
@@ -276,10 +277,10 @@ fn NavBar(user_l1: ReadSignal<ActiveUser>,set_user_l1: WriteSignal<ActiveUser>) 
     // Get the current location (path)
     let location = use_location();
 
-    let (show_card, set_show_card) = create_signal(false); //proly dont need
+    let (show_card, set_show_card) = signal(false); //proly dont need
                                                            //
     //rename to hiding state
-    let (is_hiding, set_hiding) =create_signal(2 as u8);
+    let (is_hiding, set_hiding) =signal(2 as u8);
     
 
     // Helper function to check if the current path starts with the link's href
@@ -370,7 +371,7 @@ pub async fn get_user_details() -> Result<Option<ActiveUser>, ServerFnError> {
 pub fn App() -> impl IntoView {
 
 
-    let (get_user,set_user) = create_signal(
+    let (get_user,set_user) = signal(
        ActiveUser{
            name:"".to_string(),
            token:"".to_string(),
@@ -436,7 +437,7 @@ pub fn App() -> impl IntoView {
 
     // Update user details
 
-    create_effect(move |_| {
+    Effect::new(move |_| {
         if let Some(fetched_usercookie) = async_UserCookieData.get() {
             match fetched_usercookie {
                 Some(active_user) => {
@@ -462,7 +463,7 @@ pub fn App() -> impl IntoView {
 
 
 
-    let (posts, set_posts) = create_signal(vec![
+    let (posts, set_posts) = signal(vec![
         Post {
             post_id: 0 as i32,
             title: "server not talked to".to_string(),
@@ -483,7 +484,7 @@ pub fn App() -> impl IntoView {
 
     // Update the posts signal when data is loaded  Maybe this is also redundant/ the signal needs
     // deletion and resource
-    create_effect(move |_| {
+    Effect::new(move |_| {
         if let Some(fetched_posts) = async_data_posts.get() {
             set_posts(fetched_posts);
         }

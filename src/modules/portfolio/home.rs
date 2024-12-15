@@ -1,15 +1,16 @@
-use leptos::*; 
+use leptos::prelude::*; 
 use leptos_router::{
-    A,Outlet,NavigateOptions,use_navigate,
+    NavigateOptions,
+    hooks::use_navigate
 };
-
+use leptos_router::components::Outlet;
 use crate::modules::blog_posts::blog_compo::Post;
 
 /// Renders the home page of your application.
 #[component]
 fn HomePage_old() -> impl IntoView {
     // Creates a reactive value to update the button
-    let (count, set_count) = create_signal(0);
+    let (count, set_count) = signal(0);
     let on_click = move |_| set_count.update(|count| *count += 1);
 
     view! {
@@ -63,12 +64,12 @@ pub fn HomePage() -> impl IntoView {
         .collect();
 
     // Signal to store the last visited link
-    let (last_link, set_last_link) = create_signal(None::<String>);
+    let (last_link, set_last_link) = signal(None::<String>);
     
     let precomputed_links: Vec<_> = category_links
         .into_iter()
         .map(|(href, gif_url, cat_for_a, cat_for_img)| {
-            let (href_signal,_href_signal_set) = create_signal(href.clone());
+            let (href_signal,_href_signal_set) = signal(href.clone());
             let cat_for_a_cloned = cat_for_a.clone();
             let cat_for_img_cloned = cat_for_img.clone();
             let gotolink_cloned = gotolink.clone(); // Clone `gotolink` to prevent move issues

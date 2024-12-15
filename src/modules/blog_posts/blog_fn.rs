@@ -1,4 +1,7 @@
-use leptos::*; // Assuming you're using the Leptos framework
+use leptos::{prelude::*, // Assuming you're using the Leptos framework
+            task::spawn_local,
+            logging
+        };
 use crate::modules::blog_posts::blog_compo::Post; // Assuming `Post` is defined in your main or another module
 use crate::modules::blog_posts::blog_comms::*;
 
@@ -6,7 +9,7 @@ use crate::modules::blog_posts::blog_comms::*;
 
 // Create post signals
 pub fn create_post_signal() -> (ReadSignal<Vec<Post>>, WriteSignal<Vec<Post>>) {
-    let (posts, set_posts) = create_signal(vec![]);
+    let (posts, set_posts) = signal(vec![]);
 
     spawn_local(async move {
         match get_posts_from_api().await {

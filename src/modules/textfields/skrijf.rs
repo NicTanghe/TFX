@@ -1,4 +1,4 @@
-use leptos::{ev::SubmitEvent, *};
+use leptos::prelude::{ev::SubmitEvent, *};
 use markdown;
 
 use regex::Regex;
@@ -156,14 +156,14 @@ fn extract_code_blocks_from_html(html: &str) -> (Vec<Cblock>, Omark) {
 #[component]
 pub fn ControlledWriting(get_user: ReadSignal<ActiveUser>) -> impl IntoView {
     // Signals for the post status
-    let (post_status, set_post_status) = create_signal(None);
+    let (post_status, set_post_status) = signal(None);
 
     // Existing signals for title, tags, content, etc.
-    let (area_title, set_area_title) = create_signal("enter title".to_string());
-    let (area_tags, set_area_tags) = create_signal("".to_string());
-    let (content_string, set_content_string) = create_signal("*enter content*".to_string());
-    let (code, set_code) = create_signal("fn main() { println!(\"Hello, world!\"); }".to_string());
-    let (final_html, set_final_html) = create_signal("".to_string());
+    let (area_title, set_area_title) = signal("enter title".to_string());
+    let (area_tags, set_area_tags) = signal("".to_string());
+    let (content_string, set_content_string) = signal("*enter content*".to_string());
+    let (code, set_code) = signal("fn main() { println!(\"Hello, world!\"); }".to_string());
+    let (final_html, set_final_html) = signal("".to_string());
 
 
 
@@ -297,7 +297,7 @@ pub fn UnControlledWriting() -> impl IntoView {
     // Use NodeRef for Textarea
     use leptos::html::Textarea;
 
-    let (name, set_name) = create_signal("Uncontrolled".to_string());
+    let (name, set_name) = signal("Uncontrolled".to_string());
     let input_element: NodeRef<Textarea> = create_node_ref();
 
     // Fires when the form `submit` event happens

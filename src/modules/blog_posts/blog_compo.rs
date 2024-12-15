@@ -1,10 +1,10 @@
-use leptos::*;
+use leptos::prelude::*;
 use leptos_router::*;
 use serde::{Serialize,Deserialize};
 
 use markdown::to_html as markdown_to_html;
 
- use web_sys::wasm_bindgen::JsCast;
+// use web_sys::wasm_bindgen::JsCast; //is this use parms map ?
 //use crate::modules::blog_posts::blog_fn::*; 
 
 //use leptos_markdown::*;
@@ -20,8 +20,10 @@ pub struct Post {
 }   
     
 
-use leptos::{component, view, IntoView, ReadSignal, WriteSignal, create_signal, Signal};
-use leptos_router::A;
+use leptos::prelude::{component, view, IntoView, ReadSignal, WriteSignal, signal};   //Signal was also in there in 0.6
+
+use leptos_router::components::{Outlet, Route, A};
+
 
 
 
@@ -34,19 +36,18 @@ use leptos_router::A;
 // and dont jump to the left.
 
 pub fn PostList(posts: ReadSignal<Vec<Post>>) -> impl IntoView {
-    use leptos_router::*;
      
-    let (selected_tags, set_selected_tags) = create_signal(Some(Vec::<String>::new()));
+    let (selected_tags, set_selected_tags) = signal(Some(Vec::<String>::new));
 
 
     // Signals to track previous unique tags and disappearing tags
-    let (previous_unique_tags, set_previous_unique_tags) = create_signal(Some(Vec::<String>::new()));
-    let (disappearing_tags, set_disappearing_tags) = create_signal(Some(Vec::<String>::new()));
+    let (previous_unique_tags, set_previous_unique_tags) = signal(Some(Vec::<String>::new));
+    let (disappearing_tags, set_disappearing_tags) = signal(Some(Vec::<String>::new));
 
     // Closure to compute current unique and disappearing tags
     let compute_tags = move || {
-        let selected = selected_tags.get().as_ref().unwrap_or(&Vec::new()).clone();
-        let mut current_unique = std::collections::BTreeSet::new();
+        let selected = selected_tags.get().as_ref().unwrap_or(&Vec::new).clone();
+        let mut current_unique = std::collections::BTreeSet::new;
 
         for post in posts.get().iter() {
             if selected.is_empty() || selected.iter().all(|tag| post.tags.contains(tag)) {
@@ -59,7 +60,7 @@ pub fn PostList(posts: ReadSignal<Vec<Post>>) -> impl IntoView {
 
         // Bind `previous` to avoid dropping temporary Vec
         let previous_tags = previous_unique_tags.get();
-        let lifebringer = Vec::new();
+        let lifebringer = Vec::new;
         let previous = previous_tags.as_ref().unwrap_or(&lifebringer);
         
         let disappearing = previous
@@ -83,7 +84,7 @@ pub fn PostList(posts: ReadSignal<Vec<Post>>) -> impl IntoView {
                     let unique = compute_tags(); // Update unique and disappearing tags
                     let disappearing_tags_list = disappearing_tags.get();
                     
-                    let binding = Vec::new();
+                    let binding = Vec::new;
                     let disappearing = disappearing_tags_list.as_ref().unwrap_or(&binding);
 
                     // Render unique tags as buttons
@@ -167,7 +168,7 @@ pub fn PostList(posts: ReadSignal<Vec<Post>>) -> impl IntoView {
 #[component]
 pub fn PostInfo(posts: ReadSignal<Vec<Post>>, _set_posts: WriteSignal<Vec<Post>>) -> impl IntoView {
     let params = use_params_map();
-    let id = create_memo(move |_| params.with(|params| params.get("id").cloned().unwrap_or_default()));
+    let id = Memo::new(move |_| params.with(|params| params.get("id").cloned().unwrap_or_default()));
 
     // Reactively find the post with the matching title (id)
     let post_info = move || {
@@ -239,17 +240,17 @@ pub fn post_routes(
 
 #[component]
 pub fn PostListAll(posts: ReadSignal<Vec<Post>>) -> impl IntoView {
-    let (selected_tags, set_selected_tags) = create_signal(Some(Vec::<String>::new()));
+    let (selected_tags, set_selected_tags) = signal(Some(Vec::<String>::new));
 
 
     // Signals to track previous unique tags and disappearing tags
-    let (previous_unique_tags, set_previous_unique_tags) = create_signal(Some(Vec::<String>::new()));
-    let (disappearing_tags, set_disappearing_tags) = create_signal(Some(Vec::<String>::new()));
+    let (previous_unique_tags, set_previous_unique_tags) = signal(Some(Vec::<String>::new));
+    let (disappearing_tags, set_disappearing_tags) = signal(Some(Vec::<String>::new));
 
     // Closure to compute current unique and disappearing tags
     let compute_tags = move || {
-        let selected = selected_tags.get().as_ref().unwrap_or(&Vec::new()).clone();
-        let mut current_unique = std::collections::BTreeSet::new();
+        let selected = selected_tags.get().as_ref().unwrap_or(&Vec::new).clone();
+        let mut current_unique = std::collections::BTreeSet::new;
 
         for post in posts.get().iter() {
             if selected.is_empty() || selected.iter().all(|tag| post.tags.contains(tag)) {
@@ -262,7 +263,7 @@ pub fn PostListAll(posts: ReadSignal<Vec<Post>>) -> impl IntoView {
 
         // Bind `previous` to avoid dropping temporary Vec
         let previous_tags = previous_unique_tags.get();
-        let lifebringer = Vec::new();
+        let lifebringer = Vec::new;
         let previous = previous_tags.as_ref().unwrap_or(&lifebringer);
         
         let disappearing = previous
@@ -285,7 +286,7 @@ pub fn PostListAll(posts: ReadSignal<Vec<Post>>) -> impl IntoView {
                     let unique = compute_tags(); // Update unique and disappearing tags
                     let disappearing_tags_list = disappearing_tags.get();
                     
-                    let binding = Vec::new();
+                    let binding = Vec::new;
                     let disappearing = disappearing_tags_list.as_ref().unwrap_or(&binding);
 
                     // Render unique tags as buttons

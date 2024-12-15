@@ -1,5 +1,6 @@
-use leptos::*; 
-use leptos_router::Outlet;
+use leptos::*;
+use leptos::prelude::*; 
+use leptos_router::components::Outlet;
 #[component]
 pub fn Portf_writing() -> impl IntoView {
     // Define categories directly as a Vec<String>

@@ -1,0 +1,2818 @@
+home_portal v0.1.0 (/home/ghuber/dev/leptos/tfx_portal/pointseven)
+├── axum-extra feature "cookie"
+│   └── axum-extra v0.9.4
+│       ├── axum v0.7.9
+│       │   ├── tracing v0.1.40
+│       │   │   ├── tracing-core v0.1.32
+│       │   │   │   └── once_cell feature "default"
+│       │   │   │       ├── once_cell v1.20.2
+│       │   │   │       └── once_cell feature "std"
+│       │   │   │           ├── once_cell v1.20.2
+│       │   │   │           └── once_cell feature "alloc"
+│       │   │   │               ├── once_cell v1.20.2
+│       │   │   │               └── once_cell feature "race"
+│       │   │   │                   └── once_cell v1.20.2
+│       │   │   └── pin-project-lite feature "default"
+│       │   │       └── pin-project-lite v0.2.15
+│       │   ├── async-trait feature "default"
+│       │   │   └── async-trait v0.1.82 (proc-macro)
+│       │   │       ├── proc-macro2 feature "default"
+│       │   │       │   ├── proc-macro2 v1.0.92
+│       │   │       │   │   └── unicode-ident feature "default"
+│       │   │       │   │       └── unicode-ident v1.0.13
+│       │   │       │   └── proc-macro2 feature "proc-macro"
+│       │   │       │       └── proc-macro2 v1.0.92 (*)
+│       │   │       ├── quote feature "default"
+│       │   │       │   ├── quote v1.0.37
+│       │   │       │   │   └── proc-macro2 v1.0.92 (*)
+│       │   │       │   └── quote feature "proc-macro"
+│       │   │       │       ├── quote v1.0.37 (*)
+│       │   │       │       └── proc-macro2 feature "proc-macro" (*)
+│       │   │       ├── syn feature "full"
+│       │   │       │   └── syn v2.0.90
+│       │   │       │       ├── proc-macro2 v1.0.92 (*)
+│       │   │       │       ├── quote v1.0.37 (*)
+│       │   │       │       └── unicode-ident feature "default" (*)
+│       │   │       ├── syn feature "parsing"
+│       │   │       │   └── syn v2.0.90 (*)
+│       │   │       ├── syn feature "printing"
+│       │   │       │   └── syn v2.0.90 (*)
+│       │   │       ├── syn feature "proc-macro"
+│       │   │       │   ├── syn v2.0.90 (*)
+│       │   │       │   ├── proc-macro2 feature "proc-macro" (*)
+│       │   │       │   └── quote feature "proc-macro" (*)
+│       │   │       └── syn feature "visit-mut"
+│       │   │           └── syn v2.0.90 (*)
+│       │   ├── axum-core feature "default"
+│       │   │   └── axum-core v0.4.5
+│       │   │       ├── tracing v0.1.40 (*)
+│       │   │       ├── async-trait feature "default" (*)
+│       │   │       ├── bytes feature "default"
+│       │   │       │   ├── bytes v1.9.0
+│       │   │       │   └── bytes feature "std"
+│       │   │       │       └── bytes v1.9.0
+│       │   │       ├── futures-util feature "alloc"
+│       │   │       │   ├── futures-util v0.3.31
+│       │   │       │   │   ├── futures-core v0.3.31
+│       │   │       │   │   ├── futures-macro v0.3.31 (proc-macro)
+│       │   │       │   │   │   ├── proc-macro2 feature "default" (*)
+│       │   │       │   │   │   ├── quote feature "default" (*)
+│       │   │       │   │   │   ├── syn feature "default"
+│       │   │       │   │   │   │   ├── syn v2.0.90 (*)
+│       │   │       │   │   │   │   ├── syn feature "clone-impls"
+│       │   │       │   │   │   │   │   └── syn v2.0.90 (*)
+│       │   │       │   │   │   │   ├── syn feature "derive"
+│       │   │       │   │   │   │   │   └── syn v2.0.90 (*)
+│       │   │       │   │   │   │   ├── syn feature "parsing" (*)
+│       │   │       │   │   │   │   ├── syn feature "printing" (*)
+│       │   │       │   │   │   │   └── syn feature "proc-macro" (*)
+│       │   │       │   │   │   └── syn feature "full" (*)
+│       │   │       │   │   ├── futures-sink v0.3.31
+│       │   │       │   │   ├── futures-task v0.3.31
+│       │   │       │   │   ├── futures-channel feature "std"
+│       │   │       │   │   │   ├── futures-channel v0.3.31
+│       │   │       │   │   │   │   ├── futures-core v0.3.31
+│       │   │       │   │   │   │   └── futures-sink v0.3.31
+│       │   │       │   │   │   ├── futures-channel feature "alloc"
+│       │   │       │   │   │   │   ├── futures-channel v0.3.31 (*)
+│       │   │       │   │   │   │   └── futures-core feature "alloc"
+│       │   │       │   │   │   │       └── futures-core v0.3.31
+│       │   │       │   │   │   └── futures-core feature "std"
+│       │   │       │   │   │       ├── futures-core v0.3.31
+│       │   │       │   │   │       └── futures-core feature "alloc" (*)
+│       │   │       │   │   ├── futures-io feature "std"
+│       │   │       │   │   │   └── futures-io v0.3.31
+│       │   │       │   │   ├── memchr feature "default"
+│       │   │       │   │   │   ├── memchr v2.7.4
+│       │   │       │   │   │   └── memchr feature "std"
+│       │   │       │   │   │       ├── memchr v2.7.4
+│       │   │       │   │   │       └── memchr feature "alloc"
+│       │   │       │   │   │           └── memchr v2.7.4
+│       │   │       │   │   ├── pin-project-lite feature "default" (*)
+│       │   │       │   │   ├── pin-utils feature "default"
+│       │   │       │   │   │   └── pin-utils v0.1.0
+│       │   │       │   │   └── slab feature "default"
+│       │   │       │   │       ├── slab v0.4.9
+│       │   │       │   │       │   [build-dependencies]
+│       │   │       │   │       │   └── autocfg feature "default"
+│       │   │       │   │       │       └── autocfg v1.3.0
+│       │   │       │   │       └── slab feature "std"
+│       │   │       │   │           └── slab v0.4.9 (*)
+│       │   │       │   ├── futures-core feature "alloc" (*)
+│       │   │       │   └── futures-task feature "alloc"
+│       │   │       │       └── futures-task v0.3.31
+│       │   │       ├── pin-project-lite feature "default" (*)
+│       │   │       ├── http feature "default"
+│       │   │       │   ├── http v1.1.0
+│       │   │       │   │   ├── bytes feature "default" (*)
+│       │   │       │   │   ├── fnv feature "default"
+│       │   │       │   │   │   ├── fnv v1.0.7
+│       │   │       │   │   │   └── fnv feature "std"
+│       │   │       │   │   │       └── fnv v1.0.7
+│       │   │       │   │   └── itoa feature "default"
+│       │   │       │   │       └── itoa v1.0.11
+│       │   │       │   └── http feature "std"
+│       │   │       │       └── http v1.1.0 (*)
+│       │   │       ├── http-body feature "default"
+│       │   │       │   └── http-body v1.0.1
+│       │   │       │       ├── bytes feature "default" (*)
+│       │   │       │       └── http feature "default" (*)
+│       │   │       ├── http-body-util feature "default"
+│       │   │       │   └── http-body-util v0.1.2
+│       │   │       │       ├── futures-util v0.3.31 (*)
+│       │   │       │       ├── bytes feature "default" (*)
+│       │   │       │       ├── pin-project-lite feature "default" (*)
+│       │   │       │       ├── http feature "default" (*)
+│       │   │       │       └── http-body feature "default" (*)
+│       │   │       ├── mime feature "default"
+│       │   │       │   └── mime v0.3.17
+│       │   │       ├── rustversion feature "default"
+│       │   │       │   └── rustversion v1.0.17 (proc-macro)
+│       │   │       ├── sync_wrapper feature "default"
+│       │   │       │   └── sync_wrapper v1.0.1
+│       │   │       │       └── futures-core v0.3.31
+│       │   │       ├── tower-layer feature "default"
+│       │   │       │   └── tower-layer v0.3.3
+│       │   │       └── tower-service feature "default"
+│       │   │           └── tower-service v0.3.3
+│       │   ├── bytes feature "default" (*)
+│       │   ├── futures-util feature "alloc" (*)
+│       │   ├── memchr feature "default" (*)
+│       │   ├── pin-project-lite feature "default" (*)
+│       │   ├── http feature "default" (*)
+│       │   ├── itoa feature "default" (*)
+│       │   ├── http-body feature "default" (*)
+│       │   ├── http-body-util feature "default" (*)
+│       │   ├── mime feature "default" (*)
+│       │   ├── rustversion feature "default" (*)
+│       │   ├── sync_wrapper feature "default" (*)
+│       │   ├── tower-layer feature "default" (*)
+│       │   ├── tower-service feature "default" (*)
+│       │   ├── matchit feature "default"
+│       │   │   └── matchit v0.7.3
+│       │   ├── percent-encoding feature "default"
+│       │   │   ├── percent-encoding v2.3.1
+│       │   │   └── percent-encoding feature "std"
+│       │   │       ├── percent-encoding v2.3.1
+│       │   │       └── percent-encoding feature "alloc"
+│       │   │           └── percent-encoding v2.3.1
+│       │   ├── serde feature "default"
+│       │   │   ├── serde v1.0.210
+│       │   │   │   └── serde_derive feature "default"
+│       │   │   │       └── serde_derive v1.0.210 (proc-macro)
+│       │   │   │           ├── proc-macro2 feature "proc-macro" (*)
+│       │   │   │           ├── quote feature "proc-macro" (*)
+│       │   │   │           ├── syn feature "clone-impls" (*)
+│       │   │   │           ├── syn feature "derive" (*)
+│       │   │   │           ├── syn feature "parsing" (*)
+│       │   │   │           ├── syn feature "printing" (*)
+│       │   │   │           └── syn feature "proc-macro" (*)
+│       │   │   └── serde feature "std"
+│       │   │       └── serde v1.0.210 (*)
+│       │   └── tower feature "util"
+│       │       ├── tower v0.5.1
+│       │       │   ├── futures-util feature "alloc" (*)
+│       │       │   ├── futures-core feature "default"
+│       │       │   │   ├── futures-core v0.3.31
+│       │       │   │   └── futures-core feature "std" (*)
+│       │       │   ├── pin-project-lite feature "default" (*)
+│       │       │   ├── tower-layer feature "default" (*)
+│       │       │   ├── tower-service feature "default" (*)
+│       │       │   └── sync_wrapper feature "default"
+│       │       │       └── sync_wrapper v0.1.2
+│       │       ├── tower feature "__common"
+│       │       │   ├── tower v0.5.1 (*)
+│       │       │   ├── tower feature "futures-core"
+│       │       │   │   └── tower v0.5.1 (*)
+│       │       │   └── tower feature "pin-project-lite"
+│       │       │       └── tower v0.5.1 (*)
+│       │       ├── tower feature "futures-util"
+│       │       │   └── tower v0.5.1 (*)
+│       │       ├── tower feature "pin-project-lite" (*)
+│       │       └── tower feature "sync_wrapper"
+│       │           └── tower v0.5.1 (*)
+│       ├── tracing v0.1.40 (*)
+│       ├── axum-core feature "default" (*)
+│       ├── bytes feature "default" (*)
+│       ├── futures-util feature "alloc" (*)
+│       ├── pin-project-lite feature "default" (*)
+│       ├── http feature "default" (*)
+│       ├── http-body feature "default" (*)
+│       ├── http-body-util feature "default" (*)
+│       ├── mime feature "default" (*)
+│       ├── tower-layer feature "default" (*)
+│       ├── tower-service feature "default" (*)
+│       ├── serde feature "default" (*)
+│       ├── tower feature "util" (*)
+│       ├── cookie feature "default"
+│       │   └── cookie v0.18.1
+│       │       ├── percent-encoding feature "default" (*)
+│       │       ├── time feature "formatting"
+│       │       │   ├── time v0.3.36
+│       │       │   │   ├── powerfmt v0.2.0
+│       │       │   │   ├── itoa feature "default" (*)
+│       │       │   │   ├── deranged feature "powerfmt"
+│       │       │   │   │   └── deranged v0.3.11
+│       │       │   │   │       └── powerfmt v0.2.0
+│       │       │   │   ├── num-conv feature "default"
+│       │       │   │   │   └── num-conv v0.1.0
+│       │       │   │   ├── time-core feature "default"
+│       │       │   │   │   └── time-core v0.1.2
+│       │       │   │   └── time-macros feature "default"
+│       │       │   │       └── time-macros v0.2.18 (proc-macro)
+│       │       │   │           ├── num-conv feature "default" (*)
+│       │       │   │           └── time-core feature "default" (*)
+│       │       │   ├── time feature "std"
+│       │       │   │   ├── time v0.3.36 (*)
+│       │       │   │   ├── time feature "alloc"
+│       │       │   │   │   └── time v0.3.36 (*)
+│       │       │   │   └── deranged feature "std"
+│       │       │   │       ├── deranged v0.3.11 (*)
+│       │       │   │       └── deranged feature "alloc"
+│       │       │   │           └── deranged v0.3.11 (*)
+│       │       │   └── time-macros feature "formatting"
+│       │       │       └── time-macros v0.2.18 (proc-macro) (*)
+│       │       ├── time feature "macros"
+│       │       │   └── time v0.3.36 (*)
+│       │       ├── time feature "parsing"
+│       │       │   ├── time v0.3.36 (*)
+│       │       │   └── time-macros feature "parsing"
+│       │       │       └── time-macros v0.2.18 (proc-macro) (*)
+│       │       └── time feature "std" (*)
+│       │       [build-dependencies]
+│       │       └── version_check feature "default"
+│       │           └── version_check v0.9.5
+│       └── cookie feature "percent-encode"
+│           ├── cookie v0.18.1 (*)
+│           └── cookie feature "percent-encoding"
+│               └── cookie v0.18.1 (*)
+├── axum-extra feature "default"
+│   ├── axum-extra v0.9.4 (*)
+│   └── axum-extra feature "tracing"
+│       ├── axum-extra v0.9.4 (*)
+│       ├── axum feature "tracing"
+│       │   ├── axum v0.7.9 (*)
+│       │   └── axum-core feature "tracing"
+│       │       └── axum-core v0.4.5 (*)
+│       └── axum-core feature "tracing" (*)
+├── http feature "default" (*)
+├── serde feature "default" (*)
+├── cookie feature "default" (*)
+├── time feature "default"
+│   ├── time v0.3.36 (*)
+│   └── time feature "std" (*)
+├── base64 feature "default"
+│   ├── base64 v0.22.1
+│   └── base64 feature "std"
+│       ├── base64 v0.22.1
+│       └── base64 feature "alloc"
+│           └── base64 v0.22.1
+├── console_error_panic_hook feature "default"
+│   └── console_error_panic_hook v0.1.7
+│       ├── cfg-if feature "default"
+│       │   └── cfg-if v1.0.0
+│       └── wasm-bindgen feature "default"
+│           ├── wasm-bindgen v0.2.99
+│           │   ├── once_cell v1.20.2
+│           │   ├── wasm-bindgen-macro v0.2.99 (proc-macro)
+│           │   │   ├── wasm-bindgen-macro-support v0.2.99
+│           │   │   │   ├── wasm-bindgen-backend v0.2.99
+│           │   │   │   │   ├── proc-macro2 feature "default" (*)
+│           │   │   │   │   ├── quote feature "default" (*)
+│           │   │   │   │   ├── syn feature "default" (*)
+│           │   │   │   │   ├── syn feature "full" (*)
+│           │   │   │   │   ├── bumpalo feature "default"
+│           │   │   │   │   │   └── bumpalo v3.16.0
+│           │   │   │   │   ├── log feature "default"
+│           │   │   │   │   │   └── log v0.4.22
+│           │   │   │   │   └── wasm-bindgen-shared feature "default"
+│           │   │   │   │       └── wasm-bindgen-shared v0.2.99
+│           │   │   │   ├── proc-macro2 feature "default" (*)
+│           │   │   │   ├── quote feature "default" (*)
+│           │   │   │   ├── syn feature "default" (*)
+│           │   │   │   ├── syn feature "full" (*)
+│           │   │   │   ├── syn feature "visit"
+│           │   │   │   │   └── syn v2.0.90 (*)
+│           │   │   │   ├── syn feature "visit-mut" (*)
+│           │   │   │   └── wasm-bindgen-shared feature "default" (*)
+│           │   │   └── quote feature "default" (*)
+│           │   └── cfg-if feature "default" (*)
+│           ├── wasm-bindgen feature "spans"
+│           │   ├── wasm-bindgen v0.2.99 (*)
+│           │   └── wasm-bindgen-macro feature "spans"
+│           │       ├── wasm-bindgen-macro v0.2.99 (proc-macro) (*)
+│           │       └── wasm-bindgen-macro-support feature "spans"
+│           │           ├── wasm-bindgen-macro-support v0.2.99 (*)
+│           │           └── wasm-bindgen-backend feature "spans"
+│           │               └── wasm-bindgen-backend v0.2.99 (*)
+│           └── wasm-bindgen feature "std"
+│               ├── wasm-bindgen v0.2.99 (*)
+│               ├── once_cell feature "std" (*)
+│               └── wasm-bindgen-macro feature "std"
+│                   ├── wasm-bindgen-macro v0.2.99 (proc-macro) (*)
+│                   └── wasm-bindgen-macro-support feature "std"
+│                       ├── wasm-bindgen-macro-support v0.2.99 (*)
+│                       └── wasm-bindgen-backend feature "std"
+│                           └── wasm-bindgen-backend v0.2.99 (*)
+├── wasm-bindgen feature "default" (*)
+├── console_log feature "default"
+│   └── console_log v0.2.2
+│       ├── log feature "default"
+│       │   └── log v0.4.22
+│       ├── web-sys feature "console"
+│       │   └── web-sys v0.3.76
+│       │       ├── js-sys v0.3.76
+│       │       │   ├── once_cell v1.20.2
+│       │       │   └── wasm-bindgen v0.2.99 (*)
+│       │       └── wasm-bindgen v0.2.99 (*)
+│       └── web-sys feature "default"
+│           ├── web-sys v0.3.76 (*)
+│           └── web-sys feature "std"
+│               ├── web-sys v0.3.76 (*)
+│               ├── wasm-bindgen feature "std" (*)
+│               └── js-sys feature "std"
+│                   ├── js-sys v0.3.76 (*)
+│                   └── wasm-bindgen feature "std" (*)
+├── log feature "default" (*)
+├── web-sys feature "Storage"
+│   └── web-sys v0.3.76 (*)
+├── web-sys feature "Window"
+│   ├── web-sys v0.3.76 (*)
+│   └── web-sys feature "EventTarget"
+│       └── web-sys v0.3.76 (*)
+├── web-sys feature "default" (*)
+├── env_logger feature "default"
+│   ├── env_logger v0.9.3
+│   │   ├── log feature "default" (*)
+│   │   ├── log feature "std"
+│   │   │   └── log v0.4.22
+│   │   ├── atty feature "default"
+│   │   │   └── atty v0.2.14
+│   │   │       └── libc v0.2.158
+│   │   ├── humantime feature "default"
+│   │   │   └── humantime v2.1.0
+│   │   ├── regex feature "perf"
+│   │   │   ├── regex v1.11.1
+│   │   │   │   ├── aho-corasick v1.1.3
+│   │   │   │   │   └── memchr v2.7.4
+│   │   │   │   ├── memchr v2.7.4
+│   │   │   │   ├── regex-syntax v0.8.5
+│   │   │   │   ├── regex-automata feature "alloc"
+│   │   │   │   │   └── regex-automata v0.4.9
+│   │   │   │   │       ├── aho-corasick v1.1.3 (*)
+│   │   │   │   │       ├── memchr v2.7.4
+│   │   │   │   │       └── regex-syntax v0.8.5
+│   │   │   │   ├── regex-automata feature "meta"
+│   │   │   │   │   ├── regex-automata v0.4.9 (*)
+│   │   │   │   │   ├── regex-automata feature "nfa-pikevm"
+│   │   │   │   │   │   ├── regex-automata v0.4.9 (*)
+│   │   │   │   │   │   └── regex-automata feature "nfa-thompson"
+│   │   │   │   │   │       ├── regex-automata v0.4.9 (*)
+│   │   │   │   │   │       └── regex-automata feature "alloc" (*)
+│   │   │   │   │   └── regex-automata feature "syntax"
+│   │   │   │   │       ├── regex-automata v0.4.9 (*)
+│   │   │   │   │       └── regex-automata feature "alloc" (*)
+│   │   │   │   ├── regex-automata feature "nfa-pikevm" (*)
+│   │   │   │   └── regex-automata feature "syntax" (*)
+│   │   │   ├── regex feature "perf-backtrack"
+│   │   │   │   ├── regex v1.11.1 (*)
+│   │   │   │   └── regex-automata feature "nfa-backtrack"
+│   │   │   │       ├── regex-automata v0.4.9 (*)
+│   │   │   │       └── regex-automata feature "nfa-thompson" (*)
+│   │   │   ├── regex feature "perf-cache"
+│   │   │   │   └── regex v1.11.1 (*)
+│   │   │   ├── regex feature "perf-dfa"
+│   │   │   │   ├── regex v1.11.1 (*)
+│   │   │   │   └── regex-automata feature "hybrid"
+│   │   │   │       ├── regex-automata v0.4.9 (*)
+│   │   │   │       ├── regex-automata feature "alloc" (*)
+│   │   │   │       └── regex-automata feature "nfa-thompson" (*)
+│   │   │   ├── regex feature "perf-inline"
+│   │   │   │   ├── regex v1.11.1 (*)
+│   │   │   │   └── regex-automata feature "perf-inline"
+│   │   │   │       └── regex-automata v0.4.9 (*)
+│   │   │   ├── regex feature "perf-literal"
+│   │   │   │   ├── regex v1.11.1 (*)
+│   │   │   │   └── regex-automata feature "perf-literal"
+│   │   │   │       ├── regex-automata v0.4.9 (*)
+│   │   │   │       ├── regex-automata feature "perf-literal-multisubstring"
+│   │   │   │       │   ├── regex-automata v0.4.9 (*)
+│   │   │   │       │   └── regex-automata feature "std"
+│   │   │   │       │       ├── regex-automata v0.4.9 (*)
+│   │   │   │       │       ├── memchr feature "std" (*)
+│   │   │   │       │       ├── aho-corasick feature "std"
+│   │   │   │       │       │   ├── aho-corasick v1.1.3 (*)
+│   │   │   │       │       │   └── memchr feature "std" (*)
+│   │   │   │       │       ├── regex-automata feature "alloc" (*)
+│   │   │   │       │       └── regex-syntax feature "std"
+│   │   │   │       │           └── regex-syntax v0.8.5
+│   │   │   │       └── regex-automata feature "perf-literal-substring"
+│   │   │   │           ├── regex-automata v0.4.9 (*)
+│   │   │   │           └── aho-corasick feature "perf-literal"
+│   │   │   │               └── aho-corasick v1.1.3 (*)
+│   │   │   └── regex feature "perf-onepass"
+│   │   │       ├── regex v1.11.1 (*)
+│   │   │       └── regex-automata feature "dfa-onepass"
+│   │   │           ├── regex-automata v0.4.9 (*)
+│   │   │           └── regex-automata feature "nfa-thompson" (*)
+│   │   ├── regex feature "std"
+│   │   │   ├── regex v1.11.1 (*)
+│   │   │   ├── memchr feature "std" (*)
+│   │   │   ├── aho-corasick feature "std" (*)
+│   │   │   ├── regex-automata feature "std" (*)
+│   │   │   └── regex-syntax feature "std" (*)
+│   │   └── termcolor feature "default"
+│   │       └── termcolor v1.4.1
+│   ├── env_logger feature "atty"
+│   │   └── env_logger v0.9.3 (*)
+│   ├── env_logger feature "humantime"
+│   │   └── env_logger v0.9.3 (*)
+│   ├── env_logger feature "regex"
+│   │   └── env_logger v0.9.3 (*)
+│   └── env_logger feature "termcolor"
+│       └── env_logger v0.9.3 (*)
+├── regex feature "default"
+│   ├── regex v1.11.1 (*)
+│   ├── regex feature "perf" (*)
+│   ├── regex feature "std" (*)
+│   ├── regex feature "unicode"
+│   │   ├── regex v1.11.1 (*)
+│   │   ├── regex feature "unicode-age"
+│   │   │   ├── regex v1.11.1 (*)
+│   │   │   ├── regex-automata feature "unicode-age"
+│   │   │   │   ├── regex-automata v0.4.9 (*)
+│   │   │   │   └── regex-syntax feature "unicode-age"
+│   │   │   │       └── regex-syntax v0.8.5
+│   │   │   └── regex-syntax feature "unicode-age" (*)
+│   │   ├── regex feature "unicode-bool"
+│   │   │   ├── regex v1.11.1 (*)
+│   │   │   ├── regex-automata feature "unicode-bool"
+│   │   │   │   ├── regex-automata v0.4.9 (*)
+│   │   │   │   └── regex-syntax feature "unicode-bool"
+│   │   │   │       └── regex-syntax v0.8.5
+│   │   │   └── regex-syntax feature "unicode-bool" (*)
+│   │   ├── regex feature "unicode-case"
+│   │   │   ├── regex v1.11.1 (*)
+│   │   │   ├── regex-automata feature "unicode-case"
+│   │   │   │   ├── regex-automata v0.4.9 (*)
+│   │   │   │   └── regex-syntax feature "unicode-case"
+│   │   │   │       └── regex-syntax v0.8.5
+│   │   │   └── regex-syntax feature "unicode-case" (*)
+│   │   ├── regex feature "unicode-gencat"
+│   │   │   ├── regex v1.11.1 (*)
+│   │   │   ├── regex-automata feature "unicode-gencat"
+│   │   │   │   ├── regex-automata v0.4.9 (*)
+│   │   │   │   └── regex-syntax feature "unicode-gencat"
+│   │   │   │       └── regex-syntax v0.8.5
+│   │   │   └── regex-syntax feature "unicode-gencat" (*)
+│   │   ├── regex feature "unicode-perl"
+│   │   │   ├── regex v1.11.1 (*)
+│   │   │   ├── regex-automata feature "unicode-perl"
+│   │   │   │   ├── regex-automata v0.4.9 (*)
+│   │   │   │   └── regex-syntax feature "unicode-perl"
+│   │   │   │       └── regex-syntax v0.8.5
+│   │   │   ├── regex-automata feature "unicode-word-boundary"
+│   │   │   │   └── regex-automata v0.4.9 (*)
+│   │   │   └── regex-syntax feature "unicode-perl" (*)
+│   │   ├── regex feature "unicode-script"
+│   │   │   ├── regex v1.11.1 (*)
+│   │   │   ├── regex-automata feature "unicode-script"
+│   │   │   │   ├── regex-automata v0.4.9 (*)
+│   │   │   │   └── regex-syntax feature "unicode-script"
+│   │   │   │       └── regex-syntax v0.8.5
+│   │   │   └── regex-syntax feature "unicode-script" (*)
+│   │   ├── regex feature "unicode-segment"
+│   │   │   ├── regex v1.11.1 (*)
+│   │   │   ├── regex-automata feature "unicode-segment"
+│   │   │   │   ├── regex-automata v0.4.9 (*)
+│   │   │   │   └── regex-syntax feature "unicode-segment"
+│   │   │   │       └── regex-syntax v0.8.5
+│   │   │   └── regex-syntax feature "unicode-segment" (*)
+│   │   ├── regex-automata feature "unicode"
+│   │   │   ├── regex-automata v0.4.9 (*)
+│   │   │   ├── regex-automata feature "unicode-age" (*)
+│   │   │   ├── regex-automata feature "unicode-bool" (*)
+│   │   │   ├── regex-automata feature "unicode-case" (*)
+│   │   │   ├── regex-automata feature "unicode-gencat" (*)
+│   │   │   ├── regex-automata feature "unicode-perl" (*)
+│   │   │   ├── regex-automata feature "unicode-script" (*)
+│   │   │   ├── regex-automata feature "unicode-segment" (*)
+│   │   │   ├── regex-automata feature "unicode-word-boundary" (*)
+│   │   │   └── regex-syntax feature "unicode"
+│   │   │       ├── regex-syntax v0.8.5
+│   │   │       ├── regex-syntax feature "unicode-age" (*)
+│   │   │       ├── regex-syntax feature "unicode-bool" (*)
+│   │   │       ├── regex-syntax feature "unicode-case" (*)
+│   │   │       ├── regex-syntax feature "unicode-gencat" (*)
+│   │   │       ├── regex-syntax feature "unicode-perl" (*)
+│   │   │       ├── regex-syntax feature "unicode-script" (*)
+│   │   │       └── regex-syntax feature "unicode-segment" (*)
+│   │   └── regex-syntax feature "unicode" (*)
+│   └── regex-syntax feature "default"
+│       ├── regex-syntax v0.8.5
+│       ├── regex-syntax feature "std" (*)
+│       └── regex-syntax feature "unicode" (*)
+├── gloo-timers feature "default"
+│   └── gloo-timers v0.3.0
+│       ├── wasm-bindgen feature "default" (*)
+│       └── js-sys feature "default"
+│           ├── js-sys v0.3.76 (*)
+│           └── js-sys feature "std" (*)
+├── leptos feature "default"
+│   └── leptos v0.7.0
+│       ├── serde feature "default" (*)
+│       ├── cfg-if feature "default" (*)
+│       ├── wasm-bindgen feature "default" (*)
+│       ├── web-sys feature "ShadowRoot"
+│       │   ├── web-sys v0.3.76 (*)
+│       │   ├── web-sys feature "DocumentFragment"
+│       │   │   ├── web-sys v0.3.76 (*)
+│       │   │   ├── web-sys feature "EventTarget" (*)
+│       │   │   └── web-sys feature "Node"
+│       │   │       ├── web-sys v0.3.76 (*)
+│       │   │       └── web-sys feature "EventTarget" (*)
+│       │   ├── web-sys feature "EventTarget" (*)
+│       │   └── web-sys feature "Node" (*)
+│       ├── web-sys feature "ShadowRootInit"
+│       │   └── web-sys v0.3.76 (*)
+│       ├── web-sys feature "ShadowRootMode"
+│       │   └── web-sys v0.3.76 (*)
+│       ├── web-sys feature "default" (*)
+│       ├── any_spawner feature "default"
+│       │   └── any_spawner v0.2.0
+│       │       ├── futures feature "default"
+│       │       │   ├── futures v0.3.31
+│       │       │   │   ├── futures-core v0.3.31
+│       │       │   │   ├── futures-executor v0.3.31
+│       │       │   │   │   ├── futures-core v0.3.31
+│       │       │   │   │   ├── futures-task v0.3.31
+│       │       │   │   │   ├── futures-util v0.3.31 (*)
+│       │       │   │   │   └── num_cpus feature "default"
+│       │       │   │   │       └── num_cpus v1.16.0
+│       │       │   │   │           └── libc feature "default"
+│       │       │   │   │               ├── libc v0.2.158
+│       │       │   │   │               └── libc feature "std"
+│       │       │   │   │                   └── libc v0.2.158
+│       │       │   │   ├── futures-io v0.3.31
+│       │       │   │   ├── futures-sink v0.3.31
+│       │       │   │   ├── futures-task v0.3.31
+│       │       │   │   ├── futures-util feature "sink"
+│       │       │   │   │   ├── futures-util v0.3.31 (*)
+│       │       │   │   │   └── futures-util feature "futures-sink"
+│       │       │   │   │       └── futures-util v0.3.31 (*)
+│       │       │   │   └── futures-channel feature "sink"
+│       │       │   │       ├── futures-channel v0.3.31 (*)
+│       │       │   │       └── futures-channel feature "futures-sink"
+│       │       │   │           └── futures-channel v0.3.31 (*)
+│       │       │   ├── futures feature "async-await"
+│       │       │   │   ├── futures v0.3.31 (*)
+│       │       │   │   ├── futures-util feature "async-await"
+│       │       │   │   │   └── futures-util v0.3.31 (*)
+│       │       │   │   └── futures-util feature "async-await-macro"
+│       │       │   │       ├── futures-util v0.3.31 (*)
+│       │       │   │       ├── futures-util feature "async-await" (*)
+│       │       │   │       └── futures-util feature "futures-macro"
+│       │       │   │           └── futures-util v0.3.31 (*)
+│       │       │   ├── futures feature "executor"
+│       │       │   │   ├── futures v0.3.31 (*)
+│       │       │   │   ├── futures feature "futures-executor"
+│       │       │   │   │   └── futures v0.3.31 (*)
+│       │       │   │   ├── futures feature "std"
+│       │       │   │   │   ├── futures v0.3.31 (*)
+│       │       │   │   │   ├── futures-util feature "channel"
+│       │       │   │   │   │   ├── futures-util v0.3.31 (*)
+│       │       │   │   │   │   ├── futures-util feature "futures-channel"
+│       │       │   │   │   │   │   └── futures-util v0.3.31 (*)
+│       │       │   │   │   │   └── futures-util feature "std"
+│       │       │   │   │   │       ├── futures-util v0.3.31 (*)
+│       │       │   │   │   │       ├── futures-util feature "alloc" (*)
+│       │       │   │   │   │       ├── futures-util feature "slab"
+│       │       │   │   │   │       │   └── futures-util v0.3.31 (*)
+│       │       │   │   │   │       ├── futures-core feature "std" (*)
+│       │       │   │   │   │       └── futures-task feature "std"
+│       │       │   │   │   │           ├── futures-task v0.3.31
+│       │       │   │   │   │           └── futures-task feature "alloc" (*)
+│       │       │   │   │   ├── futures-util feature "io"
+│       │       │   │   │   │   ├── futures-util v0.3.31 (*)
+│       │       │   │   │   │   ├── futures-util feature "futures-io"
+│       │       │   │   │   │   │   └── futures-util v0.3.31 (*)
+│       │       │   │   │   │   ├── futures-util feature "memchr"
+│       │       │   │   │   │   │   └── futures-util v0.3.31 (*)
+│       │       │   │   │   │   └── futures-util feature "std" (*)
+│       │       │   │   │   ├── futures-util feature "std" (*)
+│       │       │   │   │   ├── futures-core feature "std" (*)
+│       │       │   │   │   ├── futures-sink feature "std"
+│       │       │   │   │   │   ├── futures-sink v0.3.31
+│       │       │   │   │   │   └── futures-sink feature "alloc"
+│       │       │   │   │   │       └── futures-sink v0.3.31
+│       │       │   │   │   ├── futures-io feature "std" (*)
+│       │       │   │   │   ├── futures-task feature "std" (*)
+│       │       │   │   │   └── futures feature "alloc"
+│       │       │   │   │       ├── futures v0.3.31 (*)
+│       │       │   │   │       ├── futures-util feature "alloc" (*)
+│       │       │   │   │       ├── futures-channel feature "alloc" (*)
+│       │       │   │   │       ├── futures-core feature "alloc" (*)
+│       │       │   │   │       ├── futures-sink feature "alloc" (*)
+│       │       │   │   │       └── futures-task feature "alloc" (*)
+│       │       │   │   └── futures-executor feature "std"
+│       │       │   │       ├── futures-executor v0.3.31 (*)
+│       │       │   │       ├── futures-util feature "std" (*)
+│       │       │   │       ├── futures-core feature "std" (*)
+│       │       │   │       └── futures-task feature "std" (*)
+│       │       │   └── futures feature "std" (*)
+│       │       ├── thiserror feature "default"
+│       │       │   ├── thiserror v2.0.7
+│       │       │   │   └── thiserror-impl feature "default"
+│       │       │   │       └── thiserror-impl v2.0.7 (proc-macro)
+│       │       │   │           ├── proc-macro2 feature "default" (*)
+│       │       │   │           ├── quote feature "default" (*)
+│       │       │   │           └── syn feature "default" (*)
+│       │       │   └── thiserror feature "std"
+│       │       │       └── thiserror v2.0.7 (*)
+│       │       └── wasm-bindgen-futures feature "default"
+│       │           ├── wasm-bindgen-futures v0.4.49
+│       │           │   ├── js-sys v0.3.76 (*)
+│       │           │   ├── once_cell v1.20.2
+│       │           │   ├── wasm-bindgen v0.2.99 (*)
+│       │           │   └── cfg-if feature "default" (*)
+│       │           └── wasm-bindgen-futures feature "std"
+│       │               ├── wasm-bindgen-futures v0.4.49 (*)
+│       │               ├── once_cell feature "std" (*)
+│       │               ├── wasm-bindgen feature "std" (*)
+│       │               └── js-sys feature "std" (*)
+│       ├── any_spawner feature "futures-executor"
+│       │   ├── any_spawner v0.2.0 (*)
+│       │   ├── futures feature "executor" (*)
+│       │   └── futures feature "thread-pool"
+│       │       ├── futures v0.3.31 (*)
+│       │       ├── futures feature "executor" (*)
+│       │       ├── futures feature "futures-executor" (*)
+│       │       └── futures-executor feature "thread-pool"
+│       │           ├── futures-executor v0.3.31 (*)
+│       │           ├── futures-executor feature "num_cpus"
+│       │           │   └── futures-executor v0.3.31 (*)
+│       │           └── futures-executor feature "std" (*)
+│       ├── any_spawner feature "wasm-bindgen"
+│       │   └── any_spawner v0.2.0 (*)
+│       ├── futures feature "default" (*)
+│       ├── thiserror feature "default" (*)
+│       ├── either_of feature "default"
+│       │   └── either_of v0.1.1
+│       │       └── pin-project-lite feature "default" (*)
+│       ├── hydration_context feature "default"
+│       │   └── hydration_context v0.2.0
+│       │       ├── pin-project-lite feature "default" (*)
+│       │       ├── once_cell feature "default" (*)
+│       │       ├── serde feature "default" (*)
+│       │       ├── serde feature "derive"
+│       │       │   ├── serde v1.0.210 (*)
+│       │       │   └── serde feature "serde_derive"
+│       │       │       └── serde v1.0.210 (*)
+│       │       ├── wasm-bindgen feature "default" (*)
+│       │       ├── js-sys feature "default" (*)
+│       │       ├── futures feature "default" (*)
+│       │       ├── or_poisoned feature "default"
+│       │       │   └── or_poisoned v0.1.0
+│       │       └── throw_error feature "default"
+│       │           └── throw_error v0.2.0
+│       │               └── pin-project-lite feature "default" (*)
+│       ├── or_poisoned feature "default" (*)
+│       ├── throw_error feature "default" (*)
+│       ├── leptos_config feature "default"
+│       │   └── leptos_config v0.7.0
+│       │       ├── serde feature "default" (*)
+│       │       ├── serde feature "derive" (*)
+│       │       ├── serde feature "rc"
+│       │       │   └── serde v1.0.210 (*)
+│       │       ├── regex feature "default" (*)
+│       │       ├── thiserror feature "default" (*)
+│       │       ├── config feature "convert-case"
+│       │       │   ├── config v0.14.1
+│       │       │   │   ├── serde feature "default" (*)
+│       │       │   │   ├── convert_case feature "default"
+│       │       │   │   │   └── convert_case v0.6.0
+│       │       │   │   │       └── unicode-segmentation feature "default"
+│       │       │   │   │           └── unicode-segmentation v1.11.0
+│       │       │   │   ├── nom feature "default"
+│       │       │   │   │   ├── nom v7.1.3
+│       │       │   │   │   │   ├── memchr v2.7.4
+│       │       │   │   │   │   └── minimal-lexical v0.2.1
+│       │       │   │   │   └── nom feature "std"
+│       │       │   │   │       ├── nom v7.1.3 (*)
+│       │       │   │   │       ├── memchr feature "std" (*)
+│       │       │   │   │       ├── nom feature "alloc"
+│       │       │   │   │       │   └── nom v7.1.3 (*)
+│       │       │   │   │       └── minimal-lexical feature "std"
+│       │       │   │   │           └── minimal-lexical v0.2.1
+│       │       │   │   ├── pathdiff feature "default"
+│       │       │   │   │   └── pathdiff v0.2.1
+│       │       │   │   └── toml feature "default"
+│       │       │   │       ├── toml v0.8.19
+│       │       │   │       │   ├── serde feature "default" (*)
+│       │       │   │       │   ├── serde_spanned feature "default"
+│       │       │   │       │   │   └── serde_spanned v0.6.7
+│       │       │   │       │   │       └── serde feature "default" (*)
+│       │       │   │       │   ├── serde_spanned feature "serde"
+│       │       │   │       │   │   └── serde_spanned v0.6.7 (*)
+│       │       │   │       │   ├── toml_datetime feature "default"
+│       │       │   │       │   │   └── toml_datetime v0.6.8
+│       │       │   │       │   │       └── serde feature "default" (*)
+│       │       │   │       │   ├── toml_datetime feature "serde"
+│       │       │   │       │   │   └── toml_datetime v0.6.8 (*)
+│       │       │   │       │   └── toml_edit feature "serde"
+│       │       │   │       │       ├── toml_edit v0.22.20
+│       │       │   │       │       │   ├── serde feature "default" (*)
+│       │       │   │       │       │   ├── serde_spanned feature "default" (*)
+│       │       │   │       │       │   ├── serde_spanned feature "serde" (*)
+│       │       │   │       │       │   ├── toml_datetime feature "default" (*)
+│       │       │   │       │       │   ├── indexmap feature "default"
+│       │       │   │       │       │   │   ├── indexmap v2.7.0
+│       │       │   │       │       │   │   │   ├── equivalent v1.0.1
+│       │       │   │       │       │   │   │   └── hashbrown v0.15.2
+│       │       │   │       │       │   │   └── indexmap feature "std"
+│       │       │   │       │       │   │       └── indexmap v2.7.0 (*)
+│       │       │   │       │       │   ├── indexmap feature "std" (*)
+│       │       │   │       │       │   └── winnow feature "default"
+│       │       │   │       │       │       ├── winnow v0.6.18
+│       │       │   │       │       │       └── winnow feature "std"
+│       │       │   │       │       │           ├── winnow v0.6.18
+│       │       │   │       │       │           └── winnow feature "alloc"
+│       │       │   │       │       │               └── winnow v0.6.18
+│       │       │   │       │       └── toml_datetime feature "serde" (*)
+│       │       │   │       ├── toml feature "display"
+│       │       │   │       │   ├── toml v0.8.19 (*)
+│       │       │   │       │   └── toml_edit feature "display"
+│       │       │   │       │       └── toml_edit v0.22.20 (*)
+│       │       │   │       └── toml feature "parse"
+│       │       │   │           ├── toml v0.8.19 (*)
+│       │       │   │           └── toml_edit feature "parse"
+│       │       │   │               └── toml_edit v0.22.20 (*)
+│       │       │   └── config feature "convert_case"
+│       │       │       └── config v0.14.1 (*)
+│       │       ├── config feature "toml"
+│       │       │   └── config v0.14.1 (*)
+│       │       └── typed-builder feature "default"
+│       │           └── typed-builder v0.20.0
+│       │               └── typed-builder-macro feature "default"
+│       │                   └── typed-builder-macro v0.20.0 (proc-macro)
+│       │                       ├── proc-macro2 feature "default" (*)
+│       │                       ├── quote feature "default" (*)
+│       │                       ├── syn feature "default" (*)
+│       │                       ├── syn feature "extra-traits"
+│       │                       │   └── syn v2.0.90 (*)
+│       │                       └── syn feature "full" (*)
+│       ├── typed-builder feature "default" (*)
+│       ├── typed-builder-macro feature "default" (*)
+│       ├── leptos_dom feature "default"
+│       │   └── leptos_dom v0.7.0
+│       │       ├── wasm-bindgen feature "default" (*)
+│       │       ├── web-sys feature "Location"
+│       │       │   └── web-sys v0.3.76 (*)
+│       │       ├── web-sys feature "default" (*)
+│       │       ├── js-sys feature "default" (*)
+│       │       ├── or_poisoned feature "default" (*)
+│       │       ├── reactive_graph feature "default"
+│       │       │   └── reactive_graph v0.1.0
+│       │       │       ├── pin-project-lite feature "default" (*)
+│       │       │       ├── serde feature "default" (*)
+│       │       │       ├── serde feature "derive" (*)
+│       │       │       ├── any_spawner feature "default" (*)
+│       │       │       ├── futures feature "default" (*)
+│       │       │       ├── thiserror feature "default" (*)
+│       │       │       ├── hydration_context feature "default" (*)
+│       │       │       ├── or_poisoned feature "default" (*)
+│       │       │       ├── async-lock feature "default"
+│       │       │       │   ├── async-lock v3.4.0
+│       │       │       │   │   ├── event-listener v5.3.1
+│       │       │       │   │   │   ├── concurrent-queue v2.5.0
+│       │       │       │   │   │   │   └── crossbeam-utils v0.8.20
+│       │       │       │   │   │   ├── pin-project-lite feature "default" (*)
+│       │       │       │   │   │   └── parking feature "default"
+│       │       │       │   │   │       └── parking v2.2.1
+│       │       │       │   │   ├── event-listener-strategy v0.5.3
+│       │       │       │   │   │   ├── event-listener v5.3.1 (*)
+│       │       │       │   │   │   └── pin-project-lite feature "default" (*)
+│       │       │       │   │   └── pin-project-lite feature "default" (*)
+│       │       │       │   └── async-lock feature "std"
+│       │       │       │       ├── async-lock v3.4.0 (*)
+│       │       │       │       ├── event-listener feature "std"
+│       │       │       │       │   ├── event-listener v5.3.1 (*)
+│       │       │       │       │   ├── event-listener feature "parking"
+│       │       │       │       │   │   └── event-listener v5.3.1 (*)
+│       │       │       │       │   └── concurrent-queue feature "std"
+│       │       │       │       │       └── concurrent-queue v2.5.0 (*)
+│       │       │       │       └── event-listener-strategy feature "std"
+│       │       │       │           ├── event-listener-strategy v0.5.3 (*)
+│       │       │       │           └── event-listener feature "std" (*)
+│       │       │       ├── guardian feature "default"
+│       │       │       │   └── guardian v1.2.0
+│       │       │       ├── rustc-hash feature "default"
+│       │       │       │   ├── rustc-hash v2.1.0
+│       │       │       │   └── rustc-hash feature "std"
+│       │       │       │       └── rustc-hash v2.1.0
+│       │       │       ├── send_wrapper feature "default"
+│       │       │       │   └── send_wrapper v0.6.0
+│       │       │       │       └── futures-core feature "default" (*)
+│       │       │       ├── send_wrapper feature "futures"
+│       │       │       │   ├── send_wrapper v0.6.0 (*)
+│       │       │       │   └── send_wrapper feature "futures-core"
+│       │       │       │       └── send_wrapper v0.6.0 (*)
+│       │       │       └── slotmap feature "default"
+│       │       │           ├── slotmap v1.0.7
+│       │       │           │   [build-dependencies]
+│       │       │           │   └── version_check feature "default" (*)
+│       │       │           └── slotmap feature "std"
+│       │       │               └── slotmap v1.0.7 (*)
+│       │       ├── send_wrapper feature "default" (*)
+│       │       └── tachys feature "default"
+│       │           ├── tachys v0.1.0
+│       │           │   ├── once_cell feature "default" (*)
+│       │           │   ├── wasm-bindgen feature "default" (*)
+│       │           │   ├── web-sys feature "AddEventListenerOptions"
+│       │           │   │   └── web-sys v0.3.76 (*)
+│       │           │   ├── web-sys feature "AnimationEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   └── web-sys feature "Event"
+│       │           │   │       └── web-sys v0.3.76 (*)
+│       │           │   ├── web-sys feature "BeforeUnloadEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   └── web-sys feature "Event" (*)
+│       │           │   ├── web-sys feature "ClipboardEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   └── web-sys feature "Event" (*)
+│       │           │   ├── web-sys feature "Comment"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "CharacterData"
+│       │           │   │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   │   └── web-sys feature "Node" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "CompositionEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Event" (*)
+│       │           │   │   └── web-sys feature "UiEvent"
+│       │           │   │       ├── web-sys v0.3.76 (*)
+│       │           │   │       └── web-sys feature "Event" (*)
+│       │           │   ├── web-sys feature "CssStyleDeclaration"
+│       │           │   │   └── web-sys v0.3.76 (*)
+│       │           │   ├── web-sys feature "CustomEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   └── web-sys feature "Event" (*)
+│       │           │   ├── web-sys feature "DeviceMotionEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   └── web-sys feature "Event" (*)
+│       │           │   ├── web-sys feature "DeviceOrientationEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   └── web-sys feature "Event" (*)
+│       │           │   ├── web-sys feature "Document"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "DocumentFragment" (*)
+│       │           │   ├── web-sys feature "DomStringMap"
+│       │           │   │   └── web-sys v0.3.76 (*)
+│       │           │   ├── web-sys feature "DomTokenList"
+│       │           │   │   └── web-sys v0.3.76 (*)
+│       │           │   ├── web-sys feature "DragEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Event" (*)
+│       │           │   │   ├── web-sys feature "MouseEvent"
+│       │           │   │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   │   ├── web-sys feature "Event" (*)
+│       │           │   │   │   └── web-sys feature "UiEvent" (*)
+│       │           │   │   └── web-sys feature "UiEvent" (*)
+│       │           │   ├── web-sys feature "Element"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "ErrorEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   └── web-sys feature "Event" (*)
+│       │           │   ├── web-sys feature "Event" (*)
+│       │           │   ├── web-sys feature "FocusEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Event" (*)
+│       │           │   │   └── web-sys feature "UiEvent" (*)
+│       │           │   ├── web-sys feature "GamepadEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   └── web-sys feature "Event" (*)
+│       │           │   ├── web-sys feature "HashChangeEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   └── web-sys feature "Event" (*)
+│       │           │   ├── web-sys feature "HtmlAnchorElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement"
+│       │           │   │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   │   └── web-sys feature "Node" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlAreaElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlAudioElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   ├── web-sys feature "HtmlMediaElement"
+│       │           │   │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   │   └── web-sys feature "Node" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlBaseElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlBodyElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlBrElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlButtonElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlCanvasElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlCollection"
+│       │           │   │   └── web-sys v0.3.76 (*)
+│       │           │   ├── web-sys feature "HtmlDListElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlDataElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlDataListElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlDetailsElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlDialogElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlDivElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   ├── web-sys feature "HtmlEmbedElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlFieldSetElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlFormElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlHeadElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlHeadingElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlHrElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlHtmlElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlIFrameElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlImageElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlInputElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlLabelElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlLegendElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlLiElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlLinkElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlMapElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlMenuElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlMetaElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlMeterElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlModElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlOListElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlObjectElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlOptGroupElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlOptionElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlOutputElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlParagraphElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlParamElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlPictureElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlPreElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlProgressElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlQuoteElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlScriptElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlSelectElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlSlotElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlSourceElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlSpanElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlStyleElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlTableCaptionElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlTableCellElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlTableColElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlTableElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlTableRowElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlTableSectionElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlTemplateElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlTextAreaElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlTimeElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlTitleElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlTrackElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlUListElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "HtmlVideoElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   ├── web-sys feature "HtmlMediaElement" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "InputEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Event" (*)
+│       │           │   │   └── web-sys feature "UiEvent" (*)
+│       │           │   ├── web-sys feature "KeyboardEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Event" (*)
+│       │           │   │   └── web-sys feature "UiEvent" (*)
+│       │           │   ├── web-sys feature "MessageEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   └── web-sys feature "Event" (*)
+│       │           │   ├── web-sys feature "MouseEvent" (*)
+│       │           │   ├── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "PageTransitionEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   └── web-sys feature "Event" (*)
+│       │           │   ├── web-sys feature "PointerEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Event" (*)
+│       │           │   │   ├── web-sys feature "MouseEvent" (*)
+│       │           │   │   └── web-sys feature "UiEvent" (*)
+│       │           │   ├── web-sys feature "PopStateEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   └── web-sys feature "Event" (*)
+│       │           │   ├── web-sys feature "ProgressEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   └── web-sys feature "Event" (*)
+│       │           │   ├── web-sys feature "PromiseRejectionEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   └── web-sys feature "Event" (*)
+│       │           │   ├── web-sys feature "SecurityPolicyViolationEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   └── web-sys feature "Event" (*)
+│       │           │   ├── web-sys feature "ShadowRoot" (*)
+│       │           │   ├── web-sys feature "StorageEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   └── web-sys feature "Event" (*)
+│       │           │   ├── web-sys feature "SubmitEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   └── web-sys feature "Event" (*)
+│       │           │   ├── web-sys feature "SvgElement"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "Text"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "CharacterData" (*)
+│       │           │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   └── web-sys feature "Node" (*)
+│       │           │   ├── web-sys feature "TouchEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Event" (*)
+│       │           │   │   └── web-sys feature "UiEvent" (*)
+│       │           │   ├── web-sys feature "TransitionEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   └── web-sys feature "Event" (*)
+│       │           │   ├── web-sys feature "UiEvent" (*)
+│       │           │   ├── web-sys feature "WheelEvent"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   ├── web-sys feature "Event" (*)
+│       │           │   │   ├── web-sys feature "MouseEvent" (*)
+│       │           │   │   └── web-sys feature "UiEvent" (*)
+│       │           │   ├── web-sys feature "Window" (*)
+│       │           │   ├── web-sys feature "console" (*)
+│       │           │   ├── web-sys feature "default" (*)
+│       │           │   ├── js-sys feature "default" (*)
+│       │           │   ├── any_spawner feature "default" (*)
+│       │           │   ├── futures feature "default" (*)
+│       │           │   ├── either_of feature "default" (*)
+│       │           │   ├── or_poisoned feature "default" (*)
+│       │           │   ├── throw_error feature "default" (*)
+│       │           │   ├── indexmap feature "default" (*)
+│       │           │   ├── reactive_graph feature "default" (*)
+│       │           │   ├── rustc-hash feature "default" (*)
+│       │           │   ├── send_wrapper feature "default" (*)
+│       │           │   ├── slotmap feature "default" (*)
+│       │           │   ├── const_str_slice_concat feature "default"
+│       │           │   │   └── const_str_slice_concat v0.1.0
+│       │           │   ├── drain_filter_polyfill feature "default"
+│       │           │   │   └── drain_filter_polyfill v0.1.3
+│       │           │   ├── html-escape feature "default"
+│       │           │   │   ├── html-escape v0.2.13
+│       │           │   │   │   └── utf8-width feature "default"
+│       │           │   │   │       └── utf8-width v0.1.7
+│       │           │   │   └── html-escape feature "std"
+│       │           │   │       └── html-escape v0.2.13 (*)
+│       │           │   ├── itertools feature "default"
+│       │           │   │   ├── itertools v0.13.0
+│       │           │   │   │   └── either v1.13.0
+│       │           │   │   └── itertools feature "use_std"
+│       │           │   │       ├── itertools v0.13.0 (*)
+│       │           │   │       ├── itertools feature "use_alloc"
+│       │           │   │       │   └── itertools v0.13.0 (*)
+│       │           │   │       └── either feature "use_std"
+│       │           │   │           └── either v1.13.0
+│       │           │   ├── linear-map feature "default"
+│       │           │   │   └── linear-map v1.2.0
+│       │           │   ├── next_tuple feature "default"
+│       │           │   │   └── next_tuple v0.1.0
+│       │           │   ├── oco_ref feature "default"
+│       │           │   │   └── oco_ref v0.2.0
+│       │           │   │       ├── serde feature "default" (*)
+│       │           │   │       └── thiserror feature "default"
+│       │           │   │           └── thiserror v1.0.63
+│       │           │   │               └── thiserror-impl feature "default"
+│       │           │   │                   └── thiserror-impl v1.0.63 (proc-macro)
+│       │           │   │                       ├── proc-macro2 feature "default" (*)
+│       │           │   │                       ├── quote feature "default" (*)
+│       │           │   │                       └── syn feature "default" (*)
+│       │           │   ├── parking_lot feature "default"
+│       │           │   │   └── parking_lot v0.12.3
+│       │           │   │       ├── lock_api feature "default"
+│       │           │   │       │   ├── lock_api v0.4.12
+│       │           │   │       │   │   └── scopeguard v1.2.0
+│       │           │   │       │   │   [build-dependencies]
+│       │           │   │       │   │   └── autocfg feature "default" (*)
+│       │           │   │       │   └── lock_api feature "atomic_usize"
+│       │           │   │       │       └── lock_api v0.4.12 (*)
+│       │           │   │       └── parking_lot_core feature "default"
+│       │           │   │           └── parking_lot_core v0.9.10
+│       │           │   │               ├── cfg-if feature "default" (*)
+│       │           │   │               ├── libc feature "default" (*)
+│       │           │   │               └── smallvec feature "default"
+│       │           │   │                   └── smallvec v1.13.2
+│       │           │   ├── paste feature "default"
+│       │           │   │   └── paste v1.0.15 (proc-macro)
+│       │           │   └── reactive_stores feature "default"
+│       │           │       └── reactive_stores v0.1.0
+│       │           │           ├── or_poisoned feature "default" (*)
+│       │           │           ├── reactive_graph feature "default" (*)
+│       │           │           ├── guardian feature "default" (*)
+│       │           │           ├── rustc-hash feature "default" (*)
+│       │           │           ├── itertools feature "default" (*)
+│       │           │           ├── paste feature "default" (*)
+│       │           │           └── reactive_stores_macro feature "default"
+│       │           │               └── reactive_stores_macro v0.1.0 (proc-macro)
+│       │           │                   ├── proc-macro2 feature "default" (*)
+│       │           │                   ├── quote feature "default" (*)
+│       │           │                   ├── syn feature "default" (*)
+│       │           │                   ├── syn feature "full" (*)
+│       │           │                   ├── convert_case feature "default" (*)
+│       │           │                   └── proc-macro-error2 feature "default"
+│       │           │                       ├── proc-macro-error2 v2.0.1
+│       │           │                       │   ├── syn v2.0.90 (*)
+│       │           │                       │   ├── proc-macro2 feature "default" (*)
+│       │           │                       │   ├── quote feature "default" (*)
+│       │           │                       │   └── proc-macro-error-attr2 feature "default"
+│       │           │                       │       └── proc-macro-error-attr2 v2.0.0 (proc-macro)
+│       │           │                       │           ├── proc-macro2 feature "default" (*)
+│       │           │                       │           └── quote feature "default" (*)
+│       │           │                       └── proc-macro-error2 feature "syn-error"
+│       │           │                           └── proc-macro-error2 v2.0.1 (*)
+│       │           └── tachys feature "testing"
+│       │               └── tachys v0.1.0 (*)
+│       ├── reactive_graph feature "default" (*)
+│       ├── reactive_graph feature "serde"
+│       │   └── reactive_graph v0.1.0 (*)
+│       ├── rustc-hash feature "default" (*)
+│       ├── send_wrapper feature "default" (*)
+│       ├── slotmap feature "default" (*)
+│       ├── tachys feature "default" (*)
+│       ├── tachys feature "oco"
+│       │   └── tachys v0.1.0 (*)
+│       ├── tachys feature "reactive_graph"
+│       │   └── tachys v0.1.0 (*)
+│       ├── tachys feature "reactive_stores"
+│       │   ├── tachys v0.1.0 (*)
+│       │   └── tachys feature "reactive_graph" (*)
+│       ├── oco_ref feature "default" (*)
+│       ├── paste feature "default" (*)
+│       ├── leptos_hot_reload feature "default"
+│       │   └── leptos_hot_reload v0.7.0
+│       │       ├── proc-macro2 feature "default" (*)
+│       │       ├── proc-macro2 feature "nightly"
+│       │       │   └── proc-macro2 v1.0.92 (*)
+│       │       ├── proc-macro2 feature "span-locations"
+│       │       │   └── proc-macro2 v1.0.92 (*)
+│       │       ├── quote feature "default" (*)
+│       │       ├── serde feature "default" (*)
+│       │       ├── serde feature "derive" (*)
+│       │       ├── indexmap feature "default" (*)
+│       │       ├── parking_lot feature "default" (*)
+│       │       ├── anyhow feature "default"
+│       │       │   ├── anyhow v1.0.88
+│       │       │   └── anyhow feature "std"
+│       │       │       └── anyhow v1.0.88
+│       │       ├── camino feature "default"
+│       │       │   └── camino v1.1.9
+│       │       ├── rstml feature "default"
+│       │       │   ├── rstml v0.12.0
+│       │       │   │   ├── proc-macro2-diagnostics v0.10.1
+│       │       │   │   │   ├── proc-macro2 feature "default" (*)
+│       │       │   │   │   ├── quote feature "default" (*)
+│       │       │   │   │   ├── syn feature "default"
+│       │       │   │   │   │   ├── syn v2.0.90
+│       │       │   │   │   │   │   ├── proc-macro2 v1.0.92 (*)
+│       │       │   │   │   │   │   ├── quote v1.0.37 (*)
+│       │       │   │   │   │   │   └── unicode-ident feature "default" (*)
+│       │       │   │   │   │   ├── syn feature "clone-impls"
+│       │       │   │   │   │   │   └── syn v2.0.90 (*)
+│       │       │   │   │   │   ├── syn feature "derive"
+│       │       │   │   │   │   │   └── syn v2.0.90 (*)
+│       │       │   │   │   │   ├── syn feature "parsing"
+│       │       │   │   │   │   │   └── syn v2.0.90 (*)
+│       │       │   │   │   │   ├── syn feature "printing"
+│       │       │   │   │   │   │   └── syn v2.0.90 (*)
+│       │       │   │   │   │   └── syn feature "proc-macro"
+│       │       │   │   │   │       ├── syn v2.0.90 (*)
+│       │       │   │   │   │       ├── proc-macro2 feature "proc-macro" (*)
+│       │       │   │   │   │       └── quote feature "proc-macro" (*)
+│       │       │   │   │   └── yansi feature "default"
+│       │       │   │   │       ├── yansi v1.0.1
+│       │       │   │   │       └── yansi feature "std"
+│       │       │   │   │           ├── yansi v1.0.1
+│       │       │   │   │           └── yansi feature "alloc"
+│       │       │   │   │               └── yansi v1.0.1
+│       │       │   │   │   [build-dependencies]
+│       │       │   │   │   └── version_check feature "default" (*)
+│       │       │   │   ├── proc-macro2 feature "default" (*)
+│       │       │   │   ├── proc-macro2 feature "span-locations" (*)
+│       │       │   │   ├── quote feature "default" (*)
+│       │       │   │   ├── thiserror feature "default" (*)
+│       │       │   │   ├── derive-where feature "default"
+│       │       │   │   │   └── derive-where v1.2.7 (proc-macro)
+│       │       │   │   │       ├── quote v1.0.37 (*)
+│       │       │   │   │       ├── proc-macro2 feature "proc-macro" (*)
+│       │       │   │   │       ├── syn feature "clone-impls" (*)
+│       │       │   │   │       ├── syn feature "derive" (*)
+│       │       │   │   │       ├── syn feature "extra-traits" (*)
+│       │       │   │   │       ├── syn feature "full" (*)
+│       │       │   │   │       ├── syn feature "parsing" (*)
+│       │       │   │   │       └── syn feature "printing" (*)
+│       │       │   │   ├── syn feature "default" (*)
+│       │       │   │   ├── syn feature "extra-traits"
+│       │       │   │   │   └── syn v2.0.90 (*)
+│       │       │   │   ├── syn feature "full"
+│       │       │   │   │   └── syn v2.0.90 (*)
+│       │       │   │   ├── syn feature "parsing" (*)
+│       │       │   │   ├── syn feature "visit-mut"
+│       │       │   │   │   └── syn v2.0.90 (*)
+│       │       │   │   └── syn_derive feature "default"
+│       │       │   │       ├── syn_derive v0.1.8 (proc-macro)
+│       │       │   │       │   ├── proc-macro-error v1.0.4
+│       │       │   │       │   │   ├── proc-macro2 feature "default" (*)
+│       │       │   │       │   │   ├── quote feature "default" (*)
+│       │       │   │       │   │   └── proc-macro-error-attr feature "default"
+│       │       │   │       │   │       └── proc-macro-error-attr v1.0.4 (proc-macro)
+│       │       │   │       │   │           ├── proc-macro2 feature "default" (*)
+│       │       │   │       │   │           └── quote feature "default" (*)
+│       │       │   │       │   │           [build-dependencies]
+│       │       │   │       │   │           └── version_check feature "default" (*)
+│       │       │   │       │   │   [build-dependencies]
+│       │       │   │       │   │   └── version_check feature "default" (*)
+│       │       │   │       │   ├── proc-macro2 feature "default" (*)
+│       │       │   │       │   ├── quote feature "default" (*)
+│       │       │   │       │   ├── syn feature "default" (*)
+│       │       │   │       │   ├── syn feature "derive" (*)
+│       │       │   │       │   └── syn feature "parsing" (*)
+│       │       │   │       └── syn_derive feature "full"
+│       │       │   │           ├── syn_derive v0.1.8 (proc-macro) (*)
+│       │       │   │           └── syn feature "full" (*)
+│       │       │   └── rstml feature "colors"
+│       │       │       ├── rstml v0.12.0 (*)
+│       │       │       └── proc-macro2-diagnostics feature "colors"
+│       │       │           ├── proc-macro2-diagnostics v0.10.1 (*)
+│       │       │           └── proc-macro2-diagnostics feature "yansi"
+│       │       │               └── proc-macro2-diagnostics v0.10.1 (*)
+│       │       ├── syn feature "default" (*)
+│       │       ├── syn feature "extra-traits" (*)
+│       │       ├── syn feature "full" (*)
+│       │       ├── syn feature "parsing" (*)
+│       │       ├── syn feature "printing" (*)
+│       │       ├── syn feature "visit"
+│       │       │   └── syn v2.0.90 (*)
+│       │       └── walkdir feature "default"
+│       │           └── walkdir v2.5.0
+│       │               └── same-file feature "default"
+│       │                   └── same-file v1.0.6
+│       ├── leptos_macro feature "default"
+│       │   └── leptos_macro v0.7.0 (proc-macro)
+│       │       ├── proc-macro-error2 v2.0.1 (*)
+│       │       ├── proc-macro2 feature "default" (*)
+│       │       ├── quote feature "default" (*)
+│       │       ├── syn feature "default" (*)
+│       │       ├── syn feature "full" (*)
+│       │       ├── cfg-if feature "default" (*)
+│       │       ├── convert_case feature "default" (*)
+│       │       ├── html-escape feature "default" (*)
+│       │       ├── itertools feature "default" (*)
+│       │       ├── leptos_hot_reload feature "default" (*)
+│       │       ├── rstml feature "default" (*)
+│       │       ├── attribute-derive feature "default"
+│       │       │   └── attribute-derive v0.10.3
+│       │       │       ├── proc-macro2 feature "default" (*)
+│       │       │       ├── quote feature "default" (*)
+│       │       │       ├── syn feature "default" (*)
+│       │       │       ├── derive-where feature "default" (*)
+│       │       │       ├── attribute-derive-macro feature "default"
+│       │       │       │   └── attribute-derive-macro v0.10.3 (proc-macro)
+│       │       │       │       ├── proc-macro2 feature "default" (*)
+│       │       │       │       ├── quote feature "default" (*)
+│       │       │       │       ├── syn feature "default" (*)
+│       │       │       │       ├── collection_literals feature "default"
+│       │       │       │       │   └── collection_literals v1.0.1
+│       │       │       │       ├── interpolator feature "default"
+│       │       │       │       │   └── interpolator v0.5.0
+│       │       │       │       ├── interpolator feature "iter"
+│       │       │       │       │   └── interpolator v0.5.0
+│       │       │       │       ├── manyhow feature "default"
+│       │       │       │       │   ├── manyhow v0.11.4
+│       │       │       │       │   │   ├── proc-macro2 feature "default" (*)
+│       │       │       │       │   │   ├── quote feature "default" (*)
+│       │       │       │       │   │   ├── syn feature "parsing" (*)
+│       │       │       │       │   │   ├── syn feature "printing" (*)
+│       │       │       │       │   │   └── manyhow-macros feature "default"
+│       │       │       │       │   │       └── manyhow-macros v0.11.4 (proc-macro)
+│       │       │       │       │   │           ├── proc-macro2 feature "default" (*)
+│       │       │       │       │   │           ├── quote feature "default" (*)
+│       │       │       │       │   │           └── proc-macro-utils feature "default"
+│       │       │       │       │   │               ├── proc-macro-utils v0.10.0
+│       │       │       │       │   │               │   ├── proc-macro2 feature "default" (*)
+│       │       │       │       │   │               │   ├── quote feature "default" (*)
+│       │       │       │       │   │               │   ├── smallvec feature "const_generics"
+│       │       │       │       │   │               │   │   └── smallvec v1.13.2
+│       │       │       │       │   │               │   └── smallvec feature "default"
+│       │       │       │       │   │               │       └── smallvec v1.13.2
+│       │       │       │       │   │               ├── proc-macro-utils feature "parser"
+│       │       │       │       │   │               │   ├── proc-macro-utils v0.10.0 (*)
+│       │       │       │       │   │               │   ├── proc-macro-utils feature "proc-macro2"
+│       │       │       │       │   │               │   │   └── proc-macro-utils v0.10.0 (*)
+│       │       │       │       │   │               │   └── proc-macro-utils feature "smallvec"
+│       │       │       │       │   │               │       └── proc-macro-utils v0.10.0 (*)
+│       │       │       │       │   │               ├── proc-macro-utils feature "proc-macro"
+│       │       │       │       │   │               │   └── proc-macro-utils v0.10.0 (*)
+│       │       │       │       │   │               ├── proc-macro-utils feature "proc-macro2" (*)
+│       │       │       │       │   │               └── proc-macro-utils feature "quote"
+│       │       │       │       │   │                   └── proc-macro-utils v0.10.0 (*)
+│       │       │       │       │   ├── manyhow feature "macros"
+│       │       │       │       │   │   └── manyhow v0.11.4 (*)
+│       │       │       │       │   └── manyhow feature "syn"
+│       │       │       │       │       ├── manyhow v0.11.4 (*)
+│       │       │       │       │       └── manyhow feature "syn2"
+│       │       │       │       │           └── manyhow v0.11.4 (*)
+│       │       │       │       ├── proc-macro-utils feature "default" (*)
+│       │       │       │       └── quote-use feature "default"
+│       │       │       │           └── quote-use v0.8.4
+│       │       │       │               ├── quote feature "default" (*)
+│       │       │       │               └── quote-use-macros feature "default"
+│       │       │       │                   └── quote-use-macros v0.8.4 (proc-macro)
+│       │       │       │                       ├── proc-macro2 feature "default" (*)
+│       │       │       │                       ├── quote feature "default" (*)
+│       │       │       │                       ├── syn feature "clone-impls" (*)
+│       │       │       │                       ├── syn feature "extra-traits" (*)
+│       │       │       │                       ├── syn feature "parsing" (*)
+│       │       │       │                       ├── syn feature "printing" (*)
+│       │       │       │                       └── proc-macro-utils feature "default" (*)
+│       │       │       └── manyhow feature "default" (*)
+│       │       ├── attribute-derive feature "syn-full"
+│       │       │   ├── attribute-derive v0.10.3 (*)
+│       │       │   └── syn feature "full" (*)
+│       │       ├── prettyplease feature "default"
+│       │       │   └── prettyplease v0.2.25
+│       │       │       ├── proc-macro2 v1.0.92 (*)
+│       │       │       └── syn feature "full" (*)
+│       │       ├── server_fn_macro feature "default"
+│       │       │   └── server_fn_macro v0.7.0
+│       │       │       ├── proc-macro2 feature "default" (*)
+│       │       │       ├── quote feature "default" (*)
+│       │       │       ├── syn feature "default" (*)
+│       │       │       ├── syn feature "extra-traits" (*)
+│       │       │       ├── syn feature "full" (*)
+│       │       │       ├── syn feature "parsing" (*)
+│       │       │       ├── convert_case feature "default" (*)
+│       │       │       ├── const_format feature "default"
+│       │       │       │   └── const_format v0.2.33
+│       │       │       │       └── const_format_proc_macros feature "default"
+│       │       │       │           └── const_format_proc_macros v0.2.33 (proc-macro)
+│       │       │       │               ├── proc-macro2 feature "default" (*)
+│       │       │       │               ├── quote feature "default" (*)
+│       │       │       │               └── unicode-xid feature "default"
+│       │       │       │                   └── unicode-xid v0.2.5
+│       │       │       ├── xxhash-rust feature "const_xxh64"
+│       │       │       │   └── xxhash-rust v0.8.12
+│       │       │       └── xxhash-rust feature "default"
+│       │       │           └── xxhash-rust v0.8.12
+│       │       ├── uuid feature "default"
+│       │       │   ├── uuid v1.11.0
+│       │       │   │   └── getrandom feature "default"
+│       │       │   │       └── getrandom v0.2.15
+│       │       │   │           ├── libc v0.2.158
+│       │       │   │           └── cfg-if feature "default" (*)
+│       │       │   └── uuid feature "std"
+│       │       │       └── uuid v1.11.0 (*)
+│       │       └── uuid feature "v4"
+│       │           ├── uuid v1.11.0 (*)
+│       │           └── uuid feature "rng"
+│       │               └── uuid v1.11.0 (*)
+│       ├── leptos_server feature "default"
+│       │   └── leptos_server v0.7.0
+│       │       ├── serde feature "default" (*)
+│       │       ├── base64 feature "default" (*)
+│       │       ├── any_spawner feature "default" (*)
+│       │       ├── futures feature "default" (*)
+│       │       ├── hydration_context feature "default" (*)
+│       │       ├── or_poisoned feature "default" (*)
+│       │       ├── reactive_graph feature "default" (*)
+│       │       ├── reactive_graph feature "hydration"
+│       │       │   └── reactive_graph v0.1.0 (*)
+│       │       ├── send_wrapper feature "default" (*)
+│       │       ├── tachys feature "default" (*)
+│       │       ├── tachys feature "reactive_graph" (*)
+│       │       ├── codee feature "default"
+│       │       │   └── codee v0.2.0
+│       │       │       ├── serde feature "default" (*)
+│       │       │       ├── thiserror feature "default" (*)
+│       │       │       └── serde_json feature "default"
+│       │       │           ├── serde_json v1.0.128
+│       │       │           │   ├── memchr v2.7.4
+│       │       │           │   ├── serde v1.0.210 (*)
+│       │       │           │   ├── itoa feature "default" (*)
+│       │       │           │   └── ryu feature "default"
+│       │       │           │       └── ryu v1.0.18
+│       │       │           └── serde_json feature "std"
+│       │       │               ├── serde_json v1.0.128 (*)
+│       │       │               ├── memchr feature "std" (*)
+│       │       │               └── serde feature "std" (*)
+│       │       ├── codee feature "json_serde"
+│       │       │   └── codee v0.2.0 (*)
+│       │       ├── serde_json feature "default" (*)
+│       │       └── server_fn feature "default"
+│       │           ├── server_fn v0.7.0
+│       │           │   ├── bytes feature "default" (*)
+│       │           │   ├── pin-project-lite feature "default" (*)
+│       │           │   ├── http feature "default" (*)
+│       │           │   ├── once_cell feature "default" (*)
+│       │           │   ├── serde feature "default" (*)
+│       │           │   ├── serde feature "derive" (*)
+│       │           │   ├── wasm-bindgen feature "default" (*)
+│       │           │   ├── web-sys feature "AbortController"
+│       │           │   │   └── web-sys v0.3.76 (*)
+│       │           │   ├── web-sys feature "AbortSignal"
+│       │           │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   └── web-sys feature "EventTarget" (*)
+│       │           │   ├── web-sys feature "ReadableStream"
+│       │           │   │   └── web-sys v0.3.76 (*)
+│       │           │   ├── web-sys feature "ReadableStreamDefaultReader"
+│       │           │   │   └── web-sys v0.3.76 (*)
+│       │           │   ├── web-sys feature "console" (*)
+│       │           │   ├── web-sys feature "default" (*)
+│       │           │   ├── js-sys feature "default" (*)
+│       │           │   ├── futures feature "default" (*)
+│       │           │   ├── thiserror feature "default" (*)
+│       │           │   ├── wasm-bindgen-futures feature "default" (*)
+│       │           │   ├── throw_error feature "default" (*)
+│       │           │   ├── send_wrapper feature "default" (*)
+│       │           │   ├── send_wrapper feature "futures" (*)
+│       │           │   ├── const_format feature "default" (*)
+│       │           │   ├── xxhash-rust feature "const_xxh64" (*)
+│       │           │   ├── xxhash-rust feature "default" (*)
+│       │           │   ├── serde_json feature "default" (*)
+│       │           │   ├── dashmap feature "default"
+│       │           │   │   └── dashmap v6.1.0
+│       │           │   │       ├── once_cell feature "default" (*)
+│       │           │   │       ├── cfg-if feature "default" (*)
+│       │           │   │       ├── crossbeam-utils feature "default"
+│       │           │   │       │   ├── crossbeam-utils v0.8.20
+│       │           │   │       │   └── crossbeam-utils feature "std"
+│       │           │   │       │       └── crossbeam-utils v0.8.20
+│       │           │   │       ├── lock_api feature "default" (*)
+│       │           │   │       ├── parking_lot_core feature "default" (*)
+│       │           │   │       └── hashbrown feature "raw"
+│       │           │   │           └── hashbrown v0.14.5
+│       │           │   ├── gloo-net feature "default"
+│       │           │   │   ├── gloo-net v0.6.0
+│       │           │   │   │   ├── gloo-utils v0.2.0
+│       │           │   │   │   │   ├── serde feature "default" (*)
+│       │           │   │   │   │   ├── wasm-bindgen feature "default" (*)
+│       │           │   │   │   │   ├── web-sys feature "Document" (*)
+│       │           │   │   │   │   ├── web-sys feature "Element" (*)
+│       │           │   │   │   │   ├── web-sys feature "History"
+│       │           │   │   │   │   │   └── web-sys v0.3.76 (*)
+│       │           │   │   │   │   ├── web-sys feature "HtmlElement" (*)
+│       │           │   │   │   │   ├── web-sys feature "HtmlHeadElement" (*)
+│       │           │   │   │   │   ├── web-sys feature "Location" (*)
+│       │           │   │   │   │   ├── web-sys feature "Window" (*)
+│       │           │   │   │   │   ├── web-sys feature "default" (*)
+│       │           │   │   │   │   ├── js-sys feature "default" (*)
+│       │           │   │   │   │   └── serde_json feature "default" (*)
+│       │           │   │   │   ├── futures-channel feature "default"
+│       │           │   │   │   │   ├── futures-channel v0.3.31 (*)
+│       │           │   │   │   │   └── futures-channel feature "std" (*)
+│       │           │   │   │   ├── futures-core feature "default" (*)
+│       │           │   │   │   ├── futures-sink feature "default"
+│       │           │   │   │   │   ├── futures-sink v0.3.31
+│       │           │   │   │   │   └── futures-sink feature "std" (*)
+│       │           │   │   │   ├── http feature "default" (*)
+│       │           │   │   │   ├── serde feature "default" (*)
+│       │           │   │   │   ├── wasm-bindgen feature "default" (*)
+│       │           │   │   │   ├── web-sys feature "default" (*)
+│       │           │   │   │   ├── js-sys feature "default" (*)
+│       │           │   │   │   ├── wasm-bindgen-futures feature "default" (*)
+│       │           │   │   │   ├── thiserror feature "default" (*)
+│       │           │   │   │   ├── serde_json feature "default" (*)
+│       │           │   │   │   └── pin-project feature "default"
+│       │           │   │   │       └── pin-project v1.1.5
+│       │           │   │   │           └── pin-project-internal feature "default"
+│       │           │   │   │               └── pin-project-internal v1.1.5 (proc-macro)
+│       │           │   │   │                   ├── proc-macro2 feature "default" (*)
+│       │           │   │   │                   ├── quote feature "default" (*)
+│       │           │   │   │                   ├── syn feature "default" (*)
+│       │           │   │   │                   ├── syn feature "full" (*)
+│       │           │   │   │                   └── syn feature "visit-mut" (*)
+│       │           │   │   ├── gloo-net feature "eventsource"
+│       │           │   │   │   ├── gloo-net v0.6.0 (*)
+│       │           │   │   │   ├── web-sys feature "Event" (*)
+│       │           │   │   │   ├── web-sys feature "EventSource"
+│       │           │   │   │   │   ├── web-sys v0.3.76 (*)
+│       │           │   │   │   │   └── web-sys feature "EventTarget" (*)
+│       │           │   │   │   ├── web-sys feature "EventTarget" (*)
+│       │           │   │   │   ├── web-sys feature "MessageEvent" (*)
+│       │           │   │   │   ├── gloo-net feature "futures-channel"
+│       │           │   │   │   │   └── gloo-net v0.6.0 (*)
+│       │           │   │   │   ├── gloo-net feature "futures-core"
+│       │           │   │   │   │   └── gloo-net v0.6.0 (*)
+│       │           │   │   │   └── gloo-net feature "pin-project"
+│       │           │   │   │       └── gloo-net v0.6.0 (*)
+│       │           │   │   ├── gloo-net feature "http"
+│       │           │   │   │   ├── gloo-net v0.6.0 (*)
+│       │           │   │   │   ├── web-sys feature "AbortSignal" (*)
+│       │           │   │   │   ├── web-sys feature "Blob"
+│       │           │   │   │   │   └── web-sys v0.3.76 (*)
+│       │           │   │   │   ├── web-sys feature "FormData"
+│       │           │   │   │   │   └── web-sys v0.3.76 (*)
+│       │           │   │   │   ├── web-sys feature "Headers"
+│       │           │   │   │   │   └── web-sys v0.3.76 (*)
+│       │           │   │   │   ├── web-sys feature "ObserverCallback"
+│       │           │   │   │   │   └── web-sys v0.3.76 (*)
+│       │           │   │   │   ├── web-sys feature "ReadableStream" (*)
+│       │           │   │   │   ├── web-sys feature "ReferrerPolicy"
+│       │           │   │   │   │   └── web-sys v0.3.76 (*)
+│       │           │   │   │   ├── web-sys feature "Request"
+│       │           │   │   │   │   └── web-sys v0.3.76 (*)
+│       │           │   │   │   ├── web-sys feature "RequestCache"
+│       │           │   │   │   │   └── web-sys v0.3.76 (*)
+│       │           │   │   │   ├── web-sys feature "RequestCredentials"
+│       │           │   │   │   │   └── web-sys v0.3.76 (*)
+│       │           │   │   │   ├── web-sys feature "RequestInit"
+│       │           │   │   │   │   └── web-sys v0.3.76 (*)
+│       │           │   │   │   ├── web-sys feature "RequestMode"
+│       │           │   │   │   │   └── web-sys v0.3.76 (*)
+│       │           │   │   │   ├── web-sys feature "RequestRedirect"
+│       │           │   │   │   │   └── web-sys v0.3.76 (*)
+│       │           │   │   │   ├── web-sys feature "Response"
+│       │           │   │   │   │   └── web-sys v0.3.76 (*)
+│       │           │   │   │   ├── web-sys feature "ResponseInit"
+│       │           │   │   │   │   └── web-sys v0.3.76 (*)
+│       │           │   │   │   ├── web-sys feature "ResponseType"
+│       │           │   │   │   │   └── web-sys v0.3.76 (*)
+│       │           │   │   │   ├── web-sys feature "Url"
+│       │           │   │   │   │   └── web-sys v0.3.76 (*)
+│       │           │   │   │   └── web-sys feature "UrlSearchParams"
+│       │           │   │   │       └── web-sys v0.3.76 (*)
+│       │           │   │   ├── gloo-net feature "json"
+│       │           │   │   │   ├── gloo-net v0.6.0 (*)
+│       │           │   │   │   ├── gloo-net feature "serde"
+│       │           │   │   │   │   └── gloo-net v0.6.0 (*)
+│       │           │   │   │   ├── gloo-net feature "serde_json"
+│       │           │   │   │   │   └── gloo-net v0.6.0 (*)
+│       │           │   │   │   └── gloo-utils feature "serde"
+│       │           │   │   │       └── gloo-utils v0.2.0 (*)
+│       │           │   │   └── gloo-net feature "websocket"
+│       │           │   │       ├── gloo-net v0.6.0 (*)
+│       │           │   │       ├── web-sys feature "AddEventListenerOptions" (*)
+│       │           │   │       ├── web-sys feature "BinaryType"
+│       │           │   │       │   └── web-sys v0.3.76 (*)
+│       │           │   │       ├── web-sys feature "Blob" (*)
+│       │           │   │       ├── web-sys feature "CloseEvent"
+│       │           │   │       │   ├── web-sys v0.3.76 (*)
+│       │           │   │       │   └── web-sys feature "Event" (*)
+│       │           │   │       ├── web-sys feature "CloseEventInit"
+│       │           │   │       │   └── web-sys v0.3.76 (*)
+│       │           │   │       ├── web-sys feature "ErrorEvent" (*)
+│       │           │   │       ├── web-sys feature "FileReader"
+│       │           │   │       │   ├── web-sys v0.3.76 (*)
+│       │           │   │       │   └── web-sys feature "EventTarget" (*)
+│       │           │   │       ├── web-sys feature "MessageEvent" (*)
+│       │           │   │       ├── web-sys feature "ProgressEvent" (*)
+│       │           │   │       ├── web-sys feature "WebSocket"
+│       │           │   │       │   ├── web-sys v0.3.76 (*)
+│       │           │   │       │   └── web-sys feature "EventTarget" (*)
+│       │           │   │       ├── gloo-net feature "futures-channel" (*)
+│       │           │   │       ├── gloo-net feature "futures-core" (*)
+│       │           │   │       ├── gloo-net feature "futures-sink"
+│       │           │   │       │   └── gloo-net v0.6.0 (*)
+│       │           │   │       └── gloo-net feature "pin-project" (*)
+│       │           │   ├── serde_qs feature "default"
+│       │           │   │   └── serde_qs v0.13.0
+│       │           │   │       ├── percent-encoding feature "default" (*)
+│       │           │   │       ├── serde feature "default" (*)
+│       │           │   │       └── thiserror feature "default" (*)
+│       │           │   ├── server_fn_macro_default feature "default"
+│       │           │   │   └── server_fn_macro_default v0.7.0 (proc-macro)
+│       │           │   │       ├── syn feature "default" (*)
+│       │           │   │       └── server_fn_macro feature "default" (*)
+│       │           │   ├── url feature "default"
+│       │           │   │   └── url v2.5.2
+│       │           │   │       ├── percent-encoding feature "default" (*)
+│       │           │   │       ├── form_urlencoded feature "default"
+│       │           │   │       │   ├── form_urlencoded v1.2.1
+│       │           │   │       │   │   └── percent-encoding v2.3.1
+│       │           │   │       │   └── form_urlencoded feature "std"
+│       │           │   │       │       ├── form_urlencoded v1.2.1 (*)
+│       │           │   │       │       ├── percent-encoding feature "std" (*)
+│       │           │   │       │       └── form_urlencoded feature "alloc"
+│       │           │   │       │           ├── form_urlencoded v1.2.1 (*)
+│       │           │   │       │           └── percent-encoding feature "alloc" (*)
+│       │           │   │       └── idna feature "default"
+│       │           │   │           ├── idna v0.5.0
+│       │           │   │           │   ├── unicode-normalization v0.1.23
+│       │           │   │           │   │   ├── tinyvec feature "alloc"
+│       │           │   │           │   │   │   ├── tinyvec v1.8.0
+│       │           │   │           │   │   │   │   └── tinyvec_macros feature "default"
+│       │           │   │           │   │   │   │       └── tinyvec_macros v0.1.1
+│       │           │   │           │   │   │   └── tinyvec feature "tinyvec_macros"
+│       │           │   │           │   │   │       └── tinyvec v1.8.0 (*)
+│       │           │   │           │   │   └── tinyvec feature "default"
+│       │           │   │           │   │       └── tinyvec v1.8.0 (*)
+│       │           │   │           │   └── unicode-bidi feature "hardcoded-data"
+│       │           │   │           │       └── unicode-bidi v0.3.15
+│       │           │   │           └── idna feature "std"
+│       │           │   │               ├── idna v0.5.0 (*)
+│       │           │   │               ├── idna feature "alloc"
+│       │           │   │               │   └── idna v0.5.0 (*)
+│       │           │   │               ├── unicode-bidi feature "std"
+│       │           │   │               │   └── unicode-bidi v0.3.15
+│       │           │   │               └── unicode-normalization feature "std"
+│       │           │   │                   └── unicode-normalization v0.1.23 (*)
+│       │           │   └── wasm-streams feature "default"
+│       │           │       └── wasm-streams v0.4.2
+│       │           │           ├── futures-util feature "default"
+│       │           │           │   ├── futures-util v0.3.31 (*)
+│       │           │           │   ├── futures-util feature "async-await" (*)
+│       │           │           │   ├── futures-util feature "async-await-macro" (*)
+│       │           │           │   └── futures-util feature "std" (*)
+│       │           │           ├── futures-util feature "io" (*)
+│       │           │           ├── futures-util feature "sink" (*)
+│       │           │           ├── wasm-bindgen feature "default" (*)
+│       │           │           ├── web-sys feature "AbortSignal" (*)
+│       │           │           ├── web-sys feature "QueuingStrategy"
+│       │           │           │   └── web-sys v0.3.76 (*)
+│       │           │           ├── web-sys feature "ReadableByteStreamController"
+│       │           │           │   └── web-sys v0.3.76 (*)
+│       │           │           ├── web-sys feature "ReadableStream" (*)
+│       │           │           ├── web-sys feature "ReadableStreamByobReader"
+│       │           │           │   └── web-sys v0.3.76 (*)
+│       │           │           ├── web-sys feature "ReadableStreamByobRequest"
+│       │           │           │   └── web-sys v0.3.76 (*)
+│       │           │           ├── web-sys feature "ReadableStreamDefaultController"
+│       │           │           │   └── web-sys v0.3.76 (*)
+│       │           │           ├── web-sys feature "ReadableStreamDefaultReader" (*)
+│       │           │           ├── web-sys feature "ReadableStreamGetReaderOptions"
+│       │           │           │   └── web-sys v0.3.76 (*)
+│       │           │           ├── web-sys feature "ReadableStreamReadResult"
+│       │           │           │   └── web-sys v0.3.76 (*)
+│       │           │           ├── web-sys feature "ReadableStreamReaderMode"
+│       │           │           │   └── web-sys v0.3.76 (*)
+│       │           │           ├── web-sys feature "ReadableStreamType"
+│       │           │           │   └── web-sys v0.3.76 (*)
+│       │           │           ├── web-sys feature "ReadableWritablePair"
+│       │           │           │   └── web-sys v0.3.76 (*)
+│       │           │           ├── web-sys feature "StreamPipeOptions"
+│       │           │           │   └── web-sys v0.3.76 (*)
+│       │           │           ├── web-sys feature "TransformStream"
+│       │           │           │   └── web-sys v0.3.76 (*)
+│       │           │           ├── web-sys feature "TransformStreamDefaultController"
+│       │           │           │   └── web-sys v0.3.76 (*)
+│       │           │           ├── web-sys feature "Transformer"
+│       │           │           │   └── web-sys v0.3.76 (*)
+│       │           │           ├── web-sys feature "UnderlyingSink"
+│       │           │           │   └── web-sys v0.3.76 (*)
+│       │           │           ├── web-sys feature "UnderlyingSource"
+│       │           │           │   └── web-sys v0.3.76 (*)
+│       │           │           ├── web-sys feature "WritableStream"
+│       │           │           │   └── web-sys v0.3.76 (*)
+│       │           │           ├── web-sys feature "WritableStreamDefaultController"
+│       │           │           │   └── web-sys v0.3.76 (*)
+│       │           │           ├── web-sys feature "WritableStreamDefaultWriter"
+│       │           │           │   └── web-sys v0.3.76 (*)
+│       │           │           ├── web-sys feature "default" (*)
+│       │           │           ├── js-sys feature "default" (*)
+│       │           │           └── wasm-bindgen-futures feature "default" (*)
+│       │           └── server_fn feature "json"
+│       │               └── server_fn v0.7.0 (*)
+│       ├── leptos_server feature "tachys"
+│       │   └── leptos_server v0.7.0 (*)
+│       ├── server_fn feature "browser"
+│       │   └── server_fn v0.7.0 (*)
+│       ├── server_fn feature "default" (*)
+│       ├── server_fn feature "form-redirects"
+│       │   └── server_fn v0.7.0 (*)
+│       ├── server_fn feature "url"
+│       │   └── server_fn v0.7.0 (*)
+│       └── serde_qs feature "default" (*)
+├── leptos feature "hydrate"
+│   ├── leptos v0.7.0 (*)
+│   ├── leptos feature "hydration"
+│   │   ├── leptos v0.7.0 (*)
+│   │   ├── hydration_context feature "browser"
+│   │   │   └── hydration_context v0.2.0 (*)
+│   │   ├── leptos_dom feature "hydration"
+│   │   │   ├── leptos_dom v0.7.0 (*)
+│   │   │   └── reactive_graph feature "hydration" (*)
+│   │   ├── reactive_graph feature "hydration" (*)
+│   │   └── leptos_server feature "hydration"
+│   │       └── leptos_server v0.7.0 (*)
+│   ├── reactive_graph feature "effects"
+│   │   └── reactive_graph v0.1.0 (*)
+│   ├── tachys feature "hydrate"
+│   │   └── tachys v0.1.0 (*)
+│   └── leptos_macro feature "hydrate"
+│       └── leptos_macro v0.7.0 (proc-macro) (*)
+├── leptos feature "nightly"
+│   ├── leptos v0.7.0 (*)
+│   ├── reactive_graph feature "nightly"
+│   │   └── reactive_graph v0.1.0 (*)
+│   ├── tachys feature "nightly"
+│   │   ├── tachys v0.1.0 (*)
+│   │   ├── reactive_graph feature "nightly" (*)
+│   │   └── tachys feature "reactive_graph" (*)
+│   └── leptos_macro feature "nightly"
+│       ├── leptos_macro v0.7.0 (proc-macro) (*)
+│       └── server_fn_macro feature "nightly"
+│           └── server_fn_macro v0.7.0 (*)
+├── thiserror feature "default" (*)
+├── serde_json feature "default" (*)
+├── leptos_meta feature "default"
+│   └── leptos_meta v0.7.0
+│       ├── once_cell feature "default" (*)
+│       ├── wasm-bindgen feature "default" (*)
+│       ├── web-sys feature "HtmlLinkElement" (*)
+│       ├── web-sys feature "HtmlMetaElement" (*)
+│       ├── web-sys feature "HtmlTitleElement" (*)
+│       ├── web-sys feature "default" (*)
+│       ├── leptos feature "default" (*)
+│       ├── futures feature "default" (*)
+│       ├── or_poisoned feature "default" (*)
+│       ├── indexmap feature "default" (*)
+│       └── send_wrapper feature "default" (*)
+├── leptos_router feature "default"
+│   └── leptos_router v0.7.0
+│       ├── once_cell feature "default" (*)
+│       ├── wasm-bindgen feature "default" (*)
+│       ├── web-sys feature "Document" (*)
+│       ├── web-sys feature "FormData" (*)
+│       ├── web-sys feature "Headers" (*)
+│       ├── web-sys feature "History" (*)
+│       ├── web-sys feature "HtmlAnchorElement" (*)
+│       ├── web-sys feature "HtmlButtonElement" (*)
+│       ├── web-sys feature "HtmlFormElement" (*)
+│       ├── web-sys feature "HtmlInputElement" (*)
+│       ├── web-sys feature "Location" (*)
+│       ├── web-sys feature "MouseEvent" (*)
+│       ├── web-sys feature "Request" (*)
+│       ├── web-sys feature "RequestInit" (*)
+│       ├── web-sys feature "RequestMode" (*)
+│       ├── web-sys feature "Response" (*)
+│       ├── web-sys feature "SubmitEvent" (*)
+│       ├── web-sys feature "Url" (*)
+│       ├── web-sys feature "UrlSearchParams" (*)
+│       ├── web-sys feature "Window" (*)
+│       ├── web-sys feature "console" (*)
+│       ├── web-sys feature "default" (*)
+│       ├── js-sys feature "default" (*)
+│       ├── leptos feature "default" (*)
+│       ├── any_spawner feature "default" (*)
+│       ├── futures feature "default" (*)
+│       ├── thiserror feature "default" (*)
+│       ├── either_of feature "default" (*)
+│       ├── or_poisoned feature "default" (*)
+│       ├── reactive_graph feature "default" (*)
+│       ├── send_wrapper feature "default" (*)
+│       ├── tachys feature "default" (*)
+│       ├── tachys feature "reactive_graph" (*)
+│       ├── gloo-net feature "default" (*)
+│       ├── url feature "default" (*)
+│       └── leptos_router_macro feature "default"
+│           └── leptos_router_macro v0.7.0 (proc-macro)
+│               ├── proc-macro-error2 v2.0.1 (*)
+│               ├── proc-macro2 feature "default" (*)
+│               └── quote feature "default" (*)
+├── leptos_router feature "nightly"
+│   └── leptos_router v0.7.0 (*)
+├── markdown feature "default"
+│   └── markdown v1.0.0-alpha.21
+│       ├── unicode-id feature "default"
+│       │   └── unicode-id v0.3.5
+│       └── unicode-id feature "no_std"
+│           └── unicode-id v0.3.5
+├── reqwest feature "default"
+│   ├── reqwest v0.12.7
+│   │   ├── futures-core v0.3.31
+│   │   ├── futures-util v0.3.31 (*)
+│   │   ├── bytes feature "default" (*)
+│   │   ├── pin-project-lite feature "default" (*)
+│   │   ├── http feature "default" (*)
+│   │   ├── http-body feature "default" (*)
+│   │   ├── http-body-util feature "default" (*)
+│   │   ├── mime feature "default" (*)
+│   │   ├── sync_wrapper feature "default" (*)
+│   │   ├── sync_wrapper feature "futures"
+│   │   │   ├── sync_wrapper v1.0.1 (*)
+│   │   │   └── sync_wrapper feature "futures-core"
+│   │   │       └── sync_wrapper v1.0.1 (*)
+│   │   ├── tower-service feature "default" (*)
+│   │   ├── once_cell feature "default" (*)
+│   │   ├── percent-encoding feature "default" (*)
+│   │   ├── serde feature "default" (*)
+│   │   ├── base64 feature "default" (*)
+│   │   ├── log feature "default" (*)
+│   │   ├── serde_json feature "default" (*)
+│   │   ├── url feature "default" (*)
+│   │   ├── encoding_rs feature "default"
+│   │   │   ├── encoding_rs v0.8.34
+│   │   │   │   └── cfg-if feature "default" (*)
+│   │   │   └── encoding_rs feature "alloc"
+│   │   │       └── encoding_rs v0.8.34 (*)
+│   │   ├── h2 feature "default"
+│   │   │   └── h2 v0.4.6
+│   │   │       ├── futures-core v0.3.31
+│   │   │       ├── futures-sink v0.3.31
+│   │   │       ├── bytes feature "default" (*)
+│   │   │       ├── slab feature "default" (*)
+│   │   │       ├── http feature "default" (*)
+│   │   │       ├── fnv feature "default" (*)
+│   │   │       ├── tracing feature "std"
+│   │   │       │   ├── tracing v0.1.40 (*)
+│   │   │       │   └── tracing-core feature "std"
+│   │   │       │       ├── tracing-core v0.1.32 (*)
+│   │   │       │       └── tracing-core feature "once_cell"
+│   │   │       │           └── tracing-core v0.1.32 (*)
+│   │   │       ├── indexmap feature "default" (*)
+│   │   │       ├── indexmap feature "std" (*)
+│   │   │       ├── atomic-waker feature "default"
+│   │   │       │   └── atomic-waker v1.1.2
+│   │   │       ├── tokio feature "default"
+│   │   │       │   └── tokio v1.42.0
+│   │   │       │       ├── mio v1.0.2
+│   │   │       │       │   └── libc feature "default" (*)
+│   │   │       │       ├── bytes feature "default" (*)
+│   │   │       │       ├── pin-project-lite feature "default" (*)
+│   │   │       │       ├── libc feature "default" (*)
+│   │   │       │       ├── socket2 feature "all"
+│   │   │       │       │   └── socket2 v0.5.7
+│   │   │       │       │       └── libc feature "default" (*)
+│   │   │       │       └── socket2 feature "default"
+│   │   │       │           └── socket2 v0.5.7 (*)
+│   │   │       ├── tokio feature "io-util"
+│   │   │       │   ├── tokio v1.42.0 (*)
+│   │   │       │   └── tokio feature "bytes"
+│   │   │       │       └── tokio v1.42.0 (*)
+│   │   │       ├── tokio-util feature "codec"
+│   │   │       │   └── tokio-util v0.7.12
+│   │   │       │       ├── bytes feature "default" (*)
+│   │   │       │       ├── futures-core feature "default" (*)
+│   │   │       │       ├── futures-sink feature "default" (*)
+│   │   │       │       ├── pin-project-lite feature "default" (*)
+│   │   │       │       ├── tokio feature "default" (*)
+│   │   │       │       └── tokio feature "sync"
+│   │   │       │           └── tokio v1.42.0 (*)
+│   │   │       ├── tokio-util feature "default"
+│   │   │       │   └── tokio-util v0.7.12 (*)
+│   │   │       └── tokio-util feature "io"
+│   │   │           └── tokio-util v0.7.12 (*)
+│   │   ├── tokio feature "net"
+│   │   │   ├── tokio v1.42.0 (*)
+│   │   │   ├── tokio feature "libc"
+│   │   │   │   └── tokio v1.42.0 (*)
+│   │   │   ├── tokio feature "mio"
+│   │   │   │   └── tokio v1.42.0 (*)
+│   │   │   ├── tokio feature "socket2"
+│   │   │   │   └── tokio v1.42.0 (*)
+│   │   │   ├── mio feature "net"
+│   │   │   │   └── mio v1.0.2 (*)
+│   │   │   ├── mio feature "os-ext"
+│   │   │   │   ├── mio v1.0.2 (*)
+│   │   │   │   └── mio feature "os-poll"
+│   │   │   │       └── mio v1.0.2 (*)
+│   │   │   └── mio feature "os-poll" (*)
+│   │   ├── tokio feature "time"
+│   │   │   └── tokio v1.42.0 (*)
+│   │   ├── hyper feature "client"
+│   │   │   └── hyper v1.5.1
+│   │   │       ├── futures-util v0.3.31 (*)
+│   │   │       ├── bytes feature "default" (*)
+│   │   │       ├── futures-channel feature "default" (*)
+│   │   │       ├── pin-project-lite feature "default" (*)
+│   │   │       ├── http feature "default" (*)
+│   │   │       ├── itoa feature "default" (*)
+│   │   │       ├── http-body feature "default" (*)
+│   │   │       ├── smallvec feature "const_generics"
+│   │   │       │   └── smallvec v1.13.2
+│   │   │       ├── smallvec feature "const_new"
+│   │   │       │   ├── smallvec v1.13.2
+│   │   │       │   └── smallvec feature "const_generics" (*)
+│   │   │       ├── smallvec feature "default" (*)
+│   │   │       ├── h2 feature "default" (*)
+│   │   │       ├── tokio feature "default" (*)
+│   │   │       ├── tokio feature "sync" (*)
+│   │   │       ├── httparse feature "default"
+│   │   │       │   ├── httparse v1.9.4
+│   │   │       │   └── httparse feature "std"
+│   │   │       │       └── httparse v1.9.4
+│   │   │       └── want feature "default"
+│   │   │           └── want v0.3.1
+│   │   │               └── try-lock feature "default"
+│   │   │                   └── try-lock v0.2.5
+│   │   ├── hyper feature "default"
+│   │   │   └── hyper v1.5.1 (*)
+│   │   ├── hyper feature "http1"
+│   │   │   └── hyper v1.5.1 (*)
+│   │   ├── hyper-tls feature "default"
+│   │   │   └── hyper-tls v0.6.0
+│   │   │       ├── bytes feature "default" (*)
+│   │   │       ├── http-body-util feature "default" (*)
+│   │   │       ├── tower-service feature "default" (*)
+│   │   │       ├── tokio feature "default" (*)
+│   │   │       ├── hyper feature "default" (*)
+│   │   │       ├── hyper-util feature "client-legacy"
+│   │   │       │   ├── hyper-util v0.1.8
+│   │   │       │   │   ├── futures-util v0.3.31 (*)
+│   │   │       │   │   ├── tokio v1.42.0 (*)
+│   │   │       │   │   ├── bytes feature "default" (*)
+│   │   │       │   │   ├── futures-channel feature "default" (*)
+│   │   │       │   │   ├── pin-project-lite feature "default" (*)
+│   │   │       │   │   ├── http feature "default" (*)
+│   │   │       │   │   ├── http-body feature "default" (*)
+│   │   │       │   │   ├── tower-service feature "default" (*)
+│   │   │       │   │   ├── tracing feature "std" (*)
+│   │   │       │   │   ├── socket2 feature "all" (*)
+│   │   │       │   │   ├── socket2 feature "default" (*)
+│   │   │       │   │   ├── hyper feature "default" (*)
+│   │   │       │   │   ├── tower feature "make"
+│   │   │       │   │   │   ├── tower v0.4.13
+│   │   │       │   │   │   │   ├── futures-util feature "alloc" (*)
+│   │   │       │   │   │   │   ├── futures-core feature "default" (*)
+│   │   │       │   │   │   │   ├── pin-project-lite feature "default" (*)
+│   │   │       │   │   │   │   ├── tower-layer feature "default" (*)
+│   │   │       │   │   │   │   ├── tower-service feature "default" (*)
+│   │   │       │   │   │   │   ├── pin-project feature "default" (*)
+│   │   │       │   │   │   │   ├── tokio feature "default" (*)
+│   │   │       │   │   │   │   └── tokio feature "sync" (*)
+│   │   │       │   │   │   ├── tokio feature "io-std"
+│   │   │       │   │   │   │   └── tokio v1.42.0 (*)
+│   │   │       │   │   │   ├── tower feature "futures-util"
+│   │   │       │   │   │   │   └── tower v0.4.13 (*)
+│   │   │       │   │   │   ├── tower feature "pin-project-lite"
+│   │   │       │   │   │   │   └── tower v0.4.13 (*)
+│   │   │       │   │   │   └── tower feature "tokio"
+│   │   │       │   │   │       └── tower v0.4.13 (*)
+│   │   │       │   │   └── tower feature "util"
+│   │   │       │   │       ├── tower v0.4.13 (*)
+│   │   │       │   │       ├── tower feature "__common"
+│   │   │       │   │       │   ├── tower v0.4.13 (*)
+│   │   │       │   │       │   ├── tower feature "futures-core"
+│   │   │       │   │       │   │   └── tower v0.4.13 (*)
+│   │   │       │   │       │   └── tower feature "pin-project-lite" (*)
+│   │   │       │   │       ├── tower feature "futures-util" (*)
+│   │   │       │   │       └── tower feature "pin-project"
+│   │   │       │   │           └── tower v0.4.13 (*)
+│   │   │       │   ├── tokio feature "sync" (*)
+│   │   │       │   ├── hyper-util feature "client"
+│   │   │       │   │   ├── hyper-util v0.1.8 (*)
+│   │   │       │   │   └── hyper feature "client" (*)
+│   │   │       │   └── hyper-util feature "tokio"
+│   │   │       │       ├── hyper-util v0.1.8 (*)
+│   │   │       │       ├── tokio feature "net" (*)
+│   │   │       │       ├── tokio feature "rt"
+│   │   │       │       │   └── tokio v1.42.0 (*)
+│   │   │       │       ├── tokio feature "time" (*)
+│   │   │       │       └── hyper-util feature "tokio" (*)
+│   │   │       ├── hyper-util feature "default"
+│   │   │       │   └── hyper-util v0.1.8 (*)
+│   │   │       ├── hyper-util feature "tokio" (*)
+│   │   │       ├── native-tls feature "default"
+│   │   │       │   └── native-tls v0.2.12
+│   │   │       │       ├── log feature "default" (*)
+│   │   │       │       ├── openssl feature "default"
+│   │   │       │       │   └── openssl v0.10.66
+│   │   │       │       │       ├── once_cell feature "default" (*)
+│   │   │       │       │       ├── cfg-if feature "default" (*)
+│   │   │       │       │       ├── libc feature "default" (*)
+│   │   │       │       │       ├── bitflags feature "default"
+│   │   │       │       │       │   └── bitflags v2.6.0
+│   │   │       │       │       ├── foreign-types feature "default"
+│   │   │       │       │       │   └── foreign-types v0.3.2
+│   │   │       │       │       │       └── foreign-types-shared feature "default"
+│   │   │       │       │       │           └── foreign-types-shared v0.1.1
+│   │   │       │       │       ├── openssl-macros feature "default"
+│   │   │       │       │       │   └── openssl-macros v0.1.1 (proc-macro)
+│   │   │       │       │       │       ├── proc-macro2 feature "default" (*)
+│   │   │       │       │       │       ├── quote feature "default" (*)
+│   │   │       │       │       │       ├── syn feature "default" (*)
+│   │   │       │       │       │       └── syn feature "full" (*)
+│   │   │       │       │       └── openssl-sys feature "default"
+│   │   │       │       │           └── openssl-sys v0.9.103
+│   │   │       │       │               └── libc feature "default" (*)
+│   │   │       │       │               [build-dependencies]
+│   │   │       │       │               ├── cc feature "default"
+│   │   │       │       │               │   └── cc v1.1.18
+│   │   │       │       │               │       └── shlex feature "default"
+│   │   │       │       │               │           ├── shlex v1.3.0
+│   │   │       │       │               │           └── shlex feature "std"
+│   │   │       │       │               │               └── shlex v1.3.0
+│   │   │       │       │               ├── pkg-config feature "default"
+│   │   │       │       │               │   └── pkg-config v0.3.30
+│   │   │       │       │               └── vcpkg feature "default"
+│   │   │       │       │                   └── vcpkg v0.2.15
+│   │   │       │       ├── openssl-sys feature "default" (*)
+│   │   │       │       └── openssl-probe feature "default"
+│   │   │       │           └── openssl-probe v0.1.5
+│   │   │       └── tokio-native-tls feature "default"
+│   │   │           └── tokio-native-tls v0.3.1
+│   │   │               ├── tokio feature "default" (*)
+│   │   │               └── native-tls feature "default" (*)
+│   │   ├── hyper-util feature "client" (*)
+│   │   ├── hyper-util feature "client-legacy" (*)
+│   │   ├── hyper-util feature "default" (*)
+│   │   ├── hyper-util feature "http1"
+│   │   │   ├── hyper-util v0.1.8 (*)
+│   │   │   └── hyper feature "http1" (*)
+│   │   ├── hyper-util feature "tokio" (*)
+│   │   ├── native-tls feature "default" (*)
+│   │   ├── tokio-native-tls feature "default" (*)
+│   │   ├── ipnet feature "default"
+│   │   │   ├── ipnet v2.10.0
+│   │   │   └── ipnet feature "std"
+│   │   │       └── ipnet v2.10.0
+│   │   ├── rustls-pemfile feature "default"
+│   │   │   ├── rustls-pemfile v2.1.3
+│   │   │   │   ├── base64 feature "alloc" (*)
+│   │   │   │   └── rustls-pki-types feature "default"
+│   │   │   │       ├── rustls-pki-types v1.8.0
+│   │   │   │       └── rustls-pki-types feature "alloc"
+│   │   │   │           └── rustls-pki-types v1.8.0
+│   │   │   └── rustls-pemfile feature "std"
+│   │   │       ├── rustls-pemfile v2.1.3 (*)
+│   │   │       └── base64 feature "std" (*)
+│   │   └── serde_urlencoded feature "default"
+│   │       └── serde_urlencoded v0.7.1
+│   │           ├── itoa feature "default" (*)
+│   │           ├── serde feature "default" (*)
+│   │           ├── ryu feature "default" (*)
+│   │           └── form_urlencoded feature "default" (*)
+│   ├── reqwest feature "charset"
+│   │   └── reqwest v0.12.7 (*)
+│   ├── reqwest feature "default-tls"
+│   │   ├── reqwest v0.12.7 (*)
+│   │   └── reqwest feature "__tls"
+│   │       ├── reqwest v0.12.7 (*)
+│   │       └── tokio feature "io-util" (*)
+│   ├── reqwest feature "http2"
+│   │   ├── reqwest v0.12.7 (*)
+│   │   ├── reqwest feature "h2"
+│   │   │   └── reqwest v0.12.7 (*)
+│   │   ├── hyper feature "http2"
+│   │   │   └── hyper v1.5.1 (*)
+│   │   └── hyper-util feature "http2"
+│   │       ├── hyper-util v0.1.8 (*)
+│   │       └── hyper feature "http2" (*)
+│   └── reqwest feature "macos-system-configuration"
+│       └── reqwest v0.12.7 (*)
+├── reqwest feature "json"
+│   └── reqwest v0.12.7 (*)
+├── scraper feature "default"
+│   ├── scraper v0.20.0
+│   │   ├── once_cell feature "default" (*)
+│   │   ├── ahash feature "default"
+│   │   │   ├── ahash v0.8.11
+│   │   │   │   ├── once_cell feature "alloc" (*)
+│   │   │   │   ├── cfg-if feature "default" (*)
+│   │   │   │   ├── getrandom feature "default"
+│   │   │   │   │   └── getrandom v0.2.15
+│   │   │   │   │       ├── libc v0.2.158
+│   │   │   │   │       └── cfg-if feature "default" (*)
+│   │   │   │   └── zerocopy feature "simd"
+│   │   │   │       └── zerocopy v0.7.35
+│   │   │   │   [build-dependencies]
+│   │   │   │   └── version_check feature "default" (*)
+│   │   │   ├── ahash feature "runtime-rng"
+│   │   │   │   ├── ahash v0.8.11 (*)
+│   │   │   │   └── ahash feature "getrandom"
+│   │   │   │       └── ahash v0.8.11 (*)
+│   │   │   └── ahash feature "std"
+│   │   │       └── ahash v0.8.11 (*)
+│   │   ├── cssparser feature "default"
+│   │   │   └── cssparser v0.31.2
+│   │   │       ├── itoa feature "default" (*)
+│   │   │       ├── smallvec feature "default" (*)
+│   │   │       ├── cssparser-macros feature "default"
+│   │   │       │   └── cssparser-macros v0.6.1 (proc-macro)
+│   │   │       │       ├── quote feature "default" (*)
+│   │   │       │       ├── syn feature "default" (*)
+│   │   │       │       ├── syn feature "extra-traits" (*)
+│   │   │       │       └── syn feature "full" (*)
+│   │   │       ├── dtoa-short feature "default"
+│   │   │       │   └── dtoa-short v0.3.5
+│   │   │       │       └── dtoa feature "default"
+│   │   │       │           └── dtoa v1.0.9
+│   │   │       ├── phf feature "default"
+│   │   │       │   ├── phf v0.11.2
+│   │   │       │   │   ├── phf_shared v0.11.2
+│   │   │       │   │   │   └── siphasher feature "default"
+│   │   │       │   │   │       ├── siphasher v0.3.11
+│   │   │       │   │   │       └── siphasher feature "std"
+│   │   │       │   │   │           └── siphasher v0.3.11
+│   │   │       │   │   └── phf_macros feature "default"
+│   │   │       │   │       └── phf_macros v0.11.2 (proc-macro)
+│   │   │       │   │           ├── phf_shared v0.11.2
+│   │   │       │   │           │   └── siphasher feature "default" (*)
+│   │   │       │   │           ├── proc-macro2 feature "default" (*)
+│   │   │       │   │           ├── quote feature "default" (*)
+│   │   │       │   │           ├── syn feature "default" (*)
+│   │   │       │   │           ├── syn feature "full" (*)
+│   │   │       │   │           └── phf_generator feature "default"
+│   │   │       │   │               └── phf_generator v0.11.2
+│   │   │       │   │                   ├── phf_shared v0.11.2 (*)
+│   │   │       │   │                   └── rand feature "small_rng"
+│   │   │       │   │                       └── rand v0.8.5
+│   │   │       │   │                           ├── libc v0.2.158
+│   │   │       │   │                           ├── rand_chacha v0.3.1
+│   │   │       │   │                           │   ├── ppv-lite86 feature "simd"
+│   │   │       │   │                           │   │   └── ppv-lite86 v0.2.20
+│   │   │       │   │                           │   │       ├── zerocopy feature "default"
+│   │   │       │   │                           │   │       │   ├── zerocopy v0.7.35
+│   │   │       │   │                           │   │       │   │   ├── byteorder v1.5.0
+│   │   │       │   │                           │   │       │   │   └── zerocopy-derive feature "default"
+│   │   │       │   │                           │   │       │   │       └── zerocopy-derive v0.7.35 (proc-macro)
+│   │   │       │   │                           │   │       │   │           ├── proc-macro2 feature "default" (*)
+│   │   │       │   │                           │   │       │   │           ├── quote feature "default" (*)
+│   │   │       │   │                           │   │       │   │           └── syn feature "default" (*)
+│   │   │       │   │                           │   │       │   └── zerocopy feature "byteorder"
+│   │   │       │   │                           │   │       │       └── zerocopy v0.7.35 (*)
+│   │   │       │   │                           │   │       ├── zerocopy feature "derive"
+│   │   │       │   │                           │   │       │   ├── zerocopy v0.7.35 (*)
+│   │   │       │   │                           │   │       │   └── zerocopy feature "zerocopy-derive"
+│   │   │       │   │                           │   │       │       └── zerocopy v0.7.35 (*)
+│   │   │       │   │                           │   │       └── zerocopy feature "simd"
+│   │   │       │   │                           │   │           └── zerocopy v0.7.35 (*)
+│   │   │       │   │                           │   └── rand_core feature "default"
+│   │   │       │   │                           │       └── rand_core v0.6.4
+│   │   │       │   │                           │           └── getrandom feature "default" (*)
+│   │   │       │   │                           └── rand_core feature "default" (*)
+│   │   │       │   └── phf feature "std"
+│   │   │       │       ├── phf v0.11.2 (*)
+│   │   │       │       └── phf_shared feature "std"
+│   │   │       │           └── phf_shared v0.11.2 (*)
+│   │   │       └── phf feature "macros"
+│   │   │           ├── phf v0.11.2 (*)
+│   │   │           └── phf feature "phf_macros"
+│   │   │               └── phf v0.11.2 (*)
+│   │   ├── ego-tree feature "default"
+│   │   │   └── ego-tree v0.6.3
+│   │   ├── getopts feature "default"
+│   │   │   └── getopts v0.2.21
+│   │   │       └── unicode-width feature "default"
+│   │   │           ├── unicode-width v0.1.14
+│   │   │           └── unicode-width feature "cjk"
+│   │   │               └── unicode-width v0.1.14
+│   │   ├── html5ever feature "default"
+│   │   │   └── html5ever v0.27.0
+│   │   │       ├── log feature "default" (*)
+│   │   │       ├── mac feature "default"
+│   │   │       │   └── mac v0.1.1
+│   │   │       └── markup5ever feature "default"
+│   │   │           └── markup5ever v0.12.1
+│   │   │               ├── log feature "default" (*)
+│   │   │               ├── phf feature "default" (*)
+│   │   │               ├── string_cache feature "default"
+│   │   │               │   ├── string_cache v0.8.7
+│   │   │               │   │   ├── once_cell feature "default" (*)
+│   │   │               │   │   ├── serde feature "default" (*)
+│   │   │               │   │   ├── parking_lot feature "default" (*)
+│   │   │               │   │   ├── new_debug_unreachable feature "default"
+│   │   │               │   │   │   └── new_debug_unreachable v1.0.6
+│   │   │               │   │   ├── phf_shared feature "default"
+│   │   │               │   │   │   ├── phf_shared v0.10.0
+│   │   │               │   │   │   │   └── siphasher feature "default" (*)
+│   │   │               │   │   │   └── phf_shared feature "std"
+│   │   │               │   │   │       └── phf_shared v0.10.0 (*)
+│   │   │               │   │   └── precomputed-hash feature "default"
+│   │   │               │   │       └── precomputed-hash v0.1.1
+│   │   │               │   └── string_cache feature "serde_support"
+│   │   │               │       ├── string_cache v0.8.7 (*)
+│   │   │               │       └── string_cache feature "serde"
+│   │   │               │           └── string_cache v0.8.7 (*)
+│   │   │               └── tendril feature "default"
+│   │   │                   └── tendril v0.4.3
+│   │   │                       ├── mac feature "default" (*)
+│   │   │                       ├── futf feature "default"
+│   │   │                       │   └── futf v0.1.5
+│   │   │                       │       ├── mac feature "default" (*)
+│   │   │                       │       └── new_debug_unreachable feature "default" (*)
+│   │   │                       └── utf-8 feature "default"
+│   │   │                           └── utf-8 v0.7.6
+│   │   │               [build-dependencies]
+│   │   │               ├── phf_codegen feature "default"
+│   │   │               │   └── phf_codegen v0.11.2
+│   │   │               │       ├── phf_generator feature "default" (*)
+│   │   │               │       └── phf_shared feature "default"
+│   │   │               │           ├── phf_shared v0.11.2 (*)
+│   │   │               │           └── phf_shared feature "std"
+│   │   │               │               └── phf_shared v0.11.2 (*)
+│   │   │               └── string_cache_codegen feature "default"
+│   │   │                   └── string_cache_codegen v0.5.2
+│   │   │                       ├── proc-macro2 feature "default" (*)
+│   │   │                       ├── quote feature "default" (*)
+│   │   │                       ├── phf_shared feature "default" (*)
+│   │   │                       └── phf_generator feature "default"
+│   │   │                           └── phf_generator v0.10.0
+│   │   │                               ├── phf_shared v0.10.0 (*)
+│   │   │                               ├── rand feature "default"
+│   │   │                               │   ├── rand v0.8.5 (*)
+│   │   │                               │   ├── rand feature "std"
+│   │   │                               │   │   ├── rand v0.8.5 (*)
+│   │   │                               │   │   ├── rand feature "alloc"
+│   │   │                               │   │   │   ├── rand v0.8.5 (*)
+│   │   │                               │   │   │   └── rand_core feature "alloc"
+│   │   │                               │   │   │       └── rand_core v0.6.4 (*)
+│   │   │                               │   │   ├── rand feature "getrandom"
+│   │   │                               │   │   │   ├── rand v0.8.5 (*)
+│   │   │                               │   │   │   └── rand_core feature "getrandom"
+│   │   │                               │   │   │       └── rand_core v0.6.4 (*)
+│   │   │                               │   │   ├── rand feature "libc"
+│   │   │                               │   │   │   └── rand v0.8.5 (*)
+│   │   │                               │   │   ├── rand feature "rand_chacha"
+│   │   │                               │   │   │   └── rand v0.8.5 (*)
+│   │   │                               │   │   ├── rand_chacha feature "std"
+│   │   │                               │   │   │   ├── rand_chacha v0.3.1 (*)
+│   │   │                               │   │   │   └── ppv-lite86 feature "std"
+│   │   │                               │   │   │       └── ppv-lite86 v0.2.20 (*)
+│   │   │                               │   │   └── rand_core feature "std"
+│   │   │                               │   │       ├── rand_core v0.6.4 (*)
+│   │   │                               │   │       ├── getrandom feature "std"
+│   │   │                               │   │       │   └── getrandom v0.2.15 (*)
+│   │   │                               │   │       ├── rand_core feature "alloc" (*)
+│   │   │                               │   │       └── rand_core feature "getrandom" (*)
+│   │   │                               │   └── rand feature "std_rng"
+│   │   │                               │       ├── rand v0.8.5 (*)
+│   │   │                               │       └── rand feature "rand_chacha" (*)
+│   │   │                               └── rand feature "small_rng" (*)
+│   │   │       [build-dependencies]
+│   │   │       ├── proc-macro2 feature "default" (*)
+│   │   │       ├── quote feature "default" (*)
+│   │   │       ├── syn feature "default" (*)
+│   │   │       ├── syn feature "extra-traits" (*)
+│   │   │       ├── syn feature "fold"
+│   │   │       │   └── syn v2.0.90 (*)
+│   │   │       └── syn feature "full" (*)
+│   │   ├── tendril feature "default" (*)
+│   │   └── selectors feature "default"
+│   │       └── selectors v0.25.0
+│   │           ├── log feature "default" (*)
+│   │           ├── smallvec feature "default" (*)
+│   │           ├── bitflags feature "default" (*)
+│   │           ├── cssparser feature "default" (*)
+│   │           ├── new_debug_unreachable feature "default" (*)
+│   │           ├── precomputed-hash feature "default" (*)
+│   │           ├── derive_more feature "add"
+│   │           │   └── derive_more v0.99.18 (proc-macro)
+│   │           │       ├── proc-macro2 feature "default" (*)
+│   │           │       ├── quote feature "default" (*)
+│   │           │       └── syn feature "default" (*)
+│   │           ├── derive_more feature "add_assign"
+│   │           │   └── derive_more v0.99.18 (proc-macro) (*)
+│   │           ├── fxhash feature "default"
+│   │           │   └── fxhash v0.2.1
+│   │           │       └── byteorder feature "default"
+│   │           │           ├── byteorder v1.5.0
+│   │           │           └── byteorder feature "std"
+│   │           │               └── byteorder v1.5.0
+│   │           ├── phf feature "default"
+│   │           │   ├── phf v0.10.1
+│   │           │   │   └── phf_shared v0.10.0 (*)
+│   │           │   └── phf feature "std"
+│   │           │       ├── phf v0.10.1 (*)
+│   │           │       └── phf_shared feature "std" (*)
+│   │           └── servo_arc feature "default"
+│   │               └── servo_arc v0.3.0
+│   │                   └── stable_deref_trait feature "default"
+│   │                       ├── stable_deref_trait v1.2.0
+│   │                       └── stable_deref_trait feature "std"
+│   │                           ├── stable_deref_trait v1.2.0
+│   │                           └── stable_deref_trait feature "alloc"
+│   │                               └── stable_deref_trait v1.2.0
+│   │           [build-dependencies]
+│   │           └── phf_codegen feature "default"
+│   │               └── phf_codegen v0.10.0
+│   │                   ├── phf_shared feature "default" (*)
+│   │                   └── phf_generator feature "default" (*)
+│   ├── scraper feature "errors"
+│   │   └── scraper v0.20.0 (*)
+│   └── scraper feature "main"
+│       ├── scraper v0.20.0 (*)
+│       └── scraper feature "getopts"
+│           └── scraper v0.20.0 (*)
+├── stylers feature "default"
+│   └── stylers v0.3.2 (proc-macro)
+│       ├── proc-macro2 feature "default" (*)
+│       ├── quote feature "default" (*)
+│       ├── levenshtein feature "default"
+│       │   └── levenshtein v1.0.5
+│       └── litrs feature "default"
+│           ├── litrs v0.4.1
+│           │   └── proc-macro2 feature "default" (*)
+│           └── litrs feature "proc-macro2"
+│               └── litrs v0.4.1 (*)
+├── syntect feature "default-fancy"
+│   ├── syntect v5.2.0
+│   │   ├── fnv feature "default" (*)
+│   │   ├── once_cell feature "default" (*)
+│   │   ├── serde feature "default" (*)
+│   │   ├── serde_derive feature "default" (*)
+│   │   ├── regex-syntax feature "default" (*)
+│   │   ├── thiserror feature "default" (*)
+│   │   ├── walkdir feature "default" (*)
+│   │   ├── serde_json feature "default" (*)
+│   │   ├── bincode feature "default"
+│   │   │   └── bincode v1.3.3
+│   │   │       └── serde feature "default" (*)
+│   │   ├── bitflags feature "default"
+│   │   │   └── bitflags v1.3.2
+│   │   ├── fancy-regex feature "default"
+│   │   │   ├── fancy-regex v0.11.0
+│   │   │   │   ├── regex feature "std" (*)
+│   │   │   │   └── bit-set feature "default"
+│   │   │   │       ├── bit-set v0.5.3
+│   │   │   │       │   └── bit-vec v0.6.3
+│   │   │   │       └── bit-set feature "std"
+│   │   │   │           ├── bit-set v0.5.3 (*)
+│   │   │   │           └── bit-vec feature "std"
+│   │   │   │               └── bit-vec v0.6.3
+│   │   │   ├── fancy-regex feature "perf"
+│   │   │   │   ├── fancy-regex v0.11.0 (*)
+│   │   │   │   └── regex feature "perf" (*)
+│   │   │   └── fancy-regex feature "unicode"
+│   │   │       ├── fancy-regex v0.11.0 (*)
+│   │   │       └── regex feature "unicode" (*)
+│   │   ├── flate2 feature "default"
+│   │   │   ├── flate2 v1.0.34
+│   │   │   │   ├── crc32fast feature "default"
+│   │   │   │   │   ├── crc32fast v1.4.2
+│   │   │   │   │   │   └── cfg-if feature "default" (*)
+│   │   │   │   │   └── crc32fast feature "std"
+│   │   │   │   │       └── crc32fast v1.4.2 (*)
+│   │   │   │   └── miniz_oxide feature "with-alloc"
+│   │   │   │       └── miniz_oxide v0.8.0
+│   │   │   │           └── adler2 v2.0.0
+│   │   │   └── flate2 feature "rust_backend"
+│   │   │       ├── flate2 v1.0.34 (*)
+│   │   │       ├── flate2 feature "any_impl"
+│   │   │       │   └── flate2 v1.0.34 (*)
+│   │   │       └── flate2 feature "miniz_oxide"
+│   │   │           └── flate2 v1.0.34 (*)
+│   │   ├── plist feature "default"
+│   │   │   ├── plist v1.7.0
+│   │   │   │   ├── serde feature "default" (*)
+│   │   │   │   ├── time feature "default" (*)
+│   │   │   │   ├── time feature "formatting" (*)
+│   │   │   │   ├── time feature "parsing" (*)
+│   │   │   │   ├── base64 feature "default" (*)
+│   │   │   │   ├── indexmap feature "default" (*)
+│   │   │   │   └── quick-xml feature "default"
+│   │   │   │       └── quick-xml v0.32.0
+│   │   │   │           └── memchr feature "default" (*)
+│   │   │   └── plist feature "serde"
+│   │   │       └── plist v1.7.0 (*)
+│   │   └── yaml-rust feature "default"
+│   │       └── yaml-rust v0.4.5
+│   │           └── linked-hash-map feature "default"
+│   │               └── linked-hash-map v0.5.6
+│   ├── syntect feature "default-syntaxes"
+│   │   ├── syntect v5.2.0 (*)
+│   │   ├── syntect feature "dump-load"
+│   │   │   ├── syntect v5.2.0 (*)
+│   │   │   ├── syntect feature "bincode"
+│   │   │   │   └── syntect v5.2.0 (*)
+│   │   │   └── syntect feature "flate2"
+│   │   │       └── syntect v5.2.0 (*)
+│   │   └── syntect feature "parsing"
+│   │       ├── syntect v5.2.0 (*)
+│   │       ├── syntect feature "dump-create"
+│   │       │   ├── syntect v5.2.0 (*)
+│   │       │   ├── syntect feature "bincode" (*)
+│   │       │   └── syntect feature "flate2" (*)
+│   │       ├── syntect feature "dump-load" (*)
+│   │       ├── syntect feature "fnv"
+│   │       │   └── syntect v5.2.0 (*)
+│   │       └── syntect feature "regex-syntax"
+│   │           └── syntect v5.2.0 (*)
+│   ├── syntect feature "default-themes"
+│   │   ├── syntect v5.2.0 (*)
+│   │   └── syntect feature "dump-load" (*)
+│   ├── syntect feature "dump-create" (*)
+│   ├── syntect feature "dump-load" (*)
+│   ├── syntect feature "html"
+│   │   ├── syntect v5.2.0 (*)
+│   │   └── syntect feature "parsing" (*)
+│   ├── syntect feature "parsing" (*)
+│   ├── syntect feature "plist-load"
+│   │   ├── syntect v5.2.0 (*)
+│   │   └── syntect feature "plist"
+│   │       └── syntect v5.2.0 (*)
+│   ├── syntect feature "regex-fancy"
+│   │   ├── syntect v5.2.0 (*)
+│   │   └── syntect feature "fancy-regex"
+│   │       └── syntect v5.2.0 (*)
+│   └── syntect feature "yaml-load"
+│       ├── syntect v5.2.0 (*)
+│       ├── syntect feature "parsing" (*)
+│       └── syntect feature "yaml-rust"
+│           └── syntect v5.2.0 (*)
+├── tower-cookies feature "default"
+│   ├── tower-cookies v0.10.0
+│   │   ├── async-trait feature "default" (*)
+│   │   ├── axum-core feature "default" (*)
+│   │   ├── futures-util feature "default" (*)
+│   │   ├── pin-project-lite feature "default" (*)
+│   │   ├── http feature "default" (*)
+│   │   ├── tower-layer feature "default" (*)
+│   │   ├── tower-service feature "default" (*)
+│   │   ├── cookie feature "default" (*)
+│   │   ├── cookie feature "percent-encode" (*)
+│   │   └── parking_lot feature "default" (*)
+│   └── tower-cookies feature "axum-core"
+│       └── tower-cookies v0.10.0 (*)
+├── tracing-subscriber feature "default"
+│   ├── tracing-subscriber v0.3.18
+│   │   ├── tracing-core v0.1.32 (*)
+│   │   ├── smallvec feature "default" (*)
+│   │   ├── nu-ansi-term feature "default"
+│   │   │   └── nu-ansi-term v0.46.0
+│   │   │       └── overload feature "default"
+│   │   │           └── overload v0.1.1
+│   │   ├── sharded-slab feature "default"
+│   │   │   └── sharded-slab v0.1.7
+│   │   │       └── lazy_static feature "default"
+│   │   │           └── lazy_static v1.5.0
+│   │   ├── thread_local feature "default"
+│   │   │   └── thread_local v1.1.8
+│   │   │       ├── once_cell feature "default" (*)
+│   │   │       └── cfg-if feature "default" (*)
+│   │   ├── tracing-log feature "log-tracer"
+│   │   │   └── tracing-log v0.2.0
+│   │   │       ├── tracing-core feature "default"
+│   │   │       │   ├── tracing-core v0.1.32 (*)
+│   │   │       │   └── tracing-core feature "std" (*)
+│   │   │       ├── once_cell feature "default" (*)
+│   │   │       └── log feature "default" (*)
+│   │   └── tracing-log feature "std"
+│   │       ├── tracing-log v0.2.0 (*)
+│   │       └── log feature "std" (*)
+│   ├── tracing-subscriber feature "ansi"
+│   │   ├── tracing-subscriber v0.3.18 (*)
+│   │   ├── tracing-subscriber feature "fmt"
+│   │   │   ├── tracing-subscriber v0.3.18 (*)
+│   │   │   ├── tracing-subscriber feature "registry"
+│   │   │   │   ├── tracing-subscriber v0.3.18 (*)
+│   │   │   │   ├── tracing-subscriber feature "sharded-slab"
+│   │   │   │   │   └── tracing-subscriber v0.3.18 (*)
+│   │   │   │   ├── tracing-subscriber feature "std"
+│   │   │   │   │   ├── tracing-subscriber v0.3.18 (*)
+│   │   │   │   │   ├── tracing-core feature "std" (*)
+│   │   │   │   │   └── tracing-subscriber feature "alloc"
+│   │   │   │   │       └── tracing-subscriber v0.3.18 (*)
+│   │   │   │   └── tracing-subscriber feature "thread_local"
+│   │   │   │       └── tracing-subscriber v0.3.18 (*)
+│   │   │   └── tracing-subscriber feature "std" (*)
+│   │   └── tracing-subscriber feature "nu-ansi-term"
+│   │       └── tracing-subscriber v0.3.18 (*)
+│   ├── tracing-subscriber feature "fmt" (*)
+│   ├── tracing-subscriber feature "smallvec"
+│   │   └── tracing-subscriber v0.3.18 (*)
+│   ├── tracing-subscriber feature "std" (*)
+│   └── tracing-subscriber feature "tracing-log"
+│       └── tracing-subscriber v0.3.18 (*)
+└── wasm-cookies feature "default"
+    └── wasm-cookies v0.2.1
+        ├── chrono feature "default"
+        │   ├── chrono v0.4.38
+        │   │   ├── num-traits v0.2.19
+        │   │   │   [build-dependencies]
+        │   │   │   └── autocfg feature "default" (*)
+        │   │   ├── iana-time-zone feature "default"
+        │   │   │   └── iana-time-zone v0.1.61
+        │   │   └── iana-time-zone feature "fallback"
+        │   │       └── iana-time-zone v0.1.61
+        │   ├── chrono feature "clock"
+        │   │   ├── chrono v0.4.38 (*)
+        │   │   ├── chrono feature "android-tzdata"
+        │   │   │   └── chrono v0.4.38 (*)
+        │   │   ├── chrono feature "iana-time-zone"
+        │   │   │   └── chrono v0.4.38 (*)
+        │   │   ├── chrono feature "now"
+        │   │   │   ├── chrono v0.4.38 (*)
+        │   │   │   └── chrono feature "std"
+        │   │   │       ├── chrono v0.4.38 (*)
+        │   │   │       └── chrono feature "alloc"
+        │   │   │           └── chrono v0.4.38 (*)
+        │   │   └── chrono feature "winapi"
+        │   │       ├── chrono v0.4.38 (*)
+        │   │       └── chrono feature "windows-targets"
+        │   │           └── chrono v0.4.38 (*)
+        │   ├── chrono feature "oldtime"
+        │   │   └── chrono v0.4.38 (*)
+        │   ├── chrono feature "std" (*)
+        │   └── chrono feature "wasmbind"
+        │       ├── chrono v0.4.38 (*)
+        │       ├── chrono feature "js-sys"
+        │       │   └── chrono v0.4.38 (*)
+        │       └── chrono feature "wasm-bindgen"
+        │           └── chrono v0.4.38 (*)
+        └── urlencoding feature "default"
+            └── urlencoding v1.3.3

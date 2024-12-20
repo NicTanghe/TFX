@@ -13,7 +13,7 @@ async fn main() {
 
     use tracing::debug;
 
-
+    dotenvy::dotenv().ok();
   // Set up CORS layer
 
 

@@ -10,6 +10,8 @@ use serde::{Serialize,Deserialize};
 
 use serde_json::Value;
 
+use crate::modules::statics::WHERETO;
+
 #[derive(PartialEq, Clone,Serialize, Deserialize,Debug)] // Ensure Post is Cloneable
 pub struct Person {
   pub id: i32,  // Use Option<i32> if id can be null
@@ -58,7 +60,7 @@ pub async fn get_people_vectorb(get_user: Signal<Option<ActiveUser>>) -> Vec<Per
 
 #[server(GetPosts, "/people/get")]
 pub async fn get_people_from_api(jwt_l2: String) -> Result<Vec<Person>, ServerFnError> {
-    let url = "http://localhost:4000/people";
+    let url = WHERETO.full_url(4000,"/people");
     logging::log!("Sending request to {}", url);
 
     // Initialize reqwest client

@@ -4,3 +4,6 @@ pub mod widgets;
 pub mod auth_fc;
 pub mod people;
 pub mod portfolio;
+
+pub mod statics;
+

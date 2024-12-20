@@ -3,6 +3,8 @@ use leptos::*;
 use leptos::server_fn::ServerFnError;
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
+use crate::modules::statics::WHERETO;
+
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct AuthResponse {
@@ -27,11 +29,15 @@ fn map_status_to_error(status: reqwest::StatusCode) -> ServerFnError {
 }
 
 
-#[server(Authoreise, "/authorize")]
+#[server(Authorise, "/authorize")]
+
 pub async fn get_access_token(client_id: String, client_secret: String) -> Result<String, ServerFnError> {
-    let url = "http://localhost:4000/authorize";
-    //let client_id = "foo";
-    //let client_secret = "bar";
+    let url_static = "http://localhost:4000/authorize";
+    let url = WHERETO.full_url(4000, "/authorize");
+    println!("Static URL: {}", url_static);
+    println!("Dynamic URL: {}", url);
+    dbg!(&*WHERETO);
+
     
     logging::log!("Sending POST request to {}", url);
 
@@ -84,7 +90,8 @@ pub async fn get_access_token(client_id: String, client_secret: String) -> Resul
         }
     };
 
-        let access_token = json_response["access_token"].as_str().expect("access_token not found").to_string();
-     //Return the access token from the response
+    let access_token = json_response["access_token"].as_str().expect("access_token not found").to_string();
+    //Return the access token from the response
     Ok(access_token.to_string())
 }
+

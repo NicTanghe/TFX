@@ -7,6 +7,10 @@ use leptos::{
 };
 use serde::{Serialize,Deserialize};
 
+
+
+use crate::modules::statics::WHERETO;
+
 #[derive(Serialize,Deserialize,Clone,Debug)]
 pub struct CreatePostReq {
  pub title: String,
@@ -19,9 +23,11 @@ struct ApiResponse {
     data: Vec<Post>,
 }
 
+
+
 #[server(GetPosts, "/post/get")]
 pub async fn get_posts_from_api() -> Result<Vec<Post>, ServerFnError> {
-    let url = "http://localhost:3030/posts";
+    let url = WHERETO.full_url(3030,"/posts");
     logging::log!("Sending request to {}", url);
 
     // Send request
@@ -84,9 +90,12 @@ pub async fn get_posts_from_api() -> Result<Vec<Post>, ServerFnError> {
 
 #[server(DelPost, "/post/del")]
 pub async fn delete_post_from_api(post_id: i32) -> Result<(), ServerFnError> {
-    let url = format!("http://localhost:3030/posts/{}", post_id);
-    logging::log!("Sending DELETE request to {}", url);
+    
+    let formatted_path = format!("/posts/{}", post_id);
+    let url = WHERETO.full_url(3030, &formatted_path);
 
+    logging::log!("Sending DELETE request to {}", url);
+ 
     let response = match reqwest::Client::new().delete(&url).send().await {
         Ok(resp) => resp,
         Err(err) => {
@@ -109,7 +118,7 @@ pub async fn delete_post_from_api(post_id: i32) -> Result<(), ServerFnError> {
 // Function to create a new post via API
 #[server(SetPost, "/post/set")]
 pub async fn create_post_to_blog_api(new_post: CreatePostReq, jwt: String) -> Result<(), ServerFnError> {
-    let url = "http://localhost:4000/posts";
+    let url = WHERETO.full_url(4000,"/posts");
     logging::log!("Sending POST request to {}", url);
 
     let client = reqwest::Client::new();
@@ -147,4 +156,6 @@ pub async fn create_post_to_blog_api(new_post: CreatePostReq, jwt: String) -> Re
 
     Ok(())
 }
+
+
 

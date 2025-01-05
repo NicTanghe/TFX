@@ -38,8 +38,8 @@ impl ServerConfig {
         }
     }
 }
-
+    
 // Lazily initialize the two different configurations
 pub static WHERETO: Lazy<ServerConfig> = Lazy::new(|| ServerConfig::init("WHERETO_URL"));
 pub static THELIGHT: Lazy<ServerConfig> = Lazy::new(|| ServerConfig::init("THELIGHT_URL"));
-
+pub static CDN: Lazy<ServerConfig> = Lazy::new(|| ServerConfig::init("CDN_URL"));

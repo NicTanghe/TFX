@@ -4,7 +4,7 @@ use leptos_router::{
 };
 
 use crate::modules::blog_posts::blog_compo::Post;
-
+use crate::modules::statics::CDN;
 /// Renders the home page of your application.
 #[component]
 fn HomePage_old() -> impl IntoView {
@@ -27,6 +27,9 @@ fn gotolink(href: &str) {
 
 #[component]
 pub fn HomePage() -> impl IntoView {
+
+    //thats a verry off bout of functional programming here.
+    //maybe reform into 
     // Define categories as a Vec<String>
     //
     let gotolink = use_navigate();
@@ -41,13 +44,15 @@ pub fn HomePage() -> impl IntoView {
     
     // this may be stupid but so are you.
     // Function to get the GIF URL based on category
+    
     let filter_gif = |category: &str| -> Option<String> {
         match category {
-            "programming" => Some("http://127.0.0.1:5434/programming.gif".to_string()),
-            "modelling" => Some("http://127.0.0.1:5434/programming.gif".to_string()),
-            "compositing" => Some("http://127.0.0.1:5434/programming.gif".to_string()),
-            "pipeline" => Some("http://127.0.0.1:5434/programming.gif".to_string()),
-            "editing" => Some("http://127.0.0.1:5434/programming.gif".to_string()),
+            "programming" => Some(CDN.full_url(5434,"/programming.gif")),
+            "moddeling" => Some(CDN.full_url(5434,"/programming.gif")),
+            "lookdev" => Some(CDN.full_url(5434,"/programming.gif")),
+            "compositing" => Some(CDN.full_url(5434,"/programming.gif")),
+            "pipeline" => Some(CDN.full_url(5434,"/programming.gif")),
+            "editing" => Some(CDN.full_url(5434,"/programming.gif")),
             _ => None,
         }
     };

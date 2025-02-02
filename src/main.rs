@@ -1,3 +1,4 @@
+use std::env;
 
 #[cfg(feature = "ssr")]
 #[tokio::main]
@@ -14,6 +15,7 @@ async fn main() {
     use tracing::debug;
 
     dotenvy::dotenv().ok();
+    debug!("CDN_URL: {}", env::var("CDN_URL").unwrap_or_else(|_| "Not Set".to_string()));
   // Set up CORS layer
 
 

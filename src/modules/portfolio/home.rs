@@ -93,7 +93,7 @@ pub fn HomePage() -> impl IntoView {
                             "".to_string() // Default class
                         }
                     }
-                    style=format!("background: url({}) no-repeat 100% / cover;", gif_url.clone().unwrap_or_default())
+                    style=format!("background: url({}) no-repeat 100% / cover", gif_url.clone().unwrap_or_default())
                     on:mouseover=move |_| {
                         // Simple navigation logic
                         if last_link.with(|last| last.as_ref() != Some(&href_signal.get())) {

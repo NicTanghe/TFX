@@ -7,3 +7,5 @@ pub mod portfolio;
 
 pub mod statics;
 
+//pub mod cdn;
+

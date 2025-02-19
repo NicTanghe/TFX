@@ -7,7 +7,7 @@ use leptos::{
 };
 use serde::{Serialize,Deserialize};
 
-
+use crate::modules::statics::get_whereto;
 
 use crate::modules::statics::WHERETO;
 
@@ -27,7 +27,7 @@ struct ApiResponse {
 
 #[server(GetPosts, "/post/get")]
 pub async fn get_posts_from_api() -> Result<Vec<Post>, ServerFnError> {
-    let url = WHERETO.full_url(3030,"/posts");
+    let url = get_whereto(3030,"/posts".to_string()).await.unwrap_or_default();
     logging::log!("Sending request to {}", url);
 
     // Send request
@@ -92,7 +92,7 @@ pub async fn get_posts_from_api() -> Result<Vec<Post>, ServerFnError> {
 pub async fn delete_post_from_api(post_id: i32) -> Result<(), ServerFnError> {
     
     let formatted_path = format!("/posts/{}", post_id);
-    let url = WHERETO.full_url(3030, &formatted_path);
+    let url = get_whereto(3030,"/posts".to_string()).await.unwrap_or_default();
 
     logging::log!("Sending DELETE request to {}", url);
  
@@ -118,7 +118,7 @@ pub async fn delete_post_from_api(post_id: i32) -> Result<(), ServerFnError> {
 // Function to create a new post via API
 #[server(SetPost, "/post/set")]
 pub async fn create_post_to_blog_api(new_post: CreatePostReq, jwt: String) -> Result<(), ServerFnError> {
-    let url = WHERETO.full_url(4000,"/posts");
+    let url = get_whereto(4000,"/posts".to_string()).await.unwrap_or_default();
     logging::log!("Sending POST request to {}", url);
 
     let client = reqwest::Client::new();

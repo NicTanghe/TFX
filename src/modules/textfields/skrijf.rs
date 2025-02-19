@@ -167,13 +167,13 @@ pub fn ControlledWriting(get_user: ReadSignal<ActiveUser>) -> impl IntoView {
 
 
 
-    // Resources for markdown and HTML conversion
-    let Allstat_resource = create_resource(content_string, move |content_string| async move {
-        let html_code = markdown::to_html(&content_string);
-        let (code_blocks, omark) = extract_code_blocks_from_html(&html_code);
-        let syndicated_blocks = highlight_code_blocks(code_blocks).await;
-        AllStat { orig: omark, code: syndicated_blocks }
-    });
+    //// Resources for markdown and HTML conversion
+    //let Allstat_resource = create_resource(content_string, move |content_string| async move {
+    //    let html_code = markdown::to_html(&content_string);
+    //    let (code_blocks, omark) = extract_code_blocks_from_html(&html_code);
+    //    let syndicated_blocks = highlight_code_blocks(code_blocks).await;
+    //    AllStat { orig: omark, code: syndicated_blocks }
+    //});
 
     let Final_resource = create_resource(content_string, move |content_string| async move {
         let html_code = markdown::to_html(&content_string);

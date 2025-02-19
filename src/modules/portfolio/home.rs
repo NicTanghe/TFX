@@ -4,131 +4,109 @@ use leptos_router::{
 };
 
 use crate::modules::blog_posts::blog_compo::Post;
-use crate::modules::statics::CDN;
+
+
+use crate::modules::statics::get_cdn;
 /// Renders the home page of your application.
-#[component]
-fn HomePage_old() -> impl IntoView {
-    // Creates a reactive value to update the button
-    let (count, set_count) = create_signal(0);
-    let on_click = move |_| set_count.update(|count| *count += 1);
 
-    view! {
-        <div class="big_void"></div>
-        <h1>"Welcome to Leptos!"</h1>
-        <button class="glowy_large" on:click=on_click>"Click Me: " {count}</button>
+async fn filter_gif(category: &str) -> Option<String> {
+    let path = match category {
+        "programming" => "/proxy/programming.gif",
+        "modelling" => "/proxy/modelling.gif",
+        "compositing" => "/proxy/compositing.gif",
+        "pipeline" => "/proxy/pipeline.gif",
+        "editing" => "/proxy/editing.gif",
+        _ => return None, // Unknown category, return None
+    };
+
+    match get_cdn(5434, path.to_string()).await {
+        Ok(url) => Some(url),
+        Err(e) => {
+            logging::error!("Error fetching GIF: {:?}", e);
+            None
+        }
     }
-}
-
-fn gotolink(href: &str) {
-    // Use Leptos `navigate` function to navigate to the link
-    let navigate = use_navigate();
-    navigate(href, NavigateOptions::default());
 }
 
 #[component]
 pub fn HomePage() -> impl IntoView {
-
-    //thats a verry off bout of functional programming here.
-    //maybe reform into 
-    // Define categories as a Vec<String>
-    //
     let gotolink = use_navigate();
 
-    let categories = vec![
+    let (categories, _set_categories) = create_signal(vec![
         "modelling".to_string(),
         "compositing".to_string(),
         "pipeline".to_string(),
         "editing".to_string(),
         "programming".to_string(),
-    ];
-    
-    // this may be stupid but so are you.
-    // Function to get the GIF URL based on category
-    
-    let filter_gif = |category: &str| -> Option<String> {
-        match category {
-            "programming" => Some(CDN.full_url(5434,"/programming.gif")),
-            "moddeling" => Some(CDN.full_url(5434,"/programming.gif")),
-            "lookdev" => Some(CDN.full_url(5434,"/programming.gif")),
-            "compositing" => Some(CDN.full_url(5434,"/programming.gif")),
-            "pipeline" => Some(CDN.full_url(5434,"/programming.gif")),
-            "editing" => Some(CDN.full_url(5434,"/programming.gif")),
-            _ => None,
-        }
-    };
+    ]);
 
-    // Precompute links and GIF URLs to avoid moving `cat` multiple times
-    let category_links: Vec<_> = categories
-        .into_iter()
-        .map(|cat| {
-            let href = format!("/home/{}", cat);
-            let gif_url = filter_gif(&cat); // Pass `cat` as `&str`
-            (href, gif_url, cat.clone(), cat) // Return a tuple with two copies of `cat`
-        })
-        .collect();
-
-    // Signal to store the last visited link
     let (last_link, set_last_link) = create_signal(None::<String>);
-    
-    let precomputed_links: Vec<_> = category_links
-        .into_iter()
-        .map(|(href, gif_url, cat_for_a, cat_for_img)| {
-            let (href_signal,_href_signal_set) = create_signal(href.clone());
-            let cat_for_a_cloned = cat_for_a.clone();
-            let cat_for_img_cloned = cat_for_img.clone();
-            let gotolink_cloned = gotolink.clone(); // Clone `gotolink` to prevent move issues
-            
-            let last_link_clone = last_link.clone();
-            // Create the necessary components for each category
-            
 
-
-            view! {
-                
-                <div 
-                    class=move || {
-                        if last_link_clone.with(|last| last.as_ref() == Some(&href.clone())) {
-                            "active".to_string() // Active class
-                        } else {
-                            "".to_string() // Default class
-                        }
-                    }
-                    style=format!("background: url({}) no-repeat 100% / cover;", gif_url.clone().unwrap_or_default())
-                    on:mouseover=move |_| {
-                        // Simple navigation logic
-                        if last_link.with(|last| last.as_ref() != Some(&href_signal.get())) {
-                            gotolink_cloned(&href_signal.get(), NavigateOptions::default());
-                            set_last_link(Some(href_signal.get()));
-                        }
-                    }
-                >
-                    <div 
-                        class=move || {
-                            if last_link_clone.with(|last| last.as_ref() == Some(&href_signal.get())) {
-                                "content active".to_string() // Active class
-                            } else {
-                                "content".to_string() // Default class
-                            }
-                        }
-                    > 
-                        <h2>{cat_for_a_cloned}</h2>
-                        <span>"Lorem Ipsum Fixum Later"</span>
-                    </div>
-                </div>
+    let category_resource = create_resource(
+        move || categories.get(),
+        |categories| async move {
+            let mut results = Vec::new();
+            for cat in categories {
+                let href = format!("/home/{}", cat);
+                let gif_url = filter_gif(&cat).await.unwrap_or_default();
+                results.push((href, gif_url, cat));
             }
-        })
-        .collect();
+            results
+        },
+    );
 
+   //eureka happened but i dont understand it. 
+    view! {
+        
+        <div class= "portf_container">
+            {move || category_resource.get().map(|precomputed_links| {
+                precomputed_links
+                    .iter()
+                    .map(|(href, gif_url, category)| {
+                        let href_signal = create_rw_signal(href.clone());
 
-        view! {
-            <div class= "portf_container">
-                {precomputed_links}
-            </div>
-            <Outlet/>
-        }
+                        let gotolink = gotolink.clone();
+                        let last_link = last_link.clone();
+                        let set_last_link = set_last_link.clone();
+
+                        view! {
+                            <div 
+                                class=move || {
+                                    if last_link.get().as_ref() == Some(&href_signal.get()) {
+                                        "active".to_string()
+                                    } else {
+                                        "".to_string()
+                                    }
+                                }
+                                style=format!("background: url({}) no-repeat 100% / cover;", gif_url.clone())
+                                on:mouseover=move |_| {
+                                    if last_link.get().as_ref() != Some(&href_signal.get()) {
+                                        gotolink(&href_signal.get(), NavigateOptions::default());
+                                        set_last_link(Some(href_signal.get()));
+                                    }
+                                }
+                            >
+                                <div 
+                                    class=move || {
+                                        if last_link.get().as_ref() == Some(&href_signal.get()) {
+                                            "content active".to_string()
+                                        } else {
+                                            "content".to_string()
+                                        }
+                                    }
+                                > 
+                                    <h2>{category.clone()}</h2>
+                                    <span>"Lorem Ipsum Fixum Later"</span>
+                                </div>
+                            </div>
+                        }
+                    })
+                    .collect::<Vec<_>>() // Collect into Vec<View>
+            }).unwrap_or_default()}
+        </div>
+        <Outlet/>
     }
-
-            
+}         
 //<div class="container">
 //  <div>
 //    <div class="content">

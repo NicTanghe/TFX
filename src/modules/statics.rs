@@ -1,6 +1,11 @@
 use std::env;
 use once_cell::sync::Lazy;
 
+use leptos::{
+    server,
+    ServerFnError
+};
+
 #[derive(Debug)]
 pub struct ServerConfig {
     base_url: String,
@@ -43,3 +48,24 @@ impl ServerConfig {
 pub static WHERETO: Lazy<ServerConfig> = Lazy::new(|| ServerConfig::init("WHERETO_URL"));
 pub static THELIGHT: Lazy<ServerConfig> = Lazy::new(|| ServerConfig::init("THELIGHT_URL"));
 pub static CDN: Lazy<ServerConfig> = Lazy::new(|| ServerConfig::init("CDN_URL"));
+
+
+// weird and roundabout way but it makes sence when you think about it to use serverfunctions
+// weird and roundabout way but it makes sence when you think about it to use serverfunctions
+
+
+#[server(GetWhereto, "/statics/get")]
+pub async fn get_whereto(port: u16, path: String) -> Result<String, ServerFnError> {
+    Ok(WHERETO.full_url(port, &path))
+}
+
+#[server(GetTheLight, "/statics/get")]
+pub async fn get_thelight(port: u16, path: String) -> Result<String, ServerFnError> {
+    Ok(THELIGHT.full_url(port, &path))
+}
+
+#[server(GetCDN, "/statics/get")]
+pub async fn get_cdn(port: u16, path: String) -> Result<String, ServerFnError> {
+    Ok(CDN.full_url(port, &path))
+}
+

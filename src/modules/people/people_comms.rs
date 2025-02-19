@@ -9,7 +9,7 @@ use leptos::{
 use serde::{Serialize,Deserialize};
 
 use serde_json::Value;
-
+use crate::modules::statics::get_whereto;
 use crate::modules::statics::WHERETO;
 
 #[derive(PartialEq, Clone,Serialize, Deserialize,Debug)] // Ensure Post is Cloneable
@@ -60,7 +60,7 @@ pub async fn get_people_vectorb(get_user: Signal<Option<ActiveUser>>) -> Vec<Per
 
 #[server(GetPosts, "/people/get")]
 pub async fn get_people_from_api(jwt_l2: String) -> Result<Vec<Person>, ServerFnError> {
-    let url = WHERETO.full_url(4000,"/people");
+    let url = get_whereto(4000,"/people".to_string()).await.unwrap_or_default();
     logging::log!("Sending request to {}", url);
 
     // Initialize reqwest client

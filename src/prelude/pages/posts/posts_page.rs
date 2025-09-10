@@ -1,13 +1,18 @@
 #![allow(unused_imports)]
 use crate::prelude::pages::posts::{
-    posts_logic::get_posts_from_api,
-    posts_types::PostData
+    posts_logic::{
+        get_posts_from_api,
+        update_post_api,
+    },
+    posts_types::{
+        PostData,UpdatePostReq
+    }
 };
 
 use leptos::{
     component,view, IntoView,
     prelude::{
-        GetUntracked, Effect,AnyView,Set,ReadSignal,WriteSignal,signal, ElementChild, ClassAttribute, InnerHtmlAttribute, OnAttribute, IntoAny, Resource, Get, CollectView,event_target_value,PropAttribute
+        Action, GetUntracked, Effect,AnyView,Set,ReadSignal,WriteSignal,signal, ElementChild, ClassAttribute, InnerHtmlAttribute, OnAttribute, IntoAny, Resource, Get, CollectView,event_target_value,PropAttribute
         },
     suspense::Suspense,
     logging::log,
@@ -79,19 +84,47 @@ fn render_disappearing_button(tag: String) -> AnyView {
 #[component]
 pub fn PostRow(post: PostData) -> impl IntoView {
     let pid = post.post_id;
-    let title = post.title.clone();
-    let tags = post.tags.clone();
-    let html = post.html.clone();
 
-    // Arc is Send + Sync (unlike Rc)
+    // Wrap in Arc so we can share safely across closures
+    let title: Arc<String> = Arc::new(post.title);
+    let tags: Arc<Vec<String>> = Arc::new(post.tags);
+    let html = post.html;
+
     let original_markdown: Arc<String> = Arc::new(post.markdown.clone());
 
     let (is_editing, set_is_editing) = signal(false);
     let (edit_content, set_edit_content) = signal((*original_markdown).clone());
 
+    // Action can now freely use Arcs
+    let update_action = {
+        let title = title.clone();
+        let tags = tags.clone();
+
+        Action::new(move |new_markdown: &String| {
+            let id = pid;
+            let markdown = new_markdown.clone();
+            let title = title.clone();
+            let tags = tags.clone();
+
+            async move {
+                let req = UpdatePostReq {
+                    title: Some((*title).clone()),
+                    tags: Some((*tags).clone()),
+                    markdown: Some(markdown),
+                    html: None,
+                };
+
+                match update_post_api(id, req).await {
+                    Ok(_) => leptos::logging::log!("✅ Post {id} updated successfully"),
+                    Err(e) => leptos::logging::log!("❌ Failed to update post {id}: {:?}", e),
+                }
+            }
+        })
+    };
+
     view! {
         <li class="post">
-            <h5>{title}</h5>
+            <h5>{(*title).clone()}</h5>
 
             <div class="tags">
                 {tags.iter().map(|t| view! { <span class="tag">{t.clone()}</span> }).collect_view()}
@@ -100,7 +133,6 @@ pub fn PostRow(post: PostData) -> impl IntoView {
             {move || {
                 let original_markdown = original_markdown.clone();
                 if is_editing.get() {
-                    // clone Arc into closure
                     view! {
                         <div class="edit-block">
                             <textarea
@@ -112,11 +144,7 @@ pub fn PostRow(post: PostData) -> impl IntoView {
                                 <button
                                     class="save-btn"
                                     on:click=move |_| {
-                                        leptos::logging::log!(
-                                            "Save post id={} with content: {}",
-                                            pid,
-                                            edit_content.get()
-                                        );
+                                        update_action.dispatch(edit_content.get());
                                         set_is_editing.set(false);
                                     }
                                 >
@@ -151,21 +179,13 @@ pub fn PostRow(post: PostData) -> impl IntoView {
                         .into_any()
                 }
             }}
-            <button
-                class="edit-btn"
-                type="button"
-                on:click=move |_| {
-                    set_is_editing.set(true);
-                    leptos::logging::log!("Edit clicked for {}", pid);
-                }
-            >
 
+            <button class="edit-btn" type="button" on:click=move |_| set_is_editing.set(true)>
                 "Edit"
             </button>
         </li>
     }
 }
-
 
 pub fn posts_loader() -> impl IntoView {
     let posts = Resource::new(|| (), |_| async { get_posts_from_api().await });

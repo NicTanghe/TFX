@@ -106,7 +106,7 @@ pub async fn update_post_api(id: i32, post: UpdatePostReq) -> Result<(), ServerF
 
     // Send PUT
     let client = reqwest::Client::new();
-    let resp = match client.put(url).json(&post).send().await {
+    let resp = match client.patch(url).json(&post).send().await {
         Ok(r) => r,
         Err(err) => {
             log!("Failed to send update request: {:#}", err);

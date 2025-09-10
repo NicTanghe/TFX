@@ -153,6 +153,7 @@ pub fn PostRow(post: PostData) -> impl IntoView {
             }}
             <button
                 class="edit-btn"
+                type="button"
                 on:click=move |_| {
                     set_is_editing.set(true);
                     leptos::logging::log!("Edit clicked for {}", pid);

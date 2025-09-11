@@ -12,7 +12,7 @@ use crate::prelude::pages::posts::{
 use leptos::{
     component,view, IntoView,
     prelude::{
-        Action, GetUntracked, Effect,AnyView,Set,ReadSignal,WriteSignal,signal, ElementChild, ClassAttribute, InnerHtmlAttribute, OnAttribute, IntoAny, Resource, Get, CollectView,event_target_value,PropAttribute
+        Action, GetUntracked, Effect,AnyView,Set,ReadSignal,WriteSignal,signal,Signal, ElementChild, ClassAttribute, InnerHtmlAttribute, OnAttribute, IntoAny, Resource, Get, CollectView,event_target_value,PropAttribute
         },
     suspense::Suspense,
     logging::log,
@@ -24,6 +24,7 @@ use leptos_router::components::{
     A,Outlet
     };
 
+use markdown;
 use std::sync::Arc;
 //use serde::{Deserialize, Serialize};
 //use std::collections::BTreeSet;
@@ -95,32 +96,38 @@ pub fn PostRow(post: PostData) -> impl IntoView {
     let (is_editing, set_is_editing) = signal(false);
     let (edit_content, set_edit_content) = signal((*original_markdown).clone());
 
-    // Action can now freely use Arcs
+    // Live preview resource — re-renders whenever edit_content changes
+    let preview_html = Signal::derive(move || {
+    let md = edit_content.get();
+    markdown::to_html(&md)
+    });
+    // Save action (unchanged)
     let update_action = {
         let title = title.clone();
         let tags = tags.clone();
+        let preview_html = preview_html.clone(); // capture it
 
         Action::new(move |new_markdown: &String| {
             let id = pid;
             let markdown = new_markdown.clone();
             let title = title.clone();
             let tags = tags.clone();
+            let html = preview_html.get(); // ✅ latest derived html
 
             async move {
                 let req = UpdatePostReq {
                     title: Some((*title).clone()),
                     tags: Some((*tags).clone()),
                     markdown: Some(markdown),
-                    html: None,
+                    html: Some(html), // ✅ send to server
                 };
-
                 match update_post_api(id, req).await {
                     Ok(_) => leptos::logging::log!("✅ Post {id} updated successfully"),
                     Err(e) => leptos::logging::log!("❌ Failed to update post {id}: {:?}", e),
                 }
             }
         })
-    };
+    }; // ✅ close update_action here
 
     view! {
         <li class="post">
@@ -134,36 +141,51 @@ pub fn PostRow(post: PostData) -> impl IntoView {
                 let original_markdown = original_markdown.clone();
                 if is_editing.get() {
                     view! {
-                        <div class="edit-block">
-                            <textarea
-                                class="markdown-editor"
-                                prop:value=edit_content.get()
-                                on:input=move |ev| set_edit_content.set(event_target_value(&ev))
-                            />
-                            <div class="edit-actions">
-                                <button
-                                    class="save-btn"
-                                    on:click=move |_| {
-                                        update_action.dispatch(edit_content.get());
-                                        set_is_editing.set(false);
+                        <div class="edit-block edit-split">
+                            <div class="edit-pane">
+                                <textarea
+                                    class="markdown-editor"
+                                    prop:value=edit_content.get()
+                                    on:input=move |ev| {
+                                        set_edit_content.set(event_target_value(&ev));
                                     }
-                                >
-                                    "Save"
-                                </button>
-                                <button
-                                    class="cancel-btn"
-                                    on:click=move |_| {
-                                        set_edit_content.set((*original_markdown).clone());
-                                        set_is_editing.set(false);
-                                    }
-                                >
-                                    "Cancel"
-                                </button>
+                                />
+                                <div class="edit-actions">
+                                    <button
+                                        class="save-btn"
+                                        type="button"
+                                        on:click=move |_| {
+                                            update_action.dispatch(edit_content.get());
+                                            set_is_editing.set(false);
+                                        }
+                                    >
+                                        "Save"
+                                    </button>
+                                    <button
+                                        class="cancel-btn"
+                                        type="button"
+                                        on:click=move |_| {
+                                            set_edit_content.set((*original_markdown).clone());
+                                            set_is_editing.set(false);
+                                        }
+                                    >
+                                        "Cancel"
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="preview-pane">
+                                <h6 class="preview-title">"Live preview"</h6>
+                                {move || {
+                                    view! { <div class="html" inner_html=preview_html.get()></div> }
+                                }}
                             </div>
                         </div>
                     }
                         .into_any()
                 } else if let Some(h) = html.clone() {
+
+                    // --- EDIT MODE: editor (left) + live HTML preview (right) ---
+                    // --- VIEW MODE: show saved HTML if present ---
                     view! {
                         <div>
                             <div class="html" inner_html=h></div>
@@ -171,6 +193,7 @@ pub fn PostRow(post: PostData) -> impl IntoView {
                     }
                         .into_any()
                 } else {
+                    // --- VIEW MODE fallback: show original markdown ---
                     view! {
                         <div>
                             <pre class="markdown">{(*original_markdown).clone()}</pre>
@@ -186,7 +209,6 @@ pub fn PostRow(post: PostData) -> impl IntoView {
         </li>
     }
 }
-
 pub fn posts_loader() -> impl IntoView {
     let posts = Resource::new(|| (), |_| async { get_posts_from_api().await });
 

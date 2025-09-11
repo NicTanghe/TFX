@@ -1,8 +1,19 @@
+#![allow(unused_imports)]
 use reqwest::Error;
-use serde::Serialize;
-
+use serde::{Serialize,Deserialize};
 
 use std::collections::HashMap;
+
+use leptos::{
+    server,
+    prelude::{
+        ServerFnError,
+    },
+};
+use scraper::{Html, Selector};
+
+use regex::Regex;
+use markdown;
 // Struct for the request payload
 #[derive(Serialize)]
 struct CodeRequest {
@@ -13,6 +24,22 @@ struct CodeRequest {
 enum LanguageStatus {
     Existing(String),
     NotExisting(String),
+}
+
+// #[server(RenderMarkdownPreview, "/post/render")]
+// pub async fn render_markdown_preview(markdown: String) -> Result<String, ServerFnError> {
+//     // Convert Markdown → HTML
+//     let html = markdown::to_html(&markdown);
+
+//     // Return HTML to the client
+//     Ok(html)
+// }
+
+
+
+/// Convert Markdown → HTML on the client side
+pub fn render_markdown_preview(markdown: &str) -> String {
+    markdown::to_html(markdown)
 }
 
 // Function to map languages to their proper syntect language identifier

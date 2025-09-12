@@ -23,6 +23,7 @@ dotenv = "0.15.0"
 markdown = "1.0.0"
 scraper = "0.24.0"
 regex = "1.11.2"
+syntect = { version = "5.2.0", default-features = false, features = ["regex-fancy"] }
 
 [features]
 hydrate = [

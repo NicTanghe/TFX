@@ -145,15 +145,15 @@ pub struct Cblock {
 }
 
 #[derive(Serialize, Deserialize, Clone)]
-struct Omark {
+pub struct Omark {
     amount: i8,
     ohtml: String,
 }
 
 #[derive(Serialize, Deserialize, Clone)]
-struct AllStat {
-    orig: Omark,
-    code: Vec<Cblock>,
+pub struct AllStat {
+    pub orig: Omark,
+    pub code: Vec<Cblock>,
 }
 
 //splits yo string
@@ -167,7 +167,7 @@ pub fn split_tags(tags: &str) -> Vec<String> {
 }
 
 // Function to highlight code blocks asynchronously
-async fn highlight_code_blocks(code_blocks: Vec<Cblock>) -> Vec<Cblock> {
+pub async fn highlight_code_blocks(code_blocks: Vec<Cblock>) -> Vec<Cblock> {
     let mut highlighted_blocks = Vec::new();
 
     for block in code_blocks {
@@ -185,7 +185,7 @@ async fn highlight_code_blocks(code_blocks: Vec<Cblock>) -> Vec<Cblock> {
 }
 
 
-async fn assemble_highlighted_content(allstat: AllStat) -> String {
+pub async fn assemble_highlighted_content(allstat: AllStat) -> String {
     let mut final_html = allstat.orig.ohtml.clone();
 
     // Iterate over the code blocks and insert them in the correct position
@@ -210,7 +210,7 @@ fn escape_html(input: &str) -> String {
 
 
 // Function to extract code blocks from HTML-formatted markdown and return both Cblock and Omark
-fn extract_code_blocks_from_html(html: &str) -> (Vec<Cblock>, Omark) {
+pub fn extract_code_blocks_from_html(html: &str) -> (Vec<Cblock>, Omark) {
     let mut code_blocks: Vec<Cblock> = Vec::new();
     let fragment = Html::parse_fragment(html);
 
@@ -258,7 +258,7 @@ fn extract_code_blocks_from_html(html: &str) -> (Vec<Cblock>, Omark) {
 
     // Create Omark struct
     let omark = Omark {
-        amount: (id_counter - 1) as i8,  // Amount is the number of code blocks found
+        amount: (id_counter - 1),  // Amount is the number of code blocks found
         ohtml: modified_html,
     };
 

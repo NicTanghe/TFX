@@ -6,13 +6,19 @@ use crate::prelude::pages::posts::{
     },
     posts_types::{
         PostData,UpdatePostReq
+    },
+    highlight::{
+        extract_code_blocks_from_html,
+        highlight_code_blocks,
+        assemble_highlighted_content,
+        AllStat
     }
 };
 
 use leptos::{
     component,view, IntoView,
     prelude::{
-        Action, GetUntracked, Effect,AnyView,Set,ReadSignal,WriteSignal,signal,Signal, ElementChild, ClassAttribute, InnerHtmlAttribute, OnAttribute, IntoAny, Resource, Get, CollectView,event_target_value,PropAttribute
+        Action, GetUntracked, Effect,AnyView,Set,ReadSignal,WriteSignal,signal,Signal, ElementChild, ClassAttribute, InnerHtmlAttribute, OnAttribute, IntoAny, LocalResource, Resource, Get, CollectView,event_target_value,PropAttribute
         },
     suspense::Suspense,
     logging::log,
@@ -82,6 +88,7 @@ fn render_disappearing_button(tag: String) -> AnyView {
 
 // --- new component for each post row ---
 
+
 #[component]
 pub fn PostRow(post: PostData) -> impl IntoView {
     let pid = post.post_id;
@@ -91,35 +98,46 @@ pub fn PostRow(post: PostData) -> impl IntoView {
     let tags: Arc<Vec<String>> = Arc::new(post.tags);
     let html = post.html;
 
+    let (current_html, set_current_html) = signal(html.clone());
     let original_markdown: Arc<String> = Arc::new(post.markdown.clone());
 
     let (is_editing, set_is_editing) = signal(false);
     let (edit_content, set_edit_content) = signal((*original_markdown).clone());
 
-    // Live preview resource — re-renders whenever edit_content changes
-    let preview_html = Signal::derive(move || {
-    let md = edit_content.get();
-    markdown::to_html(&md)
+    // 🔑 Async local resource: recompute preview whenever edit_content changes
+    let preview_html = LocalResource::new(move || {
+        let content_string = edit_content.get();
+        async move {
+            let html_code = markdown::to_html(&content_string);
+            let (code_blocks, omark) = extract_code_blocks_from_html(&html_code);
+            let syndicated_blocks = highlight_code_blocks(code_blocks).await;
+            let tempstat = AllStat {
+                orig: omark,
+                code: syndicated_blocks,
+            };
+            assemble_highlighted_content(tempstat).await
+        }
     });
-    // Save action (unchanged)
+
+    // Save action (uses preview_html if available)
     let update_action = {
         let title = title.clone();
         let tags = tags.clone();
-        let preview_html = preview_html.clone(); // capture it
+        let preview_html = preview_html.clone();
 
         Action::new(move |new_markdown: &String| {
             let id = pid;
             let markdown = new_markdown.clone();
             let title = title.clone();
             let tags = tags.clone();
-            let html = preview_html.get(); // ✅ latest derived html
+            let html = preview_html.get(); // Option<String>
 
             async move {
                 let req = UpdatePostReq {
                     title: Some((*title).clone()),
                     tags: Some((*tags).clone()),
                     markdown: Some(markdown),
-                    html: Some(html), // ✅ send to server
+                    html, // pass Option<String>
                 };
                 match update_post_api(id, req).await {
                     Ok(_) => leptos::logging::log!("✅ Post {id} updated successfully"),
@@ -127,7 +145,7 @@ pub fn PostRow(post: PostData) -> impl IntoView {
                 }
             }
         })
-    }; // ✅ close update_action here
+    };
 
     view! {
         <li class="post">
@@ -140,6 +158,7 @@ pub fn PostRow(post: PostData) -> impl IntoView {
             {move || {
                 let original_markdown = original_markdown.clone();
                 if is_editing.get() {
+                    // --- EDIT MODE: editor + live highlighted preview ---
                     view! {
                         <div class="edit-block edit-split">
                             <div class="edit-pane">
@@ -156,6 +175,7 @@ pub fn PostRow(post: PostData) -> impl IntoView {
                                         type="button"
                                         on:click=move |_| {
                                             update_action.dispatch(edit_content.get());
+                                            set_current_html.set(preview_html.get());
                                             set_is_editing.set(false);
                                         }
                                     >
@@ -175,16 +195,27 @@ pub fn PostRow(post: PostData) -> impl IntoView {
                             </div>
                             <div class="preview-pane">
                                 <h6 class="preview-title">"Live preview"</h6>
-                                {move || {
-                                    view! { <div class="html" inner_html=preview_html.get()></div> }
-                                }}
+                                <Suspense fallback=move || {
+                                    view! { <div>"Rendering…"</div> }
+                                }>
+                                    {move || match preview_html.get() {
+                                        Some(html) => {
+                                            view! { <div class="html" inner_html=html></div> }
+                                                .into_any()
+                                        }
+                                        None => {
+                                            view! {
+                                                <div class="html-placeholder">"Type to preview…"</div>
+                                            }
+                                                .into_any()
+                                        }
+                                    }}
+                                </Suspense>
                             </div>
                         </div>
                     }
                         .into_any()
-                } else if let Some(h) = html.clone() {
-
-                    // --- EDIT MODE: editor (left) + live HTML preview (right) ---
+                } else if let Some(h) = current_html.get() {
                     // --- VIEW MODE: show saved HTML if present ---
                     view! {
                         <div>
@@ -209,6 +240,7 @@ pub fn PostRow(post: PostData) -> impl IntoView {
         </li>
     }
 }
+
 pub fn posts_loader() -> impl IntoView {
     let posts = Resource::new(|| (), |_| async { get_posts_from_api().await });
 

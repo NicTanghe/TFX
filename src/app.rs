@@ -48,8 +48,12 @@ pub fn App() -> impl IntoView {
                     // -------- Portfolio --------
                     <ParentRoute path=path!("/portfolio") view=PortfolioLander>
                         <ParentRoute path=path!(":id") view=PortfolioInfo>
-                            <Route path=path!("2d") view=PortfolioTab />
-                            <Route path=path!("3d") view=PortfolioTab />
+                            <Route path=path!(":tab") view=PortfolioTab />
+                            <Route
+                                // 👈 matches `/portfolio/:id` exactly
+                                path=path!("")
+                                view=|| view! { <div>"(Portfolio Info)"</div> }
+                            />
                         </ParentRoute>
                         <Route
                             path=path!("")

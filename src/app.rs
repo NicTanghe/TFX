@@ -7,7 +7,7 @@ use leptos_router::{
 };
 
 use crate::prelude::pages::{
-    portfolio::landing::{PortfolioInfo, PortfolioLander},
+    portfolio::landing::*,
     posts::posts_page::{posts_loader, PostsLander},
 };
 
@@ -34,12 +34,11 @@ pub fn App() -> impl IntoView {
     provide_meta_context();
 
     view! {
-        <Stylesheet id="leptos" href="/pkg/main.css" />
+        <Stylesheet id="leptos" href="/pkg/tfx-rewrite.css" />
         <Title text="Welcome to Leptos" />
 
         <Router>
             <main>
-                // NavBar renders always
                 <NavBar />
 
                 <Routes fallback=move || view! { <NotFound /> }>
@@ -49,10 +48,8 @@ pub fn App() -> impl IntoView {
                     // -------- Portfolio --------
                     <ParentRoute path=path!("/portfolio") view=PortfolioLander>
                         <ParentRoute path=path!(":id") view=PortfolioInfo>
-                            <Route
-                                path=path!("")
-                                view=|| view! { <div class="tab">"(Portfolio Info)"</div> }
-                            />
+                            <Route path=path!("2d") view=PortfolioTab />
+                            <Route path=path!("3d") view=PortfolioTab />
                         </ParentRoute>
                         <Route
                             path=path!("")
@@ -90,14 +87,9 @@ pub fn App() -> impl IntoView {
                         />
                     </ParentRoute>
 
-                    // ----------------- POSTS -----------------
+                    // -------- Posts --------
                     <ParentRoute path=path!("/posts") view=PostsLander>
-                        // loader for /posts (no category filtering)
                         <Route path=path!("") view=posts_loader />
-                    // If later you want /posts/:id, reuse Postsloader or add another component:
-                    // <ParentRoute path=path!(":id") view=Postsloader>
-                    // <Route path=path!("") view=|| view! { <div class="tab">"(Posts for this category)"</div> } />
-                    // </ParentRoute>
                     </ParentRoute>
 
                 </Routes>

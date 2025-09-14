@@ -7,6 +7,7 @@ use leptos_router::{
     path, StaticSegment, WildcardSegment,
 };
 
+use crate::prelude::pages::portfolio::assets::{assets_2d_lander, assets_3d_lander};
 #[component]
 pub fn PortfolioLander() -> impl IntoView {
     view! {
@@ -25,11 +26,9 @@ pub fn PortfolioLander() -> impl IntoView {
 
 #[component]
 pub fn PortfolioInfo() -> impl IntoView {
-    // we can access the :id param reactively with `use_params_map`
     let params = use_params_map();
     let id = move || params.read().get("id").unwrap_or_default();
 
-    // imagine we're loading data from an API here
     let name = move || match id().as_str() {
         "Assets" => "Assets",
         "Compositing" => "Compositing",
@@ -41,15 +40,38 @@ pub fn PortfolioInfo() -> impl IntoView {
         <h4>{name}</h4>
         <div class="contact-info">
             <div class="tabs">
-                <A href="" exact=true>
-                    "Contact Info"
+                <A href=move || format!("/portfolio/{}/2d", id()) exact=true>
+                    "2d"
                 </A>
-                <A href="conversations">"Conversations"</A>
+                <A href=move || format!("/portfolio/{}/3d", id())>"3d"</A>
             </div>
 
-            // <Outlet/> here is the tabs that are nested
-            // underneath the /contacts/:id route
             <Outlet />
         </div>
+    }
+}
+
+#[component]
+pub fn PortfolioTab() -> impl IntoView {
+    let params = use_params_map();
+    let id = move || params.read().get("id").unwrap_or_default();
+    let tab = move || params.read().get("tab").unwrap_or_default();
+
+    view! {
+        {move || match (id().as_str(), tab().as_str()) {
+            ("Assets", "2d") => assets_2d_lander().into_any(),
+            ("Assets", "3d") => assets_3d_lander().into_any(),
+            ("Compositing", "2d") => view! { <div>"Compositing 2D placeholder"</div> }.into_any(),
+            ("Compositing", "3d") => view! { <div>"Compositing 3D placeholder"</div> }.into_any(),
+            ("Gamedev", "2d") => view! { <div>"Gamedev 2D placeholder"</div> }.into_any(),
+            ("Gamedev", "3d") => view! { <div>"Gamedev 3D placeholder"</div> }.into_any(),
+            ("Pipeline", "2d") => view! { <div>"Pipeline 2D placeholder"</div> }.into_any(),
+            ("Pipeline", "3d") => view! { <div>"Pipeline 3D placeholder"</div> }.into_any(),
+            _ => {
+
+                view! { <p>"No content found."</p> }
+                    .into_any()
+            }
+        }}
     }
 }

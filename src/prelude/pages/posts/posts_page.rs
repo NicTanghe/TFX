@@ -38,16 +38,21 @@ use std::sync::Arc;
 #[component]
 pub fn PostsLander() -> impl IntoView {
     view! {
-        <div class="portfolio-list">
-            <h3>"Portfolio"</h3>
-            <div class="portfolio-list-categories">
-                <A href="Assets">"Assets"</A>
-                <A href="Compositing">"Compositing"</A>
-                <A href="Gamedev">"Gamedev"</A>
-                <A href="pipeline">"pipeline"</A>
+        <div class="separator-large"></div>
+        <div class="blog-posts">
+            <h3>"Blog Posts"</h3>
+
+            <div class="blog-intro">
+                <p>
+                    "Here's some random musings, project updates, experiments that worked "
+                    "(and some that didn't), and the occasional rant about technology. "
+                    "Nothing too formal — just a place to keep track of ideas in motion."
+                </p>
             </div>
+
             <Outlet />
         </div>
+        <div class="separator-small"></div>
     }
 }
 
@@ -149,8 +154,9 @@ pub fn PostRow(post: PostData) -> impl IntoView {
 
     view! {
         <li class="post">
-            <h5>{(*title).clone()}</h5>
+            <h1>{(*title).clone()}</h1>
 
+            <div class="separator-small"></div>
             <div class="tags">
                 {tags.iter().map(|t| view! { <span class="tag">{t.clone()}</span> }).collect_view()}
             </div>
@@ -238,6 +244,7 @@ pub fn PostRow(post: PostData) -> impl IntoView {
                 "Edit"
             </button>
         </li>
+        <div class="separator-small"></div>
     }
 }
 
@@ -318,7 +325,7 @@ pub fn posts_loader() -> impl IntoView {
                         Some(Ok(list)) => {
                             view! {
                                 <div>
-                                    <h4>"Filtered Posts"</h4>
+                                    // <h4>"Filtered Posts"</h4>
                                     <ul class="posts">
                                         {list
                                             .into_iter()

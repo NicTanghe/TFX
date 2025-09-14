@@ -1,4 +1,68 @@
+@use "variables";
+@use "navbar";
+// @use "portfolio";
+@use "posts";
+@use "buttons";
+@use "forms";
+@use "animations";
+@use "responsive";
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-	font-family: sans-serif;
-	text-align: center;
+  font-family: var(--font);
+  background: var(--bg-main);
+  min-height: 100vh;
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-align: center;
+}
+
+p,
+pre,
+code,
+.html,
+.post,
+.tags {
+  text-align: left;
+}
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px 60px;
+}
+
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  list-style: none;
+}
+
+.separator-large {
+  height: 80px; // adjust to how big you want
+  width: 100%;
+}
+
+.separator-small {
+  height: 30px; // smaller spacing
+  width: 100%;
 }

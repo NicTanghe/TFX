@@ -1,0 +1,15 @@
+@use "variables" as *;
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+  }
+
+  .portfolio-list-categories {
+    justify-content: center;
+  }
+
+  .posts-wrapper {
+    grid-template-columns: 1fr;
+  }
+}

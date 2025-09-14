@@ -21,7 +21,7 @@ pub struct ApiResponse {
 #[server(GetPosts, "/post/get")]
 pub async fn get_posts_from_api() -> Result<Vec<PostData>, ServerFnError> {
     // Build and sanitize the URL string
-    let url_str = WHERETO.full_url(3033, "/posts");
+    let url_str = WHERETO.full_url(4000, "/posts");
     let url_str_trimmed = url_str.trim(); // kill accidental spaces/newlines
     log!("Posts URL (raw)   = {:?}", url_str);
     log!("Posts URL (trimmed)= {:?}", url_str_trimmed);

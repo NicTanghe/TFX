@@ -91,7 +91,7 @@ pub async fn get_posts_from_api() -> Result<Vec<PostData>, ServerFnError> {
 
 #[server(UpdatePost, "/post/update")]
 pub async fn update_post_api(id: i32, post: UpdatePostReq) -> Result<(), ServerFnError> {
-    let url_str = WHERETO.full_url(3033, &format!("/posts/{id}"));
+    let url_str = WHERETO.full_url(4000, &format!("/posts/{id}"));
     let url_str_trimmed = url_str.trim();
     log!("Update URL (trimmed) = {:?}", url_str_trimmed);
 

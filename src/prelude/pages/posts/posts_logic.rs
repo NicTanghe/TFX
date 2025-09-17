@@ -1,12 +1,24 @@
 #![allow(unused_imports)]
 
+use axum_extra::extract::CookieJar;
+use http::header::AUTHORIZATION;
+
+
 use crate::prelude::statics::WHERETO;
-use crate::prelude::pages::posts::posts_types::{
-    PostData,UpdatePostReq
+use crate::prelude::{
+        auth_fc::cookie::extract_token_from_cookies,
+        pages::posts::posts_types::{
+            PostData,UpdatePostReq
+    }
 };
 
 use leptos::logging::log;
-use leptos::{server, prelude::ServerFnError};
+use leptos::context::use_context;
+use leptos::{
+    server, prelude::ServerFnError::{
+        self,ServerError
+    },
+};
 use serde::Deserialize;
 
 
@@ -87,38 +99,38 @@ pub async fn get_posts_from_api() -> Result<Vec<PostData>, ServerFnError> {
     Ok(api.data)
 }
 
+type MyServerError = leptos::server_fn::ServerFnError<String>;
+
 
 
 #[server(UpdatePost, "/post/update")]
-pub async fn update_post_api(id: i32, post: UpdatePostReq) -> Result<(), ServerFnError> {
+pub async fn update_post_api(
+    id: i32,
+    post: UpdatePostReq,
+    jwt: String,   // ✅ pass extracted JWT directly
+) -> Result<(), leptos::server_fn::ServerFnError<String>> {
     let url_str = WHERETO.full_url(4000, &format!("/posts/{id}"));
-    let url_str_trimmed = url_str.trim();
-    log!("Update URL (trimmed) = {:?}", url_str_trimmed);
+    let url = Url::parse(url_str.trim())
+        .map_err(|e| ServerError(format!("Bad URL: {e}")))?;
 
-    // Catch invalid URL
-    let url = match Url::parse(url_str_trimmed) {
-        Ok(u) => u,
-        Err(e) => {
-            log!("Bad URL for update: {}", e);
-            return Err(ServerFnError::ServerError(format!("Bad URL: {e}")));
-        }
-    };
-
-    // Send PUT
     let client = reqwest::Client::new();
-    let resp = match client.patch(url).json(&post).send().await {
-        Ok(r) => r,
-        Err(err) => {
-            log!("Failed to send update request: {:#}", err);
-            return Err(ServerFnError::ServerError(format!("Failed request: {err}")));
-        }
-    };
+    let mut req = client.patch(url).json(&post);
+
+    if !jwt.is_empty() {
+        leptos::logging::log!("➡️ Attaching Authorization header: Bearer {}", jwt);
+        req = req.header(AUTHORIZATION, format!("Bearer {jwt}"));
+    }
+
+    let resp = req.send().await.map_err(|err| {
+        ServerError(format!("Failed request: {err}"))
+    })?;
 
     if !resp.status().is_success() {
         let code = resp.status();
         let body = resp.text().await.unwrap_or_default();
-        log!("Update failed: HTTP {} body={}", code, body);
-        return Err(ServerFnError::ServerError(format!("Update failed: HTTP {code} body={body}")));
+        return Err(ServerError(format!(
+            "Update failed: HTTP {code} body={body}"
+        )));
     }
 
     Ok(())

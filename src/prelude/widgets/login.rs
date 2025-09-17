@@ -1,48 +1,50 @@
+#[allow(dead_code)]
 
-use leptos::*;
+use leptos::{
+    prelude::*, 
+    component, view,
+    ev::SubmitEvent,
+    task::spawn_local,
+};
 use leptos::html::Input;
-use serde_json;
+use serde_json::to_string;
 use std::time::Duration;
 
-use crate::auth::{ActiveUser, get_access_token}; // adjust import paths
-use crate::cookie::{self, CookieKey};            // adjust import paths
+use crate::prelude::auth_fc::auth_ta::{ActiveUser, get_access_token};
+use crate::prelude::auth_fc::cookie::{self, CookieKey};
 
 /// Login form for entering username + password.
 #[component]
-pub fn LoginForm(set_user: WriteSignal<ActiveUser>) -> impl IntoView {
+pub fn login_form(set_user: WriteSignal<ActiveUser>) -> impl IntoView {
     let (username, set_username) = signal(String::new());
     let (password, set_password) = signal(String::new());
 
-    let username_ref: NodeRef<Input> = create_node_ref();
-    let password_ref: NodeRef<Input> = create_node_ref();
+    let username_ref: NodeRef<Input> = NodeRef::new();
+    let password_ref: NodeRef<Input> = NodeRef::new();
 
     let on_submit = move |ev: SubmitEvent| {
         ev.prevent_default();
 
-        if let (Some(username_el), Some(password_el)) = (username_ref(), password_ref()) {
+        if let (Some(username_el), Some(password_el)) = (username_ref.get(), password_ref.get()) {
             let username_val = username_el.value();
             let password_val = password_el.value();
 
             set_username(username_val.clone());
             set_password(password_val.clone());
 
-            leptos::spawn_local(async move {
+            spawn_local(async move {
                 let mut updated_user = ActiveUser::default();
                 updated_user.name = username_val.clone();
 
                 match get_access_token(username_val.clone(), password_val.clone()).await {
-                    Ok(token) => {
-                        updated_user.token = token;
-                    }
+                    Ok(token) => updated_user.token = token,
                     Err(err) => {
                         updated_user.token = "Error".to_string();
-                        logging::log!("Login failed: {:?}", err);
+                        leptos::logging::log!("Login failed: {:?}", err);
                     }
                 }
 
-                set_user.update(|user| {
-                    *user = updated_user.clone();
-                });
+                set_user.set(updated_user.clone());
 
                 // Set cookie depending on success
                 let cookie_duration = if updated_user.token == "Error" {
@@ -51,11 +53,13 @@ pub fn LoginForm(set_user: WriteSignal<ActiveUser>) -> impl IntoView {
                     Duration::new(324_890, 0)
                 };
 
-                cookie::cookieops::set(
+                if let Err(e) = cookie::cookieops::set(
                     &CookieKey::Other("user"),
-                    &serde_json::to_string(&updated_user).expect("serialize user"),
+                    &to_string(&updated_user).expect("serialize user"),
                     cookie_duration,
-                );
+                ) {
+                    leptos::logging::log!("Failed to set cookie: {:?}", e);
+                }
             });
         }
     };
@@ -88,13 +92,13 @@ pub fn UserWidget(
             user.name.clear();
             user.token.clear();
             user.roles.clear();
-
-            cookie::cookieops::set(
-                &CookieKey::Other("user"),
-                &serde_json::to_string(&user).expect("serialize user"),
-                Duration::new(0, 0),
-            );
         });
+
+        let _ = cookie::cookieops::set(
+            &CookieKey::Other("user"),
+            "",
+            Duration::new(0, 0),
+        );
     };
 
     view! {
@@ -102,7 +106,6 @@ pub fn UserWidget(
             {move || {
                 let user_state = user.get();
                 if user_state.token == "Error" {
-
                     view! {
                         <>
                             <span>
@@ -127,3 +130,4 @@ pub fn UserWidget(
         </div>
     }
 }
+

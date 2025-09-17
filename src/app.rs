@@ -1,3 +1,15 @@
+use crate::prelude::{
+    auth_fc::{
+        cookie::get_user_details,
+        auth_ta::ActiveUser,
+    },
+    pages::{
+        portfolio::landing::*,
+        posts::posts_page::{posts_loader, PostsLander},
+    },
+    widgets::login::UserWidget,
+};
+// use leptos::prelude::codee::string::JsonSerdeCodec;
 use leptos::prelude::*;
 use leptos_meta::{provide_meta_context, MetaTags, Stylesheet, Title};
 use leptos_router::{
@@ -5,12 +17,9 @@ use leptos_router::{
     hooks::{use_location, use_params_map},
     path,
 };
+use leptos::task::spawn_local;
 
-use crate::prelude::pages::{
-    portfolio::landing::*,
-    posts::posts_page::{posts_loader, PostsLander},
-};
-
+use urlencoding::decode;
 pub fn shell(options: LeptosOptions) -> impl IntoView {
     view! {
         <!DOCTYPE html>
@@ -29,9 +38,36 @@ pub fn shell(options: LeptosOptions) -> impl IntoView {
     }
 }
 
+
 #[component]
 pub fn App() -> impl IntoView {
     provide_meta_context();
+
+    // Start with empty user
+    let (user, set_user) = signal(ActiveUser::default());
+    provide_context(user);
+    provide_context(set_user);
+
+    // Resource to fetch user details
+    let user_resource = Resource::new(
+        || (), // no dependency, runs once
+        |_| async move {
+            get_user_details().await.ok().flatten()
+        },
+    );
+
+    // Effect to update the signal whenever resource resolves
+    Effect::new(move |_| {
+        if let Some(Some(active_user)) = user_resource.get() {
+            set_user.set(active_user);
+        }
+    });
+
+
+
+
+    // Signal for hide/show state (like old code)
+    let (is_hiding, set_hiding) = signal(2u8);
 
     view! {
         <Stylesheet id="leptos" href="/pkg/tfx-rewrite.css" />
@@ -39,7 +75,7 @@ pub fn App() -> impl IntoView {
 
         <Router>
             <main>
-                <NavBar />
+                <NavBar is_hiding=is_hiding />
 
                 <Routes fallback=move || view! { <NotFound /> }>
 
@@ -49,11 +85,7 @@ pub fn App() -> impl IntoView {
                     <ParentRoute path=path!("/portfolio") view=PortfolioLander>
                         <ParentRoute path=path!(":id") view=PortfolioInfo>
                             <Route path=path!(":tab") view=PortfolioTab />
-                            <Route
-                                // 👈 matches `/portfolio/:id` exactly
-                                path=path!("")
-                                view=|| view! { <div>"(Portfolio Info)"</div> }
-                            />
+                            <Route path=path!("") view=|| view! { <div>"(Portfolio Info)"</div> } />
                         </ParentRoute>
                         <Route
                             path=path!("")
@@ -103,10 +135,11 @@ pub fn App() -> impl IntoView {
 }
 
 #[component]
-pub fn NavBar() -> impl IntoView {
+pub fn NavBar(is_hiding: ReadSignal<u8>) -> impl IntoView {
     let location = use_location();
+    let user = use_context::<ReadSignal<ActiveUser>>().unwrap();
+    let set_user = use_context::<WriteSignal<ActiveUser>>().unwrap();
 
-    // Returns a reactive class string depending on current path
     let class_for = |base: &'static str| {
         move || {
             if location.pathname.get().starts_with(base) {
@@ -120,18 +153,23 @@ pub fn NavBar() -> impl IntoView {
     view! {
         <div class="navbar-container">
             <nav class="navbar">
-                <a href="/" class="nv">
-                    "Home"
-                </a>
-                <a href="/contacts" class=class_for("/contacts")>
-                    "Contacts"
-                </a>
-                <a href="/portfolio" class=class_for("/portfolio")>
-                    "Portfolio"
-                </a>
-                <a href="/posts" class=class_for("/posts")>
-                    "Posts"
-                </a>
+                <div class="nav-left">
+                    <A href="/" attr:class="nv">
+                        "Home"
+                    </A>
+                    <A href="/contacts" attr:class=class_for("/contacts")>
+                        "Contacts"
+                    </A>
+                    <A href="/portfolio" attr:class=class_for("/portfolio")>
+                        "Portfolio"
+                    </A>
+                    <A href="/posts" attr:class=class_for("/posts")>
+                        "Posts"
+                    </A>
+                </div>
+                <div class="nav-right">
+                    <UserWidget user=user set_user=set_user is_hiding=is_hiding />
+                </div>
             </nav>
         </div>
     }

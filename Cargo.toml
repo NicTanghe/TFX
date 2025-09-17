@@ -24,6 +24,14 @@ markdown = "1.0.0"
 scraper = "0.24.0"
 regex = "1.11.2"
 syntect = { version = "5.2.0", default-features = false, features = ["regex-fancy"] }
+http = "1.3.1"
+thiserror = "2.0.16"
+axum-extra = { version = "0.10.1", features = ["cookie"] }
+wasm-cookies = "0.2.1"
+time = "0.3.43"
+serde_json = "1.0.145"
+urlencoding = "2.1.3"
+# leptos-use = { version = "0.16.2", features = ["axum"] }
 
 [features]
 hydrate = [
